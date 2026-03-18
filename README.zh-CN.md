@@ -27,9 +27,10 @@
 
 <div align="center">
   
-## 项目生态 
+## 数据看板
 </div>
-
+<div align="center">
+  
 | Project | Stars | Forks | Open Issues | Contributors | Last Commit |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | [EvoScientist](https://github.com/EvoScientist/EvoScientist) | [![Stars](https://img.shields.io/github/stars/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/stargazers) | [![Forks](https://img.shields.io/github/forks/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/network/members) | [![Issues](https://img.shields.io/github/issues/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/issues) | [![Contributors](https://img.shields.io/github/contributors/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/commits/main) |
@@ -45,7 +46,7 @@
 | [chemcrow-public](https://github.com/ur-whitelab/chemcrow-public) | [![Stars](https://img.shields.io/github/stars/ur-whitelab/chemcrow-public?style=flat-square)](https://github.com/ur-whitelab/chemcrow-public/stargazers) | [![Forks](https://img.shields.io/github/forks/ur-whitelab/chemcrow-public?style=flat-square)](https://github.com/ur-whitelab/chemcrow-public/network/members) | [![Issues](https://img.shields.io/github/issues/ur-whitelab/chemcrow-public?style=flat-square)](https://github.com/ur-whitelab/chemcrow-public/issues) | [![Contributors](https://img.shields.io/github/contributors/ur-whitelab/chemcrow-public?style=flat-square)](https://github.com/ur-whitelab/chemcrow-public/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/ur-whitelab/chemcrow-public?style=flat-square)](https://github.com/ur-whitelab/chemcrow-public/commits/main) |
 | [ScholarForge](https://github.com/shawnleeai/ScholarForge) | [![Stars](https://img.shields.io/github/stars/shawnleeai/ScholarForge?style=flat-square)](https://github.com/shawnleeai/ScholarForge/stargazers) | [![Forks](https://img.shields.io/github/forks/shawnleeai/ScholarForge?style=flat-square)](https://github.com/shawnleeai/ScholarForge/network/members) | [![Issues](https://img.shields.io/github/issues/shawnleeai/ScholarForge?style=flat-square)](https://github.com/shawnleeai/ScholarForge/issues) | [![Contributors](https://img.shields.io/github/contributors/shawnleeai/ScholarForge?style=flat-square)](https://github.com/shawnleeai/ScholarForge/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/shawnleeai/ScholarForge?style=flat-square)](https://github.com/shawnleeai/ScholarForge/commits/main) |
 | [Prismer](https://github.com/Prismer-AI/Prismer) | [![Stars](https://img.shields.io/github/stars/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/stargazers) | [![Forks](https://img.shields.io/github/forks/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/network/members) | [![Issues](https://img.shields.io/github/issues/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/issues) | [![Contributors](https://img.shields.io/github/contributors/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/commits/main) |
-
+</div>
 
 ## 许可证 / License
 
