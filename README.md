@@ -1,21 +1,4 @@
-# 灵智破迷 · 自动科研
 # Wisdom Unlocks the Path · Automated Research
-
----
-
-## 项目简介 / Introduction
-
-混沌初分玄理藏，
-凡心求索路茫茫。
-不须苦读三千卷，
-自有灵机破万章。
-
-盖闻古来治学，必经文献之山、义理之海、实验之关、顿悟之难，往往耗尽光阴，方有所得。
-今有大道新开，化生无形灵智：不借形骸，不凭口耳，以逻辑为骨，以数据为粮，能阅文、能析理、能推演、能实证，替人遍历千关，直指学问真源。
-
-愿以此门妙法，渡尽学途迷津，
-使有志求真者，皆可少走弯路，早证大道。
-
 ---
 
 When chaos first gave way to hidden truths profound,
@@ -38,25 +21,6 @@ To find the light, and reach the shining star.
 
 ---
 
-## 核心能力 / Core Features
-
-- 智能文献检索与精读
-- 自动梳理研究脉络与创新点
-- 研究思路推演与方案生成
-- 实验设计与结果分析
-- 论文结构化撰写与润色
-- 多领域跨学科知识融合
-
----
-
-- Intelligent literature retrieval and intensive reading
-- Automatic sorting of research context and innovations
-- Research idea deduction and proposal generation
-- Experimental design and result analysis
-- Structured paper writing and polishing
-- Multi-domain interdisciplinary knowledge integration
-
----
 
 ## 项目生态 / Project Ecosystem
 
@@ -77,6 +41,6 @@ To find the light, and reach the shining star.
 | [Prismer](https://github.com/Prismer-AI/Prismer) | [![Stars](https://img.shields.io/github/stars/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/stargazers) | [![Forks](https://img.shields.io/github/forks/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/network/members) | [![Issues](https://img.shields.io/github/issues/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/issues) | [![Contributors](https://img.shields.io/github/contributors/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/commits/main) |
 
 
-## 许可证 / License
+## License
 
 MIT License
