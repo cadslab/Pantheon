@@ -1,5 +1,13 @@
+<div align="center">
+# 万神殿
+</div>
+<div align="center">
+**[English](./README.md) | 简体中文**
+</div>
+<div align="center">
 ## 钻研进化·灵智破迷
-
+</div>
+<div align="center">
 混沌初分玄理藏，
 凡心求索路茫茫。
 不须苦读三千卷，
@@ -10,23 +18,10 @@
 
 愿以此门妙法，渡尽学途迷津，
 使有志求真者，皆可少走弯路，早证大道。
-
----
-
-
-## 核心能力
-
-- 智能文献检索与精读
-- 自动梳理研究脉络与创新点
-- 研究思路推演与方案生成
-- 实验设计与结果分析
-- 论文结构化撰写与润色
-- 多领域跨学科知识融合
-
----
-
+</div>
+<div align="center">
 ## 项目生态 
-
+</div>
 | Project | Stars | Forks | Open Issues | Contributors | Last Commit |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | [EvoScientist](https://github.com/EvoScientist/EvoScientist) | [![Stars](https://img.shields.io/github/stars/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/stargazers) | [![Forks](https://img.shields.io/github/forks/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/network/members) | [![Issues](https://img.shields.io/github/issues/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/issues) | [![Contributors](https://img.shields.io/github/contributors/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/commits/main) |
