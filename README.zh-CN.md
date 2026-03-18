@@ -31,7 +31,7 @@
 </div>
 <div align="center">
 
-**[English](./README.md)
+**[跳转](./README.md)**
 
 </div>
 
