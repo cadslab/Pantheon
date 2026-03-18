@@ -33,7 +33,7 @@ To find the light, and reach the shining star.
 </div>
 <div align="center">
   
-## Project Status
+## Dashboard
 </div>
 <div align="center">
   
