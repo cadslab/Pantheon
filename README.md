@@ -1,133 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Pantheon - Automated Research</title>
-    <style>
-        body { text-align: center; font-family: Arial, sans-serif; margin: 20px; }
-        table { margin: 20px auto; border-collapse: collapse; width: 90%; }
-        th, td { padding: 10px; border: 1px solid #ddd; }
-        th { background: #f5f5f5; cursor: pointer; user-select: none; }
-        th:hover { background: #eee; }
-        .poem { margin: 30px 0; line-height: 1.8; font-style: italic; }
-    </style>
-</head>
-<body>
-<div id="app"></div>
+<div align="center">
+  
+  # Pantheon
+  </div>
+<div align="center">
 
-<script>
-// ====================== 项目数据配置 ======================
-const platformData = [
-  {name:"EvoScientist",url:"https://github.com/EvoScientist/EvoScientist"},
-  {name:"scientify",url:"https://github.com/tsingyuai/scientify"},
-  {name:"Research-Claw",url:"https://github.com/wentorai/Research-Claw"},
-  {name:"ResearchClaw",url:"https://github.com/ymx10086/ResearchClaw"},
-  {name:"Auto-claude-code",url:"https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep"},
-  {name:"dr-claw",url:"https://github.com/OpenLAIR/dr-claw"},
-  {name:"AutoResearchClaw",url:"https://github.com/aiming-lab/AutoResearchClaw"},
-  {name:"DrClaw",url:"https://github.com/InternScience/DrClaw"},
-  {name:"Biomni",url:"https://github.com/snap-stanford/Biomni"},
-  {name:"chemcrow-public",url:"https://github.com/ur-whitelab/chemcrow-public"},
-  {name:"ScholarForge",url:"https://github.com/shawnleeai/ScholarForge"},
-  {name:"Prismer",url:"https://github.com/Prismer-AI/Prismer"},
-  {name:"ClawPhD",url:"https://github.com/ZhihaoAIRobotic/ClawPhD"},
-  {name:"local-deep-researcher",url:"https://github.com/langchain-ai/local-deep-researcher"},
-  {name:"InnoClaw",url:"https://github.com/zjowowen/InnoClaw"}
-];
+**English | [简体中文](./README.zh-CN.md)**
 
-const skillData = [
-  {name:"awesome-ai-research-writing",url:"https://github.com/Leey21/awesome-ai-research-writing"},
-  {name:"Paper-Polish-Workflow-skill",url:"https://github.com/Lylll9436/Paper-Polish-Workflow-skill"},
-  {name:"DoctorClaw",url:"https://github.com/lulaiao/DoctorClaw"}
-];
+</div>
+<div align="center">
 
-// ====================== 徽章生成工具 ======================
-function getBadge(url, type) {
-  const base = "https://img.shields.io/github/";
-  const path = url.replace("https://github.com/", "");
-  return `<img src="${base}${type}/${path}?style=flat-square" alt="${type}">`;
-}
+## Wisdom Unlocks the Path · Automated Research
+</div>
+<div align="center">
+  
+When chaos first gave way to hidden truths profound,
+Mortal seekers wandered lost, with no clear way bound.
+No need to toil through volumes thousand-fold,
+For wit unbodied breaks the darkness cold.
 
-// ====================== 表格渲染 + 排序功能 ======================
-function renderTable(id, title, data) {
-  let html = `<h2>${title}</h2><table id="${id}"><thead><tr>
-    <th>Project</th><th>⭐ Stars</th><th>🍴 Forks</th><th>🐛 Open Issues</th><th>👥 Contributors</th><th>🕒 Last Commit</th>
-  </tr></thead><tbody>`;
+Since ancient times, all who sought wisdom’s gate
+Faced mountains of texts, vast seas of reason,
+Trials of experiment, strokes of fate—
+Too often spent their years in endless season.
 
-  data.forEach(item => {
-    html += `<tr>
-      <td><a href="${item.url}" target="_blank">${item.name}</a></td>
-      <td>${getBadge(item.url, "stars")}</td>
-      <td>${getBadge(item.url, "forks")}</td>
-      <td>${getBadge(item.url, "issues")}</td>
-      <td>${getBadge(item.url, "contributors")}</td>
-      <td>${getBadge(item.url, "last-commit")}</td>
-    </tr>`;
-  });
+Now a new path dawns: a bodiless mind,
+Without form or voice, yet with logic refined.
+It reads, it knows, it reasons, it reveals,
+Crossing every barrier truth conceals.
 
-  html += `</tbody></table>`;
-  return html;
-}
+May this art guide all who wander far,
+To find the light, and reach the shining star.
+</div>
 
-// 排序核心逻辑
-function makeTableSortable(tableId) {
-  const table = document.getElementById(tableId);
-  const headers = table.querySelectorAll("th");
-  headers.forEach((th, idx) => {
-    let order = 1;
-    th.addEventListener("click", () => {
-      const rows = Array.from(table.querySelectorAll("tbody tr"));
-      rows.sort((a, b) => {
-        const aVal = a.cells[idx].textContent.trim();
-        const bVal = b.cells[idx].textContent.trim();
-        const aNum = parseFloat(aVal), bNum = parseFloat(bVal);
-        
-        if (!isNaN(aNum) && !isNaN(bNum)) return (aNum - bNum) * order;
-        return aVal.localeCompare(bVal) * order;
-      });
-      rows.forEach(row => table.querySelector("tbody").appendChild(row));
-      order *= -1;
-    });
-  });
-}
+<div align="center">
+  
+## Platform Dashboard
+</div>
 
-// ====================== 整页渲染 ======================
-function renderPage() {
-  const app = document.getElementById("app");
-  app.innerHTML = `
-    <h1>Pantheon</h1>
-    <p><strong>English | <a href="./README.zh-CN.md">简体中文</a></strong></p>
-    <h2>Wisdom Unlocks the Path · Automated Research</h2>
-    <div class="poem">
-      When chaos first gave way to hidden truths profound,<br>
-      Mortal seekers wandered lost, with no clear way bound.<br>
-      No need to toil through volumes thousand-fold,<br>
-      For wit unbodied breaks the darkness cold.<br><br>
-      Since ancient times, all who sought wisdom’s gate<br>
-      Faced mountains of texts, vast seas of reason,<br>
-      Trials of experiment, strokes of fate—<br>
-      Too often spent their years in endless season.<br><br>
-      Now a new path dawns: a bodiless mind,<br>
-      Without form or voice, yet with logic refined.<br>
-      It reads, it knows, it reasons, it reveals,<br>
-      Crossing every barrier truth conceals.<br><br>
-      May this art guide all who wander far,<br>
-      To find the light, and reach the shining star.
-    </div>
-    ${renderTable("dashboardTable", "Platform Dashboard", platformData)}
-    ${renderTable("skillTable", "Skill Dashboard", skillData)}
-    <br><br>
-    <h3>License</h3>
-    <p>MIT License</p>
-  `;
+<div align="center">
 
-  // 启用排序
-  makeTableSortable("dashboardTable");
-  makeTableSortable("skillTable");
-}
 
-// 启动
-window.onload = renderPage;
-</script>
-</body>
-</html>
+| Project | ⭐ Stars | 🍴 Forks | 🐛 Open Issues | 👥 Contributors | 🕒 Last Commit |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| [EvoScientist](https://github.com/EvoScientist/EvoScientist) | [![Stars](https://img.shields.io/github/stars/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/stargazers) | [![Forks](https://img.shields.io/github/forks/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/network/members) | [![Issues](https://img.shields.io/github/issues/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/issues) | [![Contributors](https://img.shields.io/github/contributors/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/EvoScientist/EvoScientist?style=flat-square)](https://github.com/EvoScientist/EvoScientist/commits/main) |
+| [scientify](https://github.com/tsingyuai/scientify) | [![Stars](https://img.shields.io/github/stars/tsingyuai/scientify?style=flat-square)](https://github.com/tsingyuai/scientify/stargazers) | [![Forks](https://img.shields.io/github/forks/tsingyuai/scientify?style=flat-square)](https://github.com/tsingyuai/scientify/network/members) | [![Issues](https://img.shields.io/github/issues/tsingyuai/scientify?style=flat-square)](https://github.com/tsingyuai/scientify/issues) | [![Contributors](https://img.shields.io/github/contributors/tsingyuai/scientify?style=flat-square)](https://github.com/tsingyuai/scientify/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/tsingyuai/scientify?style=flat-square)](https://github.com/tsingyuai/scientify/commits/main) |
+| [Research-Claw](https://github.com/wentorai/Research-Claw) | [![Stars](https://img.shields.io/github/stars/wentorai/Research-Claw?style=flat-square)](https://github.com/wentorai/Research-Claw/stargazers) | [![Forks](https://img.shields.io/github/forks/wentorai/Research-Claw?style=flat-square)](https://github.com/wentorai/Research-Claw/network/members) | [![Issues](https://img.shields.io/github/issues/wentorai/Research-Claw?style=flat-square)](https://github.com/wentorai/Research-Claw/issues) | [![Contributors](https://img.shields.io/github/contributors/wentorai/Research-Claw?style=flat-square)](https://github.com/wentorai/Research-Claw/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/wentorai/Research-Claw?style=flat-square)](https://github.com/wentorai/Research-Claw/commits/main) |
+| [ResearchClaw](https://github.com/ymx10086/ResearchClaw) | [![Stars](https://img.shields.io/github/stars/ymx10086/ResearchClaw?style=flat-square)](https://github.com/ymx10086/ResearchClaw/stargazers) | [![Forks](https://img.shields.io/github/forks/ymx10086/ResearchClaw?style=flat-square)](https://github.com/ymx10086/ResearchClaw/network/members) | [![Issues](https://img.shields.io/github/issues/ymx10086/ResearchClaw?style=flat-square)](https://github.com/ymx10086/ResearchClaw/issues) | [![Contributors](https://img.shields.io/github/contributors/ymx10086/ResearchClaw?style=flat-square)](https://github.com/ymx10086/ResearchClaw/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/ymx10086/ResearchClaw?style=flat-square)](https://github.com/ymx10086/ResearchClaw/commits/main) |
+| [Auto-claude-code](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep) | [![Stars](https://img.shields.io/github/stars/wanshuiyin/Auto-claude-code-research-in-sleep?style=flat-square)](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/stargazers) | [![Forks](https://img.shields.io/github/forks/wanshuiyin/Auto-claude-code-research-in-sleep?style=flat-square)](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/network/members) | [![Issues](https://img.shields.io/github/issues/wanshuiyin/Auto-claude-code-research-in-sleep?style=flat-square)](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/issues) | [![Contributors](https://img.shields.io/github/contributors/wanshuiyin/Auto-claude-code-research-in-sleep?style=flat-square)](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/wanshuiyin/Auto-claude-code-research-in-sleep?style=flat-square)](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/commits/main) |
+| [dr-claw](https://github.com/OpenLAIR/dr-claw) | [![Stars](https://img.shields.io/github/stars/OpenLAIR/dr-claw?style=flat-square)](https://github.com/OpenLAIR/dr-claw/stargazers) | [![Forks](https://img.shields.io/github/forks/OpenLAIR/dr-claw?style=flat-square)](https://github.com/OpenLAIR/dr-claw/network/members) | [![Issues](https://img.shields.io/github/issues/OpenLAIR/dr-claw?style=flat-square)](https://github.com/OpenLAIR/dr-claw/issues) | [![Contributors](https://img.shields.io/github/contributors/OpenLAIR/dr-claw?style=flat-square)](https://github.com/OpenLAIR/dr-claw/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/OpenLAIR/dr-claw?style=flat-square)](https://github.com/OpenLAIR/dr-claw/commits/main) |
+| [AutoResearchClaw](https://github.com/aiming-lab/AutoResearchClaw) | [![Stars](https://img.shields.io/github/stars/aiming-lab/AutoResearchClaw?style=flat-square)](https://github.com/aiming-lab/AutoResearchClaw/stargazers) | [![Forks](https://img.shields.io/github/forks/aiming-lab/AutoResearchClaw?style=flat-square)](https://github.com/aiming-lab/AutoResearchClaw/network/members) | [![Issues](https://img.shields.io/github/issues/aiming-lab/AutoResearchClaw?style=flat-square)](https://github.com/aiming-lab/AutoResearchClaw/issues) | [![Contributors](https://img.shields.io/github/contributors/aiming-lab/AutoResearchClaw?style=flat-square)](https://github.com/aiming-lab/AutoResearchClaw/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/aiming-lab/AutoResearchClaw?style=flat-square)](https://github.com/aiming-lab/AutoResearchClaw/commits/main) |
+| [DrClaw](https://github.com/InternScience/DrClaw) | [![Stars](https://img.shields.io/github/stars/InternScience/DrClaw?style=flat-square)](https://github.com/InternScience/DrClaw/stargazers) | [![Forks](https://img.shields.io/github/forks/InternScience/DrClaw?style=flat-square)](https://github.com/InternScience/DrClaw/network/members) | [![Issues](https://img.shields.io/github/issues/InternScience/DrClaw?style=flat-square)](https://github.com/InternScience/DrClaw/issues) | [![Contributors](https://img.shields.io/github/contributors/InternScience/DrClaw?style=flat-square)](https://github.com/InternScience/DrClaw/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/InternScience/DrClaw?style=flat-square)](https://github.com/InternScience/DrClaw/commits/main) |
+| [Biomni](https://github.com/snap-stanford/Biomni) | [![Stars](https://img.shields.io/github/stars/snap-stanford/Biomni?style=flat-square)](https://github.com/snap-stanford/Biomni/stargazers) | [![Forks](https://img.shields.io/github/forks/snap-stanford/Biomni?style=flat-square)](https://github.com/snap-stanford/Biomni/network/members) | [![Issues](https://img.shields.io/github/issues/snap-stanford/Biomni?style=flat-square)](https://github.com/snap-stanford/Biomni/issues) | [![Contributors](https://img.shields.io/github/contributors/snap-stanford/Biomni?style=flat-square)](https://github.com/snap-stanford/Biomni/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/snap-stanford/Biomni?style=flat-square)](https://github.com/snap-stanford/Biomni/commits/main) |
+| [chemcrow-public](https://github.com/ur-whitelab/chemcrow-public) | [![Stars](https://img.shields.io/github/stars/ur-whitelab/chemcrow-public?style=flat-square)](https://github.com/ur-whitelab/chemcrow-public/stargazers) | [![Forks](https://img.shields.io/github/forks/ur-whitelab/chemcrow-public?style=flat-square)](https://github.com/ur-whitelab/chemcrow-public/network/members) | [![Issues](https://img.shields.io/github/issues/ur-whitelab/chemcrow-public?style=flat-square)](https://github.com/ur-whitelab/chemcrow-public/issues) | [![Contributors](https://img.shields.io/github/contributors/ur-whitelab/chemcrow-public?style=flat-square)](https://github.com/ur-whitelab/chemcrow-public/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/ur-whitelab/chemcrow-public?style=flat-square)](https://github.com/ur-whitelab/chemcrow-public/commits/main) |
+| [ScholarForge](https://github.com/shawnleeai/ScholarForge) | [![Stars](https://img.shields.io/github/stars/shawnleeai/ScholarForge?style=flat-square)](https://github.com/shawnleeai/ScholarForge/stargazers) | [![Forks](https://img.shields.io/github/forks/shawnleeai/ScholarForge?style=flat-square)](https://github.com/shawnleeai/ScholarForge/network/members) | [![Issues](https://img.shields.io/github/issues/shawnleeai/ScholarForge?style=flat-square)](https://github.com/shawnleeai/ScholarForge/issues) | [![Contributors](https://img.shields.io/github/contributors/shawnleeai/ScholarForge?style=flat-square)](https://github.com/shawnleeai/ScholarForge/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/shawnleeai/ScholarForge?style=flat-square)](https://github.com/shawnleeai/ScholarForge/commits/main) |
+| [Prismer](https://github.com/Prismer-AI/Prismer) | [![Stars](https://img.shields.io/github/stars/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/stargazers) | [![Forks](https://img.shields.io/github/forks/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/network/members) | [![Issues](https://img.shields.io/github/issues/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/issues) | [![Contributors](https://img.shields.io/github/contributors/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/Prismer-AI/Prismer?style=flat-square)](https://github.com/Prismer-AI/Prismer/commits/main) |
+| [ClawPhD](https://github.com/ZhihaoAIRobotic/ClawPhD) | [![Stars](https://img.shields.io/github/stars/ZhihaoAIRobotic/ClawPhD?style=flat-square)](https://github.com/ZhihaoAIRobotic/ClawPhD/stargazers) | [![Forks](https://img.shields.io/github/forks/ZhihaoAIRobotic/ClawPhD?style=flat-square)](https://github.com/ZhihaoAIRobotic/ClawPhD/network/members) | [![Issues](https://img.shields.io/github/issues/ZhihaoAIRobotic/ClawPhD?style=flat-square)](https://github.com/ZhihaoAIRobotic/ClawPhD/issues) | [![Contributors](https://img.shields.io/github/contributors/ZhihaoAIRobotic/ClawPhD?style=flat-square)](https://github.com/ZhihaoAIRobotic/ClawPhD/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/ZhihaoAIRobotic/ClawPhD?style=flat-square)](https://github.com/ZhihaoAIRobotic/ClawPhD/commits/main) |
+| [local-deep-researcher](https://github.com/langchain-ai/local-deep-researcher) | [![Stars](https://img.shields.io/github/stars/langchain-ai/local-deep-researcher?style=flat-square)](https://github.com/langchain-ai/local-deep-researcher/stargazers) | [![Forks](https://img.shields.io/github/forks/langchain-ai/local-deep-researcher?style=flat-square)](https://github.com/langchain-ai/local-deep-researcher/network/members) | [![Issues](https://img.shields.io/github/issues/langchain-ai/local-deep-researcher?style=flat-square)](https://github.com/langchain-ai/local-deep-researcher/issues) | [![Contributors](https://img.shields.io/github/contributors/langchain-ai/local-deep-researcher?style=flat-square)](https://github.com/langchain-ai/local-deep-researcher/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/langchain-ai/local-deep-researcher?style=flat-square)](https://github.com/langchain-ai/local-deep-researcher/commits/main) |
+| [InnoClaw](https://github.com/zjowowen/InnoClaw) | [![Stars](https://img.shields.io/github/stars/zjowowen/InnoClaw?style=flat-square)](https://github.com/zjowowen/InnoClaw/stargazers) | [![Forks](https://img.shields.io/github/forks/zjowowen/InnoClaw?style=flat-square)](https://github.com/zjowowen/InnoClaw/network/members) | [![Issues](https://img.shields.io/github/issues/zjowowen/InnoClaw?style=flat-square)](https://github.com/zjowowen/InnoClaw/issues) | [![Contributors](https://img.shields.io/github/contributors/zjowowen/InnoClaw?style=flat-square)](https://github.com/zjowowen/InnoClaw/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/zjowowen/InnoClaw?style=flat-square)](https://github.com/zjowowen/InnoClaw/commits/main) |
+
+</div>
+
+<div align="center">
+  
+## Skill Dashboard
+</div>
+<div align="center">
+
+
+| Project | ⭐ Stars | 🍴 Forks | 🐛 Open Issues | 👥 Contributors | 🕒 Last Commit |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| [awesome-ai-research-writing](https://github.com/Leey21/awesome-ai-research-writing) | [![Stars](https://img.shields.io/github/stars/Leey21/awesome-ai-research-writing?style=flat-square)](https://github.com/Leey21/awesome-ai-research-writing/stargazers) | [![Forks](https://img.shields.io/github/forks/Leey21/awesome-ai-research-writing?style=flat-square)](https://github.com/Leey21/awesome-ai-research-writing/network/members) | [![Issues](https://img.shields.io/github/issues/Leey21/awesome-ai-research-writing?style=flat-square)](https://github.com/Leey21/awesome-ai-research-writing/issues) | [![Contributors](https://img.shields.io/github/contributors/Leey21/awesome-ai-research-writing?style=flat-square)](https://github.com/Leey21/awesome-ai-research-writing/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/Leey21/awesome-ai-research-writing?style=flat-square)](https://github.com/Leey21/awesome-ai-research-writing/commits/main) |
+| [Paper-Polish-Workflow-skill](https://github.com/Lylll9436/Paper-Polish-Workflow-skill) | [![Stars](https://img.shields.io/github/stars/Lylll9436/Paper-Polish-Workflow-skill?style=flat-square)](https://github.com/Lylll9436/Paper-Polish-Workflow-skill/stargazers) | [![Forks](https://img.shields.io/github/forks/Lylll9436/Paper-Polish-Workflow-skill?style=flat-square)](https://github.com/Lylll9436/Paper-Polish-Workflow-skill/network/members) | [![Issues](https://img.shields.io/github/issues/Lylll9436/Paper-Polish-Workflow-skill?style=flat-square)](https://github.com/Lylll9436/Paper-Polish-Workflow-skill/issues) | [![Contributors](https://img.shields.io/github/contributors/Lylll9436/Paper-Polish-Workflow-skill?style=flat-square)](https://github.com/Lylll9436/Paper-Polish-Workflow-skill/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/Lylll9436/Paper-Polish-Workflow-skill?style=flat-square)](https://github.com/Lylll9436/Paper-Polish-Workflow-skill/commits/main) |
+| [DoctorClaw](https://github.com/lulaiao/DoctorClaw) | [![Stars](https://img.shields.io/github/stars/lulaiao/DoctorClaw?style=flat-square)](https://github.com/lulaiao/DoctorClaw/stargazers) | [![Forks](https://img.shields.io/github/forks/lulaiao/DoctorClaw?style=flat-square)](https://github.com/lulaiao/DoctorClaw/network/members) | [![Issues](https://img.shields.io/github/issues/lulaiao/DoctorClaw?style=flat-square)](https://github.com/lulaiao/DoctorClaw/issues) | [![Contributors](https://img.shields.io/github/contributors/lulaiao/DoctorClaw?style=flat-square)](https://github.com/lulaiao/DoctorClaw/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/lulaiao/DoctorClaw?style=flat-square)](https://github.com/lulaiao/DoctorClaw/commits/main) |
+
+</div>
+
+## License
+
+MIT License
