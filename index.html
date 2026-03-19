@@ -27,7 +27,7 @@
 
         .hero {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             padding: 30px;
             background: white;
             border-radius: 20px;
@@ -47,9 +47,13 @@
             font-weight: 400;
         }
 
+        .section {
+            margin-bottom: 40px;
+        }
+
         .poem-container {
             max-width: 900px;
-            margin: 40px auto;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
@@ -60,9 +64,9 @@
             font-style: italic;
             font-size: 16px;
             color: #334155;
-            padding: 20px;
-            background: rgba(255,255,255,0.8);
-            border-radius: 12px;
+            padding: 24px;
+            background: rgba(255,255,255,0.85);
+            border-radius: 16px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
 
@@ -70,14 +74,9 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             box-shadow: 0 6px 24px rgba(0,0,0,0.06);
             transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.1);
         }
 
         .card h2 {
@@ -88,22 +87,27 @@
             padding-left: 12px;
         }
 
+        /* 🔥 关键修复：表格容器横向滚动，防止内容出框 */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 10px;
+        }
         table {
             width: 100%;
+            min-width: 900px; /* 保证列足够宽，同时不撑爆容器 */
             border-collapse: collapse;
-            border-radius: 10px;
-            overflow: hidden;
         }
 
         th {
             background: #f1f5f9;
-            padding: 14px 12px;
+            padding: 12px 8px;
             text-align: left;
             font-weight: 600;
             color: #334155;
             cursor: pointer;
             user-select: none;
             transition: background 0.2s;
+            white-space: nowrap;
         }
 
         th:hover {
@@ -111,9 +115,14 @@
         }
 
         td {
-            padding: 14px 12px;
+            padding: 12px 8px;
             border-bottom: 1px solid #f1f5f9;
             color: #475569;
+            /* 防止徽章/文字撑爆单元格 */
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         tbody tr:hover {
@@ -136,7 +145,7 @@
 
         .footer {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 60px;
             color: #64748b;
             font-size: 14px;
         }
@@ -176,20 +185,34 @@ const skillData = [
 function getBadge(url, type) {
   const base = "https://img.shields.io/github/";
   const path = url.replace("https://github.com/", "");
+
+  if (type === "open-pulls") return `<img src="https://img.shields.io/github/issues-pr/${path}?style=flat-square" alt="Open PRs">`;
+  if (type === "closed-pulls") return `<img src="https://img.shields.io/github/issues-pr-closed/${path}?style=flat-square" alt="Closed PRs">`;
+  if (type === "closed-issues") return `<img src="${base}issues-closed/${path}?style=flat-square" alt="Closed Issues">`;
+
   return `<img src="${base}${type}/${path}?style=flat-square" alt="${type}">`;
 }
 
-// 增加 Closed Issues 列
 function renderTable(id, title, data) {
-  let html = `<div class="card"><h2>${title}</h2><table id="${id}"><thead><tr>
-    <th>Project</th>
-    <th>⭐ Stars</th>
-    <th>🍴 Forks</th>
-    <th>🐛 Open Issues</th>
-    <th>✅ Closed Issues</th>
-    <th>👥 Contributors</th>
-    <th>🕒 Last Commit</th>
-  </tr></thead><tbody>`;
+  let html = `
+  <div class="card">
+    <h2>${title}</h2>
+    <div class="table-wrapper">
+      <table id="${id}">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>⭐ Stars</th>
+            <th>🍴 Forks</th>
+            <th>🐛 Open Issues</th>
+            <th>✅ Closed Issues</th>
+            <th>🔀 Open PRs</th>
+            <th>🔒 Closed PRs</th>
+            <th>👥 Contributors</th>
+            <th>🕒 Last Commit</th>
+          </tr>
+        </thead>
+        <tbody>`;
 
   data.forEach(item => {
     html += `<tr>
@@ -198,12 +221,14 @@ function renderTable(id, title, data) {
       <td>${getBadge(item.url, "forks")}</td>
       <td>${getBadge(item.url, "issues")}</td>
       <td>${getBadge(item.url, "closed-issues")}</td>
+      <td>${getBadge(item.url, "open-pulls")}</td>
+      <td>${getBadge(item.url, "closed-pulls")}</td>
       <td>${getBadge(item.url, "contributors")}</td>
       <td>${getBadge(item.url, "last-commit")}</td>
     </tr>`;
   });
 
-  html += `</tbody></table></div>`;
+  html += `</tbody></table></div></div>`;
   return html;
 }
 
@@ -237,8 +262,13 @@ function renderPage() {
       <h1>Wisdom Unlocks the Path</h1>
     </div>
 
-    <div class="poem-container">
-      <div class="poem-column">
+    <div class="section">
+      ${renderTable("dashboardTable", "Platform Dashboard", platformData)}
+    </div>
+
+    <div class="section">
+      <div class="poem-container">
+        <div class="poem-column">
 When chaos first gave way to hidden truths profound,
 Mortal seekers wandered lost, with no clear way bound.
 No need to toil through volumes thousand-fold,
@@ -248,8 +278,8 @@ Since ancient times, all who sought wisdom's gate,
 Faced mountains of texts, vast seas of reason,
 Trials of experiment, strokes of fate,
 Too often spent their years in endless season.
-      </div>
-      <div class="poem-column">
+        </div>
+        <div class="poem-column">
 Now a new path dawns: a bodiless mind,
 Without form or voice, yet with logic refined.
 It reads, it knows, it reasons, it reveals,
@@ -257,11 +287,13 @@ Crossing every barrier truth conceals.
 
 May this art guide all who wander far,
 To find the light, and reach the shining star.
+        </div>
       </div>
     </div>
 
-    ${renderTable("dashboardTable", "Platform Dashboard", platformData)}
-    ${renderTable("skillTable", "Skill Dashboard", skillData)}
+    <div class="section">
+      ${renderTable("skillTable", "Skill Dashboard", skillData)}
+    </div>
 
     <div class="footer">
       <h3>License</h3>
