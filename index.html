@@ -25,7 +25,6 @@
             margin: 0 auto;
         }
 
-        /* 标题区域 */
         .hero {
             text-align: center;
             margin-bottom: 50px;
@@ -42,28 +41,31 @@
             margin-bottom: 10px;
         }
 
-        .hero h1:nth-child(2) {
+        .hero h1:last-of-type {
             font-size: 24px;
             color: #475569;
             font-weight: 400;
         }
 
-        /* 诗歌样式 */
-        .poem {
-            max-width: 800px;
+        .poem-container {
+            max-width: 900px;
             margin: 40px auto;
-            padding: 30px;
-            background: #ffffffcc;
-            border-radius: 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            line-height: 1.9;
+            white-space: pre-wrap;
+        }
+        .poem-column {
             font-style: italic;
             font-size: 16px;
             color: #334155;
-            line-height: 2;
-            white-space: pre-line;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 20px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
 
-        /* 卡片容器 */
         .card {
             background: white;
             border-radius: 16px;
@@ -86,7 +88,6 @@
             padding-left: 12px;
         }
 
-        /* 表格样式 */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -129,12 +130,10 @@
             text-decoration: underline;
         }
 
-        /* 徽章对齐 */
         img {
             vertical-align: middle;
         }
 
-        /* 页脚 */
         .footer {
             text-align: center;
             margin-top: 50px;
@@ -150,7 +149,6 @@
 </div>
 
 <script>
-// ====================== 项目数据配置 ======================
 const platformData = [
   {name:"EvoScientist",url:"https://github.com/EvoScientist/EvoScientist"},
   {name:"scientify",url:"https://github.com/tsingyuai/scientify"},
@@ -175,17 +173,22 @@ const skillData = [
   {name:"DoctorClaw",url:"https://github.com/lulaiao/DoctorClaw"}
 ];
 
-// ====================== 徽章生成工具 ======================
 function getBadge(url, type) {
   const base = "https://img.shields.io/github/";
   const path = url.replace("https://github.com/", "");
   return `<img src="${base}${type}/${path}?style=flat-square" alt="${type}">`;
 }
 
-// ====================== 表格渲染 + 排序功能 ======================
+// 增加 Closed Issues 列
 function renderTable(id, title, data) {
   let html = `<div class="card"><h2>${title}</h2><table id="${id}"><thead><tr>
-    <th>Project</th><th>⭐ Stars</th><th>🍴 Forks</th><th>🐛 Open Issues</th><th>👥 Contributors</th><th>🕒 Last Commit</th>
+    <th>Project</th>
+    <th>⭐ Stars</th>
+    <th>🍴 Forks</th>
+    <th>🐛 Open Issues</th>
+    <th>✅ Closed Issues</th>
+    <th>👥 Contributors</th>
+    <th>🕒 Last Commit</th>
   </tr></thead><tbody>`;
 
   data.forEach(item => {
@@ -194,6 +197,7 @@ function renderTable(id, title, data) {
       <td>${getBadge(item.url, "stars")}</td>
       <td>${getBadge(item.url, "forks")}</td>
       <td>${getBadge(item.url, "issues")}</td>
+      <td>${getBadge(item.url, "closed-issues")}</td>
       <td>${getBadge(item.url, "contributors")}</td>
       <td>${getBadge(item.url, "last-commit")}</td>
     </tr>`;
@@ -203,9 +207,9 @@ function renderTable(id, title, data) {
   return html;
 }
 
-// 排序核心逻辑
 function makeTableSortable(tableId) {
   const table = document.getElementById(tableId);
+  if (!table) return;
   const headers = table.querySelectorAll("th");
   headers.forEach((th, idx) => {
     let order = 1;
@@ -225,7 +229,6 @@ function makeTableSortable(tableId) {
   });
 }
 
-// ====================== 整页渲染 ======================
 function renderPage() {
   const app = document.getElementById("app");
   app.innerHTML = `
@@ -234,23 +237,6 @@ function renderPage() {
       <h1>Wisdom Unlocks the Path</h1>
     </div>
 
-    <!-- 两列诗歌布局 -->
-    <style>
-      .poem-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 30px;
-        margin: 40px 0;
-        line-height: 1.8;
-        white-space: pre-wrap;
-      }
-      .poem-column {
-        font-style: italic;
-        font-size: 1.1em;
-      }
-    </style>
-
-<div align="center">
     <div class="poem-container">
       <div class="poem-column">
 When chaos first gave way to hidden truths profound,
@@ -273,7 +259,6 @@ May this art guide all who wander far,
 To find the light, and reach the shining star.
       </div>
     </div>
-</div>
 
     ${renderTable("dashboardTable", "Platform Dashboard", platformData)}
     ${renderTable("skillTable", "Skill Dashboard", skillData)}
@@ -283,9 +268,13 @@ To find the light, and reach the shining star.
       <p>MIT License</p>
     </div>
   `;
+
+  setTimeout(() => {
+    makeTableSortable("dashboardTable");
+    makeTableSortable("skillTable");
+  }, 0);
 }
 
-// 启动
 window.onload = renderPage;
 </script>
 </body>
