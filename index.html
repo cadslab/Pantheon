@@ -16,8 +16,8 @@
 <div id="app"></div>
 
 <script>
-// ====================== 项目配置 ======================
-const platformData = [
+// ====================== 仓库列表 ======================
+const platformRepos = [
   "EvoScientist/EvoScientist",
   "tsingyuai/scientify",
   "wentorai/Research-Claw",
@@ -35,99 +35,122 @@ const platformData = [
   "zjowowen/InnoClaw"
 ];
 
-const skillData = [
+const skillRepos = [
   "Leey21/awesome-ai-research-writing",
   "Lylll9436/Paper-Polish-Workflow-skill",
   "lulaiao/DoctorClaw"
 ];
 
+// 全局数据
+let platformData = [];
+let skillData = [];
+let sortAsc = true;
+
 // ====================== 获取 GitHub 实时数据 ======================
-async function fetchRepoData(repoPath) {
+async function fetchRepo(repo) {
   try {
-    const res = await fetch(`https://api.github.com/repos/${repoPath}`);
+    const res = await fetch(`https://api.github.com/repos/${repo}`);
     const data = await res.json();
-    const commitRes = await fetch(`https://api.github.com/repos/${repoPath}/commits?per_page=1`);
+    const commitRes = await fetch(`https://api.github.com/repos/${repo}/commits?per_page=1`);
     const commits = await commitRes.json();
     return {
-      name: repoPath.split('/')[1],
-      url: `https://github.com/${repoPath}`,
+      name: repo.split('/')[1],
+      url: `https://github.com/${repo}`,
       stars: data.stargazers_count || 0,
       forks: data.forks_count || 0,
       issues: data.open_issues_count || 0,
       contributors: 0,
-      lastCommit: commits[0]?.commit?.committer?.date || ''
+      lastCommit: commits[0]?.commit?.committer?.date || "1970-01-01"
     };
   } catch (e) {
-    return { name: repoPath, url: '#', stars:0, forks:0, issues:0, lastCommit:'' };
+    return { name: repo, url: "#", stars: 0, forks: 0, issues: 0, lastCommit: "1970-01-01" };
   }
 }
 
 // ====================== 渲染表格 ======================
-function renderTable(id, title, data) {
-  let html = `<h2>${title}</h2><table id="${id}"><thead><tr>
-    <th>Project</th>
-    <th data-type="num">⭐ Stars</th>
-    <th data-type="num">🍴 Forks</th>
-    <th data-type="num">🐛 Issues</th>
-    <th data-type="date">🕒 Last Commit</th>
-  </tr></thead><tbody>`;
-
-  data.forEach(item => {
-    html += `<tr>
-      <td><a href="${item.url}" target="_blank">${item.name}</a></td>
-      <td data-sort="${item.stars}">${item.stars}</td>
-      <td data-sort="${item.forks}">${item.forks}</td>
-      <td data-sort="${item.issues}">${item.issues}</td>
-      <td data-sort="${new Date(item.lastCommit).getTime()}">${new Date(item.lastCommit).toLocaleDateString()}</td>
-    </tr>`;
-  });
-
-  html += `</tbody></table>`;
-  return html;
+function renderTable(id, title, data, sortFunc) {
+  return `
+    <h2>${title}</h2>
+    <table id="${id}">
+      <thead>
+        <tr>
+          <th onclick="${sortFunc}('name')">Project</th>
+          <th onclick="${sortFunc}('stars')">⭐ Stars</th>
+          <th onclick="${sortFunc}('forks')">🍴 Forks</th>
+          <th onclick="${sortFunc}('issues')">🐛 Issues</th>
+          <th onclick="${sortFunc}('lastCommit')">🕒 Last Commit</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${data.map(item => `
+          <tr>
+            <td><a href="${item.url}" target="_blank">${item.name}</a></td>
+            <td>${item.stars}</td>
+            <td>${item.forks}</td>
+            <td>${item.issues}</td>
+            <td>${new Date(item.lastCommit).toLocaleDateString()}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
 }
 
-// ====================== 排序函数 ======================
-function bindSort(tableId) {
-  const table = document.getElementById(tableId);
-  const headers = table.querySelectorAll("th");
-  headers.forEach((th, idx) => {
-    let order = 1;
-    th.onclick = () => {
-      const rows = Array.from(table.querySelectorAll("tbody tr"));
-      rows.sort((a, b) => {
-        const aVal = a.cells[idx].dataset.sort;
-        const bVal = b.cells[idx].dataset.sort;
-        return (aVal - bVal) * order;
-      });
-      rows.forEach(row => table.tbodies[0].appendChild(row));
-      order *= -1;
-    };
+// ====================== 排序：完全按你给的方法 ======================
+function sortPlatform(key) {
+  platformData.sort((a, b) => {
+    if (key === "name") return a.name.localeCompare(b.name) * (sortAsc ? 1 : -1);
+    if (key === "lastCommit") return (new Date(a.lastCommit) - new Date(b.lastCommit)) * (sortAsc ? 1 : -1);
+    return (a[key] - b[key]) * (sortAsc ? 1 : -1);
   });
+  sortAsc = !sortAsc;
+  renderAll();
 }
 
-// ====================== 启动 ======================
-async function init() {
-  const app = document.getElementById("app");
-  app.innerHTML = "<h2>Loading GitHub data...</h2>";
-  
-  const platforms = await Promise.all(platformData.map(fetchRepoData));
-  const skills = await Promise.all(skillData.map(fetchRepoData));
+function sortSkill(key) {
+  skillData.sort((a, b) => {
+    if (key === "name") return a.name.localeCompare(b.name) * (sortAsc ? 1 : -1);
+    if (key === "lastCommit") return (new Date(a.lastCommit) - new Date(b.lastCommit)) * (sortAsc ? 1 : -1);
+    return (a[key] - b[key]) * (sortAsc ? 1 : -1);
+  });
+  sortAsc = !sortAsc;
+  renderAll();
+}
 
-  app.innerHTML = `
+// ====================== 渲染页面 ======================
+async function renderAll() {
+  if (platformData.length === 0) {
+    platformData = await Promise.all(platformRepos.map(fetchRepo));
+  }
+  if (skillData.length === 0) {
+    skillData = await Promise.all(skillRepos.map(fetchRepo));
+  }
+
+  document.getElementById("app").innerHTML = `
     <h1>Pantheon - Automated Research</h1>
     <div class="poem">
       When chaos first gave way to hidden truths profound,<br>
-      Mortal seekers wandered lost, with no clear way bound.
+      Mortal seekers wandered lost, with no clear way bound.<br>
+      No need to toil through volumes thousand-fold,<br>
+      For wit unbodied breaks the darkness cold.<br><br>
+      Trials of experiment, strokes of fate—<br>
+      Too often spent their years in endless season.<br><br>
+      Now a new path dawns: a bodiless mind,<br>
+      Without form or voice, yet with logic refined.<br>
+      It reads, it knows, it reasons, it reveals,<br>
+      Crossing every barrier truth conceals.<br><br>
+      May this art guide all who wander far,<br>
+      To find the light, and reach the shining star.
     </div>
-    ${renderTable("platforms", "Platform Dashboard", platforms)}
-    ${renderTable("skills", "Skill Dashboard", skills)}
+    ${renderTable("platformTable", "Platform Dashboard", platformData, "sortPlatform")}
+    ${renderTable("skillTable", "Skill Dashboard", skillData, "sortSkill")}
+    <br>
+    <h3>License</h3>
+    <p>MIT License</p>
   `;
-
-  bindSort("platforms");
-  bindSort("skills");
 }
 
-window.onload = init;
+window.onload = renderAll;
 </script>
 </body>
 </html>
