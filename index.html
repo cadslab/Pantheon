@@ -2,18 +2,167 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pantheon - Automated Research</title>
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; margin: 20px; }
-        table { margin: 20px auto; border-collapse: collapse; width: 90%; }
-        th, td { padding: 10px; border: 1px solid #ddd; }
-        th { background: #f5f5f5; cursor: pointer; user-select: none; }
-        th:hover { background: #eee; }
-        .poem { margin: 30px 0; line-height: 1.8; font-style: italic; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+            padding: 20px 15px;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 标题渐变 */
+        h1 {
+            background: linear-gradient(90deg, #4f46e5, #06b6d4, #22c55e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 42px;
+            margin: 30px 0;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #f1f5f9;
+            margin: 40px 0 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            width: 60%;
+            height: 3px;
+            background: #22c55e;
+            position: absolute;
+            bottom: -8px;
+            left: 20%;
+            border-radius: 2px;
+        }
+
+        /* 诗歌样式 */
+        .poem {
+            max-width: 700px;
+            margin: 0 auto 50px;
+            font-size: 17px;
+            color: #cbd5e1;
+            line-height: 2;
+            font-style: italic;
+            white-space: pre-line;
+            opacity: 0.9;
+        }
+
+        /* 卡片 */
+        .card {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(180deg, #334155, #1e293b);
+            padding: 14px 12px;
+            font-weight: 600;
+            color: #f8fafc;
+            cursor: pointer;
+            user-select: none;
+            transition: 0.2s;
+        }
+
+        th:hover {
+            background: #475569;
+        }
+
+        td {
+            padding: 12px;
+            color: #e2e8f0;
+            border-bottom: 1px solid #334155;
+        }
+
+        tbody tr {
+            transition: 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #334155;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #1e293b;
+        }
+
+        a {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: #0ea5e9;
+            text-decoration: underline;
+        }
+
+        /* 加载 */
+        .loading {
+            font-size: 18px;
+            color: #94a3b8;
+            padding: 40px;
+        }
+
+        /* 底部 */
+        .license {
+            margin-top: 50px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+            .card {
+                padding: 16px;
+            }
+            table {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
+
 <body>
-<div id="app"></div>
+    <div class="container">
+        <div id="app">
+            <div class="loading">Loading GitHub repository data...</div>
+        </div>
+    </div>
 
 <script>
 // ====================== 仓库列表 ======================
@@ -44,7 +193,8 @@ const skillRepos = [
 // 全局数据
 let platformData = [];
 let skillData = [];
-let sortAsc = true;
+let sortAscPlatform = true;
+let sortAscSkill = true;
 
 // ====================== 获取 GitHub 实时数据 ======================
 async function fetchRepo(repo) {
@@ -59,7 +209,6 @@ async function fetchRepo(repo) {
       stars: data.stargazers_count || 0,
       forks: data.forks_count || 0,
       issues: data.open_issues_count || 0,
-      contributors: 0,
       lastCommit: commits[0]?.commit?.committer?.date || "1970-01-01"
     };
   } catch (e) {
@@ -68,57 +217,60 @@ async function fetchRepo(repo) {
 }
 
 // ====================== 渲染表格 ======================
-function renderTable(id, title, data, sortFunc) {
+function renderTable(id, title, data) {
   return `
-    <h2>${title}</h2>
-    <table id="${id}">
-      <thead>
-        <tr>
-          <th onclick="${sortFunc}('name')">Project</th>
-          <th onclick="${sortFunc}('stars')">⭐ Stars</th>
-          <th onclick="${sortFunc}('forks')">🍴 Forks</th>
-          <th onclick="${sortFunc}('issues')">🐛 Issues</th>
-          <th onclick="${sortFunc}('lastCommit')">🕒 Last Commit</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${data.map(item => `
+    <div class="card">
+      <h2>${title}</h2>
+      <table id="${id}">
+        <thead>
           <tr>
-            <td><a href="${item.url}" target="_blank">${item.name}</a></td>
-            <td>${item.stars}</td>
-            <td>${item.forks}</td>
-            <td>${item.issues}</td>
-            <td>${new Date(item.lastCommit).toLocaleDateString()}</td>
+            <th onclick="sortTable('platform', 'name')">Project</th>
+            <th onclick="sortTable('platform', 'stars')">⭐ Stars</th>
+            <th onclick="sortTable('platform', 'forks')">🍴 Forks</th>
+            <th onclick="sortTable('platform', 'issues')">🐛 Issues</th>
+            <th onclick="sortTable('platform', 'lastCommit')">🕒 Last Commit</th>
           </tr>
-        `).join('')}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          ${data.map(item => `
+            <tr>
+              <td><a href="${item.url}" target="_blank">${item.name}</a></td>
+              <td>${item.stars}</td>
+              <td>${item.forks}</td>
+              <td>${item.issues}</td>
+              <td>${new Date(item.lastCommit).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' })}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
   `;
 }
 
-// ====================== 排序：完全按你给的方法 ======================
-function sortPlatform(key) {
-  platformData.sort((a, b) => {
-    if (key === "name") return a.name.localeCompare(b.name) * (sortAsc ? 1 : -1);
-    if (key === "lastCommit") return (new Date(a.lastCommit) - new Date(b.lastCommit)) * (sortAsc ? 1 : -1);
-    return (a[key] - b[key]) * (sortAsc ? 1 : -1);
-  });
-  sortAsc = !sortAsc;
-  renderAll();
-}
-
-function sortSkill(key) {
-  skillData.sort((a, b) => {
-    if (key === "name") return a.name.localeCompare(b.name) * (sortAsc ? 1 : -1);
-    if (key === "lastCommit") return (new Date(a.lastCommit) - new Date(b.lastCommit)) * (sortAsc ? 1 : -1);
-    return (a[key] - b[key]) * (sortAsc ? 1 : -1);
-  });
-  sortAsc = !sortAsc;
-  renderAll();
+// 统一排序
+function sortTable(type, key) {
+    if (type === 'platform') {
+        platformData.sort((a, b) => {
+            if (key === "name") return a.name.localeCompare(b.name) * (sortAscPlatform ? 1 : -1);
+            if (key === "lastCommit") return (new Date(a.lastCommit) - new Date(b.lastCommit)) * (sortAscPlatform ? 1 : -1);
+            return (a[key] - b[key]) * (sortAscPlatform ? 1 : -1);
+        });
+        sortAscPlatform = !sortAscPlatform;
+    } else {
+        skillData.sort((a, b) => {
+            if (key === "name") return a.name.localeCompare(b.name) * (sortAscSkill ? 1 : -1);
+            if (key === "lastCommit") return (new Date(a.lastCommit) - new Date(b.lastCommit)) * (sortAscSkill ? 1 : -1);
+            return (a[key] - b[key]) * (sortAscSkill ? 1 : -1);
+        });
+        sortAscSkill = !sortAscSkill;
+    }
+    renderAll();
 }
 
 // ====================== 渲染页面 ======================
 async function renderAll() {
+  const app = document.getElementById("app");
+  
   if (platformData.length === 0) {
     platformData = await Promise.all(platformRepos.map(fetchRepo));
   }
@@ -126,27 +278,22 @@ async function renderAll() {
     skillData = await Promise.all(skillRepos.map(fetchRepo));
   }
 
-  document.getElementById("app").innerHTML = `
+  app.innerHTML = `
     <h1>Pantheon - Automated Research</h1>
     <div class="poem">
-      When chaos first gave way to hidden truths profound,<br>
-      Mortal seekers wandered lost, with no clear way bound.<br>
-      No need to toil through volumes thousand-fold,<br>
-      For wit unbodied breaks the darkness cold.<br><br>
-      Trials of experiment, strokes of fate—<br>
-      Too often spent their years in endless season.<br><br>
-      Now a new path dawns: a bodiless mind,<br>
-      Without form or voice, yet with logic refined.<br>
-      It reads, it knows, it reasons, it reveals,<br>
-      Crossing every barrier truth conceals.<br><br>
-      May this art guide all who wander far,<br>
-      To find the light, and reach the shining star.
+When chaos first gave way to hidden truths profound,
+Mortal seekers wandered lost, with no clear way bound.
+No need to toil through volumes thousand-fold,
+For wit unbodied breaks the darkness cold.
     </div>
-    ${renderTable("platformTable", "Platform Dashboard", platformData, "sortPlatform")}
-    ${renderTable("skillTable", "Skill Dashboard", skillData, "sortSkill")}
-    <br>
-    <h3>License</h3>
-    <p>MIT License</p>
+
+    ${renderTable("platformTable", "Platform Dashboard", platformData)}
+    ${renderTable("skillTable", "Skill Dashboard", skillData)}
+
+    <div class="license">
+        <h3>License</h3>
+        <p>MIT License</p>
+    </div>
   `;
 }
 
