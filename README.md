@@ -5,9 +5,9 @@
 
 <div align="center">
 
-## Wisdom Unlocks the Path · Automated Research
-</div>
-<div align="center">
+<strong>Wisdom Unlocks the Path · Automated Research</strong>
+
+
   
 When chaos first gave way to hidden truths profound,
 Mortal seekers wandered lost, with no clear way bound.
