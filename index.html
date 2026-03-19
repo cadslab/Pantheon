@@ -7,8 +7,8 @@
         body { text-align: center; font-family: Arial, sans-serif; margin: 20px; }
         table { margin: 20px auto; border-collapse: collapse; width: 90%; }
         th, td { padding: 10px; border: 1px solid #ddd; }
-        th { background: #f5f7fa; cursor: pointer; user-select: none; }
-        th:hover { background: #e4eaf5; }
+        th { background: #f5f5f5; cursor: pointer; user-select: none; }
+        th:hover { background: #eee; }
         .poem { margin: 30px 0; line-height: 1.8; font-style: italic; }
     </style>
 </head>
@@ -41,7 +41,7 @@ const skillData = [
   {name:"DoctorClaw",url:"https://github.com/lulaiao/DoctorClaw"}
 ];
 
-// ====================== 渲染表格（带真实排序属性） ======================
+// ====================== 渲染表格 ======================
 function renderTable(id, title, data) {
   let html = `<h2>${title}</h2><table id="${id}"><thead><tr>
     <th>Project</th>
@@ -53,88 +53,74 @@ function renderTable(id, title, data) {
   </tr></thead><tbody>`;
 
   data.forEach(item => {
-    const path = item.url.replace("https://github.com/", "");
+    const p = item.url.replace("https://github.com/", "");
     html += `<tr>
       <td><a href="${item.url}" target="_blank">${item.name}</a></td>
-      <td data-sort="0"><img src="https://img.shields.io/github/stars/${path}?style=flat-square"></td>
-      <td data-sort="0"><img src="https://img.shields.io/github/forks/${path}?style=flat-square"></td>
-      <td data-sort="0"><img src="https://img.shields.io/github/issues/${path}?style=flat-square"></td>
-      <td data-sort="0"><img src="https://img.shields.io/github/contributors/${path}?style=flat-square"></td>
-      <td data-sort="0"><img src="https://img.shields.io/github/last-commit/${path}?style=flat-square"></td>
+      <td><img src="https://img.shields.io/github/stars/${p}"></td>
+      <td><img src="https://img.shields.io/github/forks/${p}"></td>
+      <td><img src="https://img.shields.io/github/issues/${p}"></td>
+      <td><img src="https://img.shields.io/github/contributors/${p}"></td>
+      <td><img src="https://img.shields.io/github/last-commit/${p}"></td>
     </tr>`;
   });
-
   html += `</tbody></table>`;
   return html;
 }
 
-// ====================== 排序核心（100% 可用） ======================
-function makeTableSortable(tableId) {
-  const table = document.getElementById(tableId);
-  const headers = table.querySelectorAll("th");
+// ====================== ✅ 核心：等图片加载完成 → 写入排序值 ======================
+async function initSortableTables() {
+  await new Promise(r => setTimeout(r, 1500)); // 等待徽章加载
 
-  headers.forEach((th, index) => {
-    let order = 1;
-    th.addEventListener("click", () => {
-      const rows = Array.from(table.querySelectorAll("tbody tr"));
-      const type = th.dataset.type;
+  document.querySelectorAll("table").forEach(table => {
+    const rows = Array.from(table.querySelectorAll("tbody tr"));
+    
+    // 预先提取所有排序数据
+    rows.forEach(row => {
+      const tds = row.querySelectorAll("td");
+      // Stars
+      tds[1].dataset.sort = parseInt(tds[1].querySelector("img").alt) || 0;
+      // Forks
+      tds[2].dataset.sort = parseInt(tds[2].querySelector("img").alt) || 0;
+      // Issues
+      tds[3].dataset.sort = parseInt(tds[3].querySelector("img").alt) || 0;
+      // Contributors
+      tds[4].dataset.sort = parseInt(tds[4].querySelector("img").alt) || 0;
+      // Last Commit
+      const dateStr = tds[5].querySelector("img").alt.split("on ")[1];
+      tds[5].dataset.sort = dateStr ? new Date(dateStr).getTime() : 0;
+    });
 
-      rows.sort((a, b) => {
-        const cellA = a.cells[index];
-        const cellB = b.cells[index];
-        const imgA = cellA.querySelector("img");
-        const imgB = cellB.querySelector("img");
-
-        if (!imgA || !imgB) return 0;
-
-        let valA, valB;
-
-        // 数字类型：stars forks issues contributors
-        if (type === "num") {
-          valA = parseInt(imgA.alt) || 0;
-          valB = parseInt(imgB.alt) || 0;
-          return (valA - valB) * order;
-        }
-
-        // 日期类型
-        if (type === "date") {
-          const dateA = imgA.alt.split(" on ")[1] || "";
-          const dateB = imgB.alt.split(" on ")[1] || "";
-          valA = new Date(dateA).getTime() || 0;
-          valB = new Date(dateB).getTime() || 0;
-          return (valA - valB) * order;
-        }
-
-        return 0;
-      });
-
-      const tbody = table.querySelector("tbody");
-      rows.forEach(row => tbody.appendChild(row));
-      order *= -1;
+    // 绑定点击排序
+    const headers = table.querySelectorAll("th");
+    headers.forEach((th, i) => {
+      let order = 1;
+      th.onclick = () => {
+        rows.sort((a, b) => {
+          const aVal = a.cells[i].dataset.sort;
+          const bVal = b.cells[i].dataset.sort;
+          return (aVal - bVal) * order;
+        });
+        rows.forEach(r => table.tbodies[0].appendChild(r));
+        order *= -1;
+      };
     });
   });
 }
 
-// ====================== 页面渲染 ======================
+// ====================== 启动页面 ======================
 function renderPage() {
   const app = document.getElementById("app");
   app.innerHTML = `
     <h1>Pantheon - Automated Research</h1>
     <div class="poem">
       When chaos first gave way to hidden truths profound,<br>
-      Mortal seekers wandered lost, with no clear way bound.<br>
-      No need to toil through volumes thousand-fold,<br>
-      For wit unbodied breaks the darkness cold.
+      Mortal seekers wandered lost, with no clear way bound.
     </div>
     ${renderTable("dashboardTable", "Platform Dashboard", platformData)}
     ${renderTable("skillTable", "Skill Dashboard", skillData)}
-    <br>
-    <h3>License</h3>
-    <p>MIT License</p>
+    <h3>MIT License</h3>
   `;
-
-  makeTableSortable("dashboardTable");
-  makeTableSortable("skillTable");
+  initSortableTables();
 }
 
 window.onload = renderPage;
