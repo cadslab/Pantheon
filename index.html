@@ -1,0 +1,132 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pantheon - Automated Research</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; margin: 20px; }
+        table { margin: 20px auto; border-collapse: collapse; width: 90%; }
+        th, td { padding: 10px; border: 1px solid #ddd; }
+        th { background: #f5f5f5; cursor: pointer; user-select: none; }
+        th:hover { background: #eee; }
+        .poem { margin: 30px 0; line-height: 1.8; font-style: italic; }
+    </style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ====================== 项目数据配置 ======================
+const platformData = [
+  {name:"EvoScientist",url:"https://github.com/EvoScientist/EvoScientist"},
+  {name:"scientify",url:"https://github.com/tsingyuai/scientify"},
+  {name:"Research-Claw",url:"https://github.com/wentorai/Research-Claw"},
+  {name:"ResearchClaw",url:"https://github.com/ymx10086/ResearchClaw"},
+  {name:"Auto-claude-code",url:"https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep"},
+  {name:"dr-claw",url:"https://github.com/OpenLAIR/dr-claw"},
+  {name:"AutoResearchClaw",url:"https://github.com/aiming-lab/AutoResearchClaw"},
+  {name:"DrClaw",url:"https://github.com/InternScience/DrClaw"},
+  {name:"Biomni",url:"https://github.com/snap-stanford/Biomni"},
+  {name:"chemcrow-public",url:"https://github.com/ur-whitelab/chemcrow-public"},
+  {name:"ScholarForge",url:"https://github.com/shawnleeai/ScholarForge"},
+  {name:"Prismer",url:"https://github.com/Prismer-AI/Prismer"},
+  {name:"ClawPhD",url:"https://github.com/ZhihaoAIRobotic/ClawPhD"},
+  {name:"local-deep-researcher",url:"https://github.com/langchain-ai/local-deep-researcher"},
+  {name:"InnoClaw",url:"https://github.com/zjowowen/InnoClaw"}
+];
+
+const skillData = [
+  {name:"awesome-ai-research-writing",url:"https://github.com/Leey21/awesome-ai-research-writing"},
+  {name:"Paper-Polish-Workflow-skill",url:"https://github.com/Lylll9436/Paper-Polish-Workflow-skill"},
+  {name:"DoctorClaw",url:"https://github.com/lulaiao/DoctorClaw"}
+];
+
+// ====================== 徽章生成工具 ======================
+function getBadge(url, type) {
+  const base = "https://img.shields.io/github/";
+  const path = url.replace("https://github.com/", "");
+  return `<img src="${base}${type}/${path}?style=flat-square" alt="${type}">`;
+}
+
+// ====================== 表格渲染 + 排序功能 ======================
+function renderTable(id, title, data) {
+  let html = `<h2>${title}</h2><table id="${id}"><thead><tr>
+    <th>Project</th><th>⭐ Stars</th><th>🍴 Forks</th><th>🐛 Open Issues</th><th>👥 Contributors</th><th>🕒 Last Commit</th>
+  </tr></thead><tbody>`;
+
+  data.forEach(item => {
+    html += `<tr>
+      <td><a href="${item.url}" target="_blank">${item.name}</a></td>
+      <td>${getBadge(item.url, "stars")}</td>
+      <td>${getBadge(item.url, "forks")}</td>
+      <td>${getBadge(item.url, "issues")}</td>
+      <td>${getBadge(item.url, "contributors")}</td>
+      <td>${getBadge(item.url, "last-commit")}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table>`;
+  return html;
+}
+
+// 排序核心逻辑
+function makeTableSortable(tableId) {
+  const table = document.getElementById(tableId);
+  const headers = table.querySelectorAll("th");
+  headers.forEach((th, idx) => {
+    let order = 1;
+    th.addEventListener("click", () => {
+      const rows = Array.from(table.querySelectorAll("tbody tr"));
+      rows.sort((a, b) => {
+        const aVal = a.cells[idx].textContent.trim();
+        const bVal = b.cells[idx].textContent.trim();
+        const aNum = parseFloat(aVal), bNum = parseFloat(bVal);
+        
+        if (!isNaN(aNum) && !isNaN(bNum)) return (aNum - bNum) * order;
+        return aVal.localeCompare(bVal) * order;
+      });
+      rows.forEach(row => table.querySelector("tbody").appendChild(row));
+      order *= -1;
+    });
+  });
+}
+
+// ====================== 整页渲染 ======================
+function renderPage() {
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    <h1>Pantheon</h1>
+    <p><strong>English | <a href="./README.zh-CN.md">简体中文</a></strong></p>
+    <h2>Wisdom Unlocks the Path · Automated Research</h2>
+    <div class="poem">
+      When chaos first gave way to hidden truths profound,<br>
+      Mortal seekers wandered lost, with no clear way bound.<br>
+      No need to toil through volumes thousand-fold,<br>
+      For wit unbodied breaks the darkness cold.<br><br>
+      Since ancient times, all who sought wisdom’s gate<br>
+      Faced mountains of texts, vast seas of reason,<br>
+      Trials of experiment, strokes of fate—<br>
+      Too often spent their years in endless season.<br><br>
+      Now a new path dawns: a bodiless mind,<br>
+      Without form or voice, yet with logic refined.<br>
+      It reads, it knows, it reasons, it reveals,<br>
+      Crossing every barrier truth conceals.<br><br>
+      May this art guide all who wander far,<br>
+      To find the light, and reach the shining star.
+    </div>
+    ${renderTable("dashboardTable", "Platform Dashboard", platformData)}
+    ${renderTable("skillTable", "Skill Dashboard", skillData)}
+    <br><br>
+    <h3>License</h3>
+    <p>MIT License</p>
+  `;
+
+  // 启用排序
+  makeTableSortable("dashboardTable");
+  makeTableSortable("skillTable");
+}
+
+// 启动
+window.onload = renderPage;
+</script>
+</body>
+</html>
