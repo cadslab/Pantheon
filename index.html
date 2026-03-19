@@ -16,7 +16,7 @@
 <div id="app"></div>
 
 <script>
-// ====================== 项目数据配置 ======================
+// ====================== 项目数据 ======================
 const platformData = [
   {name:"EvoScientist",url:"https://github.com/EvoScientist/EvoScientist"},
   {name:"scientify",url:"https://github.com/tsingyuai/scientify"},
@@ -41,27 +41,33 @@ const skillData = [
   {name:"DoctorClaw",url:"https://github.com/lulaiao/DoctorClaw"}
 ];
 
-// ====================== 徽章生成工具 ======================
+// ====================== 徽章生成 ======================
 function getBadge(url, type) {
   const base = "https://img.shields.io/github/";
   const path = url.replace("https://github.com/", "");
   return `<img src="${base}${type}/${path}?style=flat-square" alt="${type}">`;
 }
 
-// ====================== 表格渲染 ======================
+// ====================== 渲染表格（带隐藏排序值） ======================
 function renderTable(id, title, data) {
   let html = `<h2>${title}</h2><table id="${id}"><thead><tr>
-    <th>Project</th><th data-sort="number">⭐ Stars</th><th data-sort="number">🍴 Forks</th><th data-sort="number">🐛 Open Issues</th><th data-sort="number">👥 Contributors</th><th data-sort="date">🕒 Last Commit</th>
+    <th>Project</th>
+    <th data-type="num">⭐ Stars</th>
+    <th data-type="num">🍴 Forks</th>
+    <th data-type="num">🐛 Open Issues</th>
+    <th data-type="num">👥 Contributors</th>
+    <th data-type="date">🕒 Last Commit</th>
   </tr></thead><tbody>`;
 
   data.forEach(item => {
+    const path = item.url.replace("https://github.com/", "");
     html += `<tr>
       <td><a href="${item.url}" target="_blank">${item.name}</a></td>
-      <td>${getBadge(item.url, "stars")}</td>
-      <td>${getBadge(item.url, "forks")}</td>
-      <td>${getBadge(item.url, "issues")}</td>
-      <td>${getBadge(item.url, "contributors")}</td>
-      <td>${getBadge(item.url, "last-commit")}</td>
+      <td data-value="0">${getBadge(item.url, "stars")}</td>
+      <td data-value="0">${getBadge(item.url, "forks")}</td>
+      <td data-value="0">${getBadge(item.url, "issues")}</td>
+      <td data-value="0">${getBadge(item.url, "contributors")}</td>
+      <td data-value="${new Date().getTime()}">${getBadge(item.url, "last-commit")}</td>
     </tr>`;
   });
 
@@ -69,72 +75,40 @@ function renderTable(id, title, data) {
   return html;
 }
 
-// ====================== ✅ 修复排序：数字+日期 ======================
+// ====================== ✅ 终极排序：读取 data-value ======================
 function makeTableSortable(tableId) {
   const table = document.getElementById(tableId);
   const headers = table.querySelectorAll("th");
-  
-  headers.forEach((th, index) => {
-    let sortOrder = 1; // 1=升序，-1=降序
-    const sortType = th.dataset.sort; // number / date
 
+  headers.forEach((th, idx) => {
+    let order = 1;
     th.addEventListener("click", () => {
       const rows = Array.from(table.querySelectorAll("tbody tr"));
+      const type = th.dataset.type;
 
-      rows.sort((rowA, rowB) => {
-        const cellA = rowA.cells[index];
-        const cellB = rowB.cells[index];
-        
-        let valA, valB;
+      rows.sort((a, b) => {
+        const cellA = a.cells[idx];
+        const cellB = b.cells[idx];
+        const valA = cellA.dataset.value;
+        const valB = cellB.dataset.value;
 
-        // ---------- 数字类型：stars forks issues contributors ----------
-        if (sortType === "number") {
-          valA = extractNumberFromBadge(cellA);
-          valB = extractNumberFromBadge(cellB);
-          return (valA - valB) * sortOrder;
+        if (type === "num") {
+          return (Number(valA) - Number(valB)) * order;
         }
-
-        // ---------- 日期类型：last-commit ----------
-        if (sortType === "date") {
-          valA = extractDateFromBadge(cellA);
-          valB = extractDateFromBadge(cellB);
-          return (valA - valB) * sortOrder;
+        if (type === "date") {
+          return (Number(valA) - Number(valB)) * order;
         }
-
-        // ---------- 默认文本排序 ----------
-        valA = cellA.textContent.trim();
-        valB = cellB.textContent.trim();
-        return valA.localeCompare(valB) * sortOrder;
+        return String(valA).localeCompare(valB) * order;
       });
 
-      // 重新渲染行
       const tbody = table.querySelector("tbody");
       rows.forEach(row => tbody.appendChild(row));
-      sortOrder *= -1;
+      order *= -1;
     });
   });
 }
 
-// 从徽章图片中提取数字（stars/forks/issues/contributors）
-function extractNumberFromBadge(cell) {
-  const img = cell.querySelector("img");
-  if (!img) return 0;
-  const src = img.src;
-  const match = src.match(/\/([\d,.]+)\?/);
-  return match ? parseInt(match[1].replace(/,/g, "")) : 0;
-}
-
-// 从徽章中提取日期时间戳（last-commit）
-function extractDateFromBadge(cell) {
-  const img = cell.querySelector("img");
-  if (!img) return 0;
-  const src = img.src;
-  const dateMatch = src.match(/(\d{4}-\d{2}-\d{2})/);
-  if (dateMatch) return new Date(dateMatch[1]).getTime();
-  return 0;
-}
-
-// ====================== 整页渲染 ======================
+// ====================== 页面渲染 ======================
 function renderPage() {
   const app = document.getElementById("app");
   app.innerHTML = `
