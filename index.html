@@ -47,6 +47,24 @@
             font-weight: 400;
         }
 
+        /* 统计数字样式 */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2563eb;
+        }
+        .stat-item span {
+            font-size: 26px;
+            color: #0f172a;
+        }
+
         .section {
             margin-bottom: 40px;
         }
@@ -173,14 +191,19 @@ const platformData = [
   {name:"Prismer",url:"https://github.com/Prismer-AI/Prismer"},
   {name:"ClawPhD",url:"https://github.com/ZhihaoAIRobotic/ClawPhD"},
   {name:"local-deep-researcher",url:"https://github.com/langchain-ai/local-deep-researcher"},
-  {name:"InnoClaw",url:"https://github.com/zjowowen/InnoClaw"}
+  {name:"InnoClaw",url:"https://github.com/zjowowen/InnoClaw"},  
 ];
 
 const skillData = [
   {name:"awesome-ai-research-writing",url:"https://github.com/Leey21/awesome-ai-research-writing"},
   {name:"Paper-Polish-Workflow-skill",url:"https://github.com/Lylll9436/Paper-Polish-Workflow-skill"},
   {name:"DoctorClaw",url:"https://github.com/lulaiao/DoctorClaw"}
+  {name:"autoresearch",url:"https://github.com/karpathy/autoresearch"}  
 ];
+
+// 统计总数
+const totalProjects = platformData.length;
+const totalSkills = skillData.length;
 
 function getBadge(url, type) {
   const base = "https://img.shields.io/github/";
@@ -260,6 +283,11 @@ function renderPage() {
     <div class="hero">
       <h1>Automated Research</h1>
       <h1>Wisdom Unlocks the Path</h1>
+      <!-- 统计展示区域 -->
+      <div class="stats-row">
+        <div class="stat-item">Total Projects: <span>${totalProjects}</span></div>
+        <div class="stat-item">Total Skills: <span>${totalSkills}</span></div>
+      </div>
     </div>
 
     <div class="section">
