@@ -41,10 +41,11 @@
             margin-bottom: 10px;
         }
 
-        .hero h1:last-of-type {
+        .hero h3 {
             font-size: 24px;
             color: #475569;
             font-weight: 400;
+            margin-bottom: 20px;
         }
 
         /* 统计数字样式 */
@@ -59,10 +60,37 @@
             font-size: 18px;
             font-weight: 600;
             color: #2563eb;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .stat-item span {
             font-size: 26px;
             color: #0f172a;
+        }
+
+        /* Add more 按钮样式 */
+        .add-more-btn {
+            margin-top: 15px;
+            padding: 10px 24px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+        .add-more-btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+            text-decoration: none;
+        }
+        .add-more-btn:active {
+            transform: translateY(0);
         }
 
         .section {
@@ -105,7 +133,7 @@
             padding-left: 12px;
         }
 
-        /* 🔥 关键修复：表格容器横向滚动，防止内容出框 */
+        /* 表格容器横向滚动，防止内容出框 */
         .table-wrapper {
             overflow-x: auto;
             border-radius: 10px;
@@ -167,6 +195,26 @@
             color: #64748b;
             font-size: 14px;
         }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            .hero h3 {
+                font-size: 20px;
+            }
+            .stats-row {
+                gap: 20px;
+            }
+            .poem-container {
+                grid-template-columns: 1fr;
+            }
+            .add-more-btn {
+                padding: 8px 18px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -205,6 +253,8 @@ const skillData = [
 // 统计总数
 const totalProjects = platformData.length;
 const totalSkills = skillData.length;
+// 跳转链接
+const addMoreUrl = "https://github.com/cadslab/Pantheon/issues";
 
 function getBadge(url, type) {
   const base = "https://img.shields.io/github/";
@@ -265,12 +315,26 @@ function makeTableSortable(tableId) {
     th.addEventListener("click", () => {
       const rows = Array.from(table.querySelectorAll("tbody tr"));
       rows.sort((a, b) => {
-        const aVal = a.cells[idx].textContent.trim();
-        const bVal = b.cells[idx].textContent.trim();
-        const aNum = parseFloat(aVal), bNum = parseFloat(bVal);
-        
-        if (!isNaN(aNum) && !isNaN(bNum)) return (aNum - bNum) * order;
-        return aVal.localeCompare(bVal) * order;
+        // 提取徽章中的数字（处理 GitHub 徽章的 alt 文本或图片标题）
+        const extractNum = (cell) => {
+          const img = cell.querySelector("img");
+          if (img) {
+            // 从徽章 alt 文本或 src 中提取数字
+            const altText = img.alt || "";
+            const numMatch = altText.match(/\d+/);
+            return numMatch ? parseInt(numMatch[0]) : 0;
+          }
+          const text = cell.textContent.trim();
+          return !isNaN(parseFloat(text)) ? parseFloat(text) : text;
+        };
+
+        const aVal = extractNum(a.cells[idx]);
+        const bVal = extractNum(b.cells[idx]);
+
+        if (typeof aVal === "number" && typeof bVal === "number") {
+          return (aVal - bVal) * order;
+        }
+        return String(aVal).localeCompare(String(bVal)) * order;
       });
       rows.forEach(row => table.querySelector("tbody").appendChild(row));
       order *= -1;
@@ -282,12 +346,18 @@ function renderPage() {
   const app = document.getElementById("app");
   app.innerHTML = `
     <div class="hero">
-      <h1>🏛️<strong>Pantheon</strong> of Automated Research</h1>
-      <h3>Wisdom Unlocks the Path</h3>
+      <h1>🏛️</h1>
+      <h1> <strong>Pantheon</strong></h1>
+      <h2>Automated Research </h2>
+      <h3> Unlocks the Path, Leads the Way</h3>
       <!-- 统计展示区域 -->
       <div class="stats-row">
         <div class="stat-item">Known Projects: <span>${totalProjects}</span></div>
         <div class="stat-item">Known Skills: <span>${totalSkills}</span></div>
+        <!-- Add more 按钮 -->
+        <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
+          Add more Skills/Projects
+        </button>
       </div>
     </div>
 
