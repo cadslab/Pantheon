@@ -16,30 +16,51 @@
 <div id="app"></div>
 
 <script>
-// ====================== 项目数据 ======================
+// ====================== 项目配置 ======================
 const platformData = [
-  {name:"EvoScientist",url:"https://github.com/EvoScientist/EvoScientist"},
-  {name:"scientify",url:"https://github.com/tsingyuai/scientify"},
-  {name:"Research-Claw",url:"https://github.com/wentorai/Research-Claw"},
-  {name:"ResearchClaw",url:"https://github.com/ymx10086/ResearchClaw"},
-  {name:"Auto-claude-code",url:"https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep"},
-  {name:"dr-claw",url:"https://github.com/OpenLAIR/dr-claw"},
-  {name:"AutoResearchClaw",url:"https://github.com/aiming-lab/AutoResearchClaw"},
-  {name:"DrClaw",url:"https://github.com/InternScience/DrClaw"},
-  {name:"Biomni",url:"https://github.com/snap-stanford/Biomni"},
-  {name:"chemcrow-public",url:"https://github.com/ur-whitelab/chemcrow-public"},
-  {name:"ScholarForge",url:"https://github.com/shawnleeai/ScholarForge"},
-  {name:"Prismer",url:"https://github.com/Prismer-AI/Prismer"},
-  {name:"ClawPhD",url:"https://github.com/ZhihaoAIRobotic/ClawPhD"},
-  {name:"local-deep-researcher",url:"https://github.com/langchain-ai/local-deep-researcher"},
-  {name:"InnoClaw",url:"https://github.com/zjowowen/InnoClaw"}
+  "EvoScientist/EvoScientist",
+  "tsingyuai/scientify",
+  "wentorai/Research-Claw",
+  "ymx10086/ResearchClaw",
+  "wanshuiyin/Auto-claude-code-research-in-sleep",
+  "OpenLAIR/dr-claw",
+  "aiming-lab/AutoResearchClaw",
+  "InternScience/DrClaw",
+  "snap-stanford/Biomni",
+  "ur-whitelab/chemcrow-public",
+  "shawnleeai/ScholarForge",
+  "Prismer-AI/Prismer",
+  "ZhihaoAIRobotic/ClawPhD",
+  "langchain-ai/local-deep-researcher",
+  "zjowowen/InnoClaw"
 ];
 
 const skillData = [
-  {name:"awesome-ai-research-writing",url:"https://github.com/Leey21/awesome-ai-research-writing"},
-  {name:"Paper-Polish-Workflow-skill",url:"https://github.com/Lylll9436/Paper-Polish-Workflow-skill"},
-  {name:"DoctorClaw",url:"https://github.com/lulaiao/DoctorClaw"}
+  "Leey21/awesome-ai-research-writing",
+  "Lylll9436/Paper-Polish-Workflow-skill",
+  "lulaiao/DoctorClaw"
 ];
+
+// ====================== 获取 GitHub 实时数据 ======================
+async function fetchRepoData(repoPath) {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${repoPath}`);
+    const data = await res.json();
+    const commitRes = await fetch(`https://api.github.com/repos/${repoPath}/commits?per_page=1`);
+    const commits = await commitRes.json();
+    return {
+      name: repoPath.split('/')[1],
+      url: `https://github.com/${repoPath}`,
+      stars: data.stargazers_count || 0,
+      forks: data.forks_count || 0,
+      issues: data.open_issues_count || 0,
+      contributors: 0,
+      lastCommit: commits[0]?.commit?.committer?.date || ''
+    };
+  } catch (e) {
+    return { name: repoPath, url: '#', stars:0, forks:0, issues:0, lastCommit:'' };
+  }
+}
 
 // ====================== 渲染表格 ======================
 function renderTable(id, title, data) {
@@ -48,82 +69,65 @@ function renderTable(id, title, data) {
     <th data-type="num">⭐ Stars</th>
     <th data-type="num">🍴 Forks</th>
     <th data-type="num">🐛 Issues</th>
-    <th data-type="num">👥 Contributors</th>
     <th data-type="date">🕒 Last Commit</th>
   </tr></thead><tbody>`;
 
   data.forEach(item => {
-    const p = item.url.replace("https://github.com/", "");
     html += `<tr>
       <td><a href="${item.url}" target="_blank">${item.name}</a></td>
-      <td><img src="https://img.shields.io/github/stars/${p}"></td>
-      <td><img src="https://img.shields.io/github/forks/${p}"></td>
-      <td><img src="https://img.shields.io/github/issues/${p}"></td>
-      <td><img src="https://img.shields.io/github/contributors/${p}"></td>
-      <td><img src="https://img.shields.io/github/last-commit/${p}"></td>
+      <td data-sort="${item.stars}">${item.stars}</td>
+      <td data-sort="${item.forks}">${item.forks}</td>
+      <td data-sort="${item.issues}">${item.issues}</td>
+      <td data-sort="${new Date(item.lastCommit).getTime()}">${new Date(item.lastCommit).toLocaleDateString()}</td>
     </tr>`;
   });
+
   html += `</tbody></table>`;
   return html;
 }
 
-// ====================== ✅ 核心：等图片加载完成 → 写入排序值 ======================
-async function initSortableTables() {
-  await new Promise(r => setTimeout(r, 1500)); // 等待徽章加载
-
-  document.querySelectorAll("table").forEach(table => {
-    const rows = Array.from(table.querySelectorAll("tbody tr"));
-    
-    // 预先提取所有排序数据
-    rows.forEach(row => {
-      const tds = row.querySelectorAll("td");
-      // Stars
-      tds[1].dataset.sort = parseInt(tds[1].querySelector("img").alt) || 0;
-      // Forks
-      tds[2].dataset.sort = parseInt(tds[2].querySelector("img").alt) || 0;
-      // Issues
-      tds[3].dataset.sort = parseInt(tds[3].querySelector("img").alt) || 0;
-      // Contributors
-      tds[4].dataset.sort = parseInt(tds[4].querySelector("img").alt) || 0;
-      // Last Commit
-      const dateStr = tds[5].querySelector("img").alt.split("on ")[1];
-      tds[5].dataset.sort = dateStr ? new Date(dateStr).getTime() : 0;
-    });
-
-    // 绑定点击排序
-    const headers = table.querySelectorAll("th");
-    headers.forEach((th, i) => {
-      let order = 1;
-      th.onclick = () => {
-        rows.sort((a, b) => {
-          const aVal = a.cells[i].dataset.sort;
-          const bVal = b.cells[i].dataset.sort;
-          return (aVal - bVal) * order;
-        });
-        rows.forEach(r => table.tbodies[0].appendChild(r));
-        order *= -1;
-      };
-    });
+// ====================== 排序函数 ======================
+function bindSort(tableId) {
+  const table = document.getElementById(tableId);
+  const headers = table.querySelectorAll("th");
+  headers.forEach((th, idx) => {
+    let order = 1;
+    th.onclick = () => {
+      const rows = Array.from(table.querySelectorAll("tbody tr"));
+      rows.sort((a, b) => {
+        const aVal = a.cells[idx].dataset.sort;
+        const bVal = b.cells[idx].dataset.sort;
+        return (aVal - bVal) * order;
+      });
+      rows.forEach(row => table.tbodies[0].appendChild(row));
+      order *= -1;
+    };
   });
 }
 
-// ====================== 启动页面 ======================
-function renderPage() {
+// ====================== 启动 ======================
+async function init() {
   const app = document.getElementById("app");
+  app.innerHTML = "<h2>Loading GitHub data...</h2>";
+  
+  const platforms = await Promise.all(platformData.map(fetchRepoData));
+  const skills = await Promise.all(skillData.map(fetchRepoData));
+
   app.innerHTML = `
     <h1>Pantheon - Automated Research</h1>
     <div class="poem">
       When chaos first gave way to hidden truths profound,<br>
       Mortal seekers wandered lost, with no clear way bound.
     </div>
-    ${renderTable("dashboardTable", "Platform Dashboard", platformData)}
-    ${renderTable("skillTable", "Skill Dashboard", skillData)}
-    <h3>MIT License</h3>
+    ${renderTable("platforms", "Platform Dashboard", platforms)}
+    ${renderTable("skills", "Skill Dashboard", skills)}
   `;
-  initSortableTables();
+
+  bindSort("platforms");
+  bindSort("skills");
 }
 
-window.onload = renderPage;
+window.onload = init;
 </script>
 </body>
 </html>
