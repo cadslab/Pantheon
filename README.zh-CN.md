@@ -1,11 +1,8 @@
 <div align="center">
   
-# 封神演义
+# **且看[封神演义](https://cadslab.github.io/Pantheon/)**
 </div>
-<div align="center">
-  
-**[English](./README.md) | 简体中文**
-</div>
+
 <div align="center">
   
 ## 钻研进化·灵智破迷
