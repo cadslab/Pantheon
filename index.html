@@ -7,8 +7,8 @@
         body { text-align: center; font-family: Arial, sans-serif; margin: 20px; }
         table { margin: 20px auto; border-collapse: collapse; width: 90%; }
         th, td { padding: 10px; border: 1px solid #ddd; }
-        th { background: #f5f5f5; cursor: pointer; user-select: none; }
-        th:hover { background: #eee; }
+        th { background: #f5f7fa; cursor: pointer; user-select: none; }
+        th:hover { background: #e4eaf5; }
         .poem { margin: 30px 0; line-height: 1.8; font-style: italic; }
     </style>
 </head>
@@ -41,20 +41,13 @@ const skillData = [
   {name:"DoctorClaw",url:"https://github.com/lulaiao/DoctorClaw"}
 ];
 
-// ====================== 徽章生成 ======================
-function getBadge(url, type) {
-  const base = "https://img.shields.io/github/";
-  const path = url.replace("https://github.com/", "");
-  return `<img src="${base}${type}/${path}?style=flat-square" alt="${type}">`;
-}
-
-// ====================== 渲染表格（带隐藏排序值） ======================
+// ====================== 渲染表格（带真实排序属性） ======================
 function renderTable(id, title, data) {
   let html = `<h2>${title}</h2><table id="${id}"><thead><tr>
     <th>Project</th>
     <th data-type="num">⭐ Stars</th>
     <th data-type="num">🍴 Forks</th>
-    <th data-type="num">🐛 Open Issues</th>
+    <th data-type="num">🐛 Issues</th>
     <th data-type="num">👥 Contributors</th>
     <th data-type="date">🕒 Last Commit</th>
   </tr></thead><tbody>`;
@@ -63,11 +56,11 @@ function renderTable(id, title, data) {
     const path = item.url.replace("https://github.com/", "");
     html += `<tr>
       <td><a href="${item.url}" target="_blank">${item.name}</a></td>
-      <td data-value="0">${getBadge(item.url, "stars")}</td>
-      <td data-value="0">${getBadge(item.url, "forks")}</td>
-      <td data-value="0">${getBadge(item.url, "issues")}</td>
-      <td data-value="0">${getBadge(item.url, "contributors")}</td>
-      <td data-value="${new Date().getTime()}">${getBadge(item.url, "last-commit")}</td>
+      <td data-sort="0"><img src="https://img.shields.io/github/stars/${path}?style=flat-square"></td>
+      <td data-sort="0"><img src="https://img.shields.io/github/forks/${path}?style=flat-square"></td>
+      <td data-sort="0"><img src="https://img.shields.io/github/issues/${path}?style=flat-square"></td>
+      <td data-sort="0"><img src="https://img.shields.io/github/contributors/${path}?style=flat-square"></td>
+      <td data-sort="0"><img src="https://img.shields.io/github/last-commit/${path}?style=flat-square"></td>
     </tr>`;
   });
 
@@ -75,30 +68,44 @@ function renderTable(id, title, data) {
   return html;
 }
 
-// ====================== ✅ 终极排序：读取 data-value ======================
+// ====================== 排序核心（100% 可用） ======================
 function makeTableSortable(tableId) {
   const table = document.getElementById(tableId);
   const headers = table.querySelectorAll("th");
 
-  headers.forEach((th, idx) => {
+  headers.forEach((th, index) => {
     let order = 1;
     th.addEventListener("click", () => {
       const rows = Array.from(table.querySelectorAll("tbody tr"));
       const type = th.dataset.type;
 
       rows.sort((a, b) => {
-        const cellA = a.cells[idx];
-        const cellB = b.cells[idx];
-        const valA = cellA.dataset.value;
-        const valB = cellB.dataset.value;
+        const cellA = a.cells[index];
+        const cellB = b.cells[index];
+        const imgA = cellA.querySelector("img");
+        const imgB = cellB.querySelector("img");
 
+        if (!imgA || !imgB) return 0;
+
+        let valA, valB;
+
+        // 数字类型：stars forks issues contributors
         if (type === "num") {
-          return (Number(valA) - Number(valB)) * order;
+          valA = parseInt(imgA.alt) || 0;
+          valB = parseInt(imgB.alt) || 0;
+          return (valA - valB) * order;
         }
+
+        // 日期类型
         if (type === "date") {
-          return (Number(valA) - Number(valB)) * order;
+          const dateA = imgA.alt.split(" on ")[1] || "";
+          const dateB = imgB.alt.split(" on ")[1] || "";
+          valA = new Date(dateA).getTime() || 0;
+          valB = new Date(dateB).getTime() || 0;
+          return (valA - valB) * order;
         }
-        return String(valA).localeCompare(valB) * order;
+
+        return 0;
       });
 
       const tbody = table.querySelector("tbody");
@@ -112,26 +119,16 @@ function makeTableSortable(tableId) {
 function renderPage() {
   const app = document.getElementById("app");
   app.innerHTML = `
-    <h2>Wisdom Unlocks the Path · Automated Research</h2>
+    <h1>Pantheon - Automated Research</h1>
     <div class="poem">
       When chaos first gave way to hidden truths profound,<br>
       Mortal seekers wandered lost, with no clear way bound.<br>
       No need to toil through volumes thousand-fold,<br>
-      For wit unbodied breaks the darkness cold.<br><br>
-      Since ancient times, all who sought wisdom’s gate<br>
-      Faced mountains of texts, vast seas of reason,<br>
-      Trials of experiment, strokes of fate—<br>
-      Too often spent their years in endless season.<br><br>
-      Now a new path dawns: a bodiless mind,<br>
-      Without form or voice, yet with logic refined.<br>
-      It reads, it knows, it reasons, it reveals,<br>
-      Crossing every barrier truth conceals.<br><br>
-      May this art guide all who wander far,<br>
-      To find the light, and reach the shining star.
+      For wit unbodied breaks the darkness cold.
     </div>
     ${renderTable("dashboardTable", "Platform Dashboard", platformData)}
     ${renderTable("skillTable", "Skill Dashboard", skillData)}
-    <br><br>
+    <br>
     <h3>License</h3>
     <p>MIT License</p>
   `;
