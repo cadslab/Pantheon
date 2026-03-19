@@ -13,11 +13,11 @@
 
         body {
             font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #0f172a;
-            color: #e2e8f0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #1e293b;
             line-height: 1.6;
-            padding: 20px 15px;
-            scroll-behavior: smooth;
         }
 
         .container {
@@ -25,279 +25,268 @@
             margin: 0 auto;
         }
 
-        /* 标题渐变 */
-        h1 {
-            background: linear-gradient(90deg, #4f46e5, #06b6d4, #22c55e);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        /* 标题区域 */
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
             font-size: 42px;
-            margin: 30px 0;
-            letter-spacing: 1px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 10px;
         }
 
-        h2 {
+        .hero h1:nth-child(2) {
             font-size: 24px;
-            color: #f1f5f9;
-            margin: 40px 0 20px;
-            position: relative;
-            display: inline-block;
-        }
-
-        h2::after {
-            content: '';
-            width: 60%;
-            height: 3px;
-            background: #22c55e;
-            position: absolute;
-            bottom: -8px;
-            left: 20%;
-            border-radius: 2px;
+            color: #475569;
+            font-weight: 400;
         }
 
         /* 诗歌样式 */
         .poem {
-            max-width: 700px;
-            margin: 0 auto 50px;
-            font-size: 17px;
-            color: #cbd5e1;
-            line-height: 2;
-            font-style: italic;
-            white-space: pre-line;
-            opacity: 0.9;
-        }
-
-        /* 卡片 */
-        .card {
-            background: #1e293b;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #ffffffcc;
             border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-            margin-bottom: 30px;
-            overflow: hidden;
+            font-style: italic;
+            font-size: 16px;
+            color: #334155;
+            line-height: 2;
+            white-space: pre-line;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-        /* 表格 */
+        /* 卡片容器 */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #1e293b;
+            border-left: 5px solid #3b82f6;
+            padding-left: 12px;
+        }
+
+        /* 表格样式 */
         table {
             width: 100%;
             border-collapse: collapse;
-            border-radius: 12px;
+            border-radius: 10px;
             overflow: hidden;
         }
 
         th {
-            background: linear-gradient(180deg, #334155, #1e293b);
+            background: #f1f5f9;
             padding: 14px 12px;
+            text-align: left;
             font-weight: 600;
-            color: #f8fafc;
+            color: #334155;
             cursor: pointer;
             user-select: none;
-            transition: 0.2s;
+            transition: background 0.2s;
         }
 
         th:hover {
-            background: #475569;
+            background: #e2e8f0;
         }
 
         td {
-            padding: 12px;
-            color: #e2e8f0;
-            border-bottom: 1px solid #334155;
-        }
-
-        tbody tr {
-            transition: 0.2s;
+            padding: 14px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #475569;
         }
 
         tbody tr:hover {
-            background: #334155;
-        }
-
-        tbody tr:nth-child(even) {
-            background: #1e293b;
+            background: #f8fafc;
         }
 
         a {
-            color: #38bdf8;
+            color: #2563eb;
             text-decoration: none;
             font-weight: 500;
         }
 
         a:hover {
-            color: #0ea5e9;
             text-decoration: underline;
         }
 
-        /* 加载 */
-        .loading {
-            font-size: 18px;
-            color: #94a3b8;
-            padding: 40px;
+        /* 徽章对齐 */
+        img {
+            vertical-align: middle;
         }
 
-        /* 底部 */
-        .license {
+        /* 页脚 */
+        .footer {
+            text-align: center;
             margin-top: 50px;
-            color: #94a3b8;
+            color: #64748b;
             font-size: 14px;
-        }
-
-        /* 响应式 */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 28px;
-            }
-            .card {
-                padding: 16px;
-            }
-            table {
-                font-size: 14px;
-            }
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <div id="app">
-            <div class="loading">Loading GitHub repository data...</div>
-        </div>
-    </div>
+
+<div class="container">
+    <div id="app"></div>
+</div>
 
 <script>
-// ====================== 仓库列表 ======================
-const platformRepos = [
-  "EvoScientist/EvoScientist",
-  "tsingyuai/scientify",
-  "wentorai/Research-Claw",
-  "ymx10086/ResearchClaw",
-  "wanshuiyin/Auto-claude-code-research-in-sleep",
-  "OpenLAIR/dr-claw",
-  "aiming-lab/AutoResearchClaw",
-  "InternScience/DrClaw",
-  "snap-stanford/Biomni",
-  "ur-whitelab/chemcrow-public",
-  "shawnleeai/ScholarForge",
-  "Prismer-AI/Prismer",
-  "ZhihaoAIRobotic/ClawPhD",
-  "langchain-ai/local-deep-researcher",
-  "zjowowen/InnoClaw"
+// ====================== 项目数据配置 ======================
+const platformData = [
+  {name:"EvoScientist",url:"https://github.com/EvoScientist/EvoScientist"},
+  {name:"scientify",url:"https://github.com/tsingyuai/scientify"},
+  {name:"Research-Claw",url:"https://github.com/wentorai/Research-Claw"},
+  {name:"ResearchClaw",url:"https://github.com/ymx10086/ResearchClaw"},
+  {name:"Auto-claude-code",url:"https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep"},
+  {name:"dr-claw",url:"https://github.com/OpenLAIR/dr-claw"},
+  {name:"AutoResearchClaw",url:"https://github.com/aiming-lab/AutoResearchClaw"},
+  {name:"DrClaw",url:"https://github.com/InternScience/DrClaw"},
+  {name:"Biomni",url:"https://github.com/snap-stanford/Biomni"},
+  {name:"chemcrow-public",url:"https://github.com/ur-whitelab/chemcrow-public"},
+  {name:"ScholarForge",url:"https://github.com/shawnleeai/ScholarForge"},
+  {name:"Prismer",url:"https://github.com/Prismer-AI/Prismer"},
+  {name:"ClawPhD",url:"https://github.com/ZhihaoAIRobotic/ClawPhD"},
+  {name:"local-deep-researcher",url:"https://github.com/langchain-ai/local-deep-researcher"},
+  {name:"InnoClaw",url:"https://github.com/zjowowen/InnoClaw"}
 ];
 
-const skillRepos = [
-  "Leey21/awesome-ai-research-writing",
-  "Lylll9436/Paper-Polish-Workflow-skill",
-  "lulaiao/DoctorClaw"
+const skillData = [
+  {name:"awesome-ai-research-writing",url:"https://github.com/Leey21/awesome-ai-research-writing"},
+  {name:"Paper-Polish-Workflow-skill",url:"https://github.com/Lylll9436/Paper-Polish-Workflow-skill"},
+  {name:"DoctorClaw",url:"https://github.com/lulaiao/DoctorClaw"}
 ];
 
-// 全局数据
-let platformData = [];
-let skillData = [];
-let sortAscPlatform = true;
-let sortAscSkill = true;
-
-// ====================== 获取 GitHub 实时数据 ======================
-async function fetchRepo(repo) {
-  try {
-    const res = await fetch(`https://api.github.com/repos/${repo}`);
-    const data = await res.json();
-    const commitRes = await fetch(`https://api.github.com/repos/${repo}/commits?per_page=1`);
-    const commits = await commitRes.json();
-    return {
-      name: repo.split('/')[1],
-      url: `https://github.com/${repo}`,
-      stars: data.stargazers_count || 0,
-      forks: data.forks_count || 0,
-      issues: data.open_issues_count || 0,
-      lastCommit: commits[0]?.commit?.committer?.date || "1970-01-01"
-    };
-  } catch (e) {
-    return { name: repo, url: "#", stars: 0, forks: 0, issues: 0, lastCommit: "1970-01-01" };
-  }
+// ====================== 徽章生成工具 ======================
+function getBadge(url, type) {
+  const base = "https://img.shields.io/github/";
+  const path = url.replace("https://github.com/", "");
+  return `<img src="${base}${type}/${path}?style=flat-square" alt="${type}">`;
 }
 
-// ====================== 渲染表格 ======================
+// ====================== 表格渲染 + 排序功能 ======================
 function renderTable(id, title, data) {
-  return `
-    <div class="card">
-      <h2>${title}</h2>
-      <table id="${id}">
-        <thead>
-          <tr>
-            <th onclick="sortTable('platform', 'name')">Project</th>
-            <th onclick="sortTable('platform', 'stars')">⭐ Stars</th>
-            <th onclick="sortTable('platform', 'forks')">🍴 Forks</th>
-            <th onclick="sortTable('platform', 'issues')">🐛 Issues</th>
-            <th onclick="sortTable('platform', 'lastCommit')">🕒 Last Commit</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${data.map(item => `
-            <tr>
-              <td><a href="${item.url}" target="_blank">${item.name}</a></td>
-              <td>${item.stars}</td>
-              <td>${item.forks}</td>
-              <td>${item.issues}</td>
-              <td>${new Date(item.lastCommit).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' })}</td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    </div>
-  `;
+  let html = `<div class="card"><h2>${title}</h2><table id="${id}"><thead><tr>
+    <th>Project</th><th>⭐ Stars</th><th>🍴 Forks</th><th>🐛 Open Issues</th><th>👥 Contributors</th><th>🕒 Last Commit</th>
+  </tr></thead><tbody>`;
+
+  data.forEach(item => {
+    html += `<tr>
+      <td><a href="${item.url}" target="_blank">${item.name}</a></td>
+      <td>${getBadge(item.url, "stars")}</td>
+      <td>${getBadge(item.url, "forks")}</td>
+      <td>${getBadge(item.url, "issues")}</td>
+      <td>${getBadge(item.url, "contributors")}</td>
+      <td>${getBadge(item.url, "last-commit")}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table></div>`;
+  return html;
 }
 
-// 统一排序
-function sortTable(type, key) {
-    if (type === 'platform') {
-        platformData.sort((a, b) => {
-            if (key === "name") return a.name.localeCompare(b.name) * (sortAscPlatform ? 1 : -1);
-            if (key === "lastCommit") return (new Date(a.lastCommit) - new Date(b.lastCommit)) * (sortAscPlatform ? 1 : -1);
-            return (a[key] - b[key]) * (sortAscPlatform ? 1 : -1);
-        });
-        sortAscPlatform = !sortAscPlatform;
-    } else {
-        skillData.sort((a, b) => {
-            if (key === "name") return a.name.localeCompare(b.name) * (sortAscSkill ? 1 : -1);
-            if (key === "lastCommit") return (new Date(a.lastCommit) - new Date(b.lastCommit)) * (sortAscSkill ? 1 : -1);
-            return (a[key] - b[key]) * (sortAscSkill ? 1 : -1);
-        });
-        sortAscSkill = !sortAscSkill;
-    }
-    renderAll();
+// 排序核心逻辑
+function makeTableSortable(tableId) {
+  const table = document.getElementById(tableId);
+  const headers = table.querySelectorAll("th");
+  headers.forEach((th, idx) => {
+    let order = 1;
+    th.addEventListener("click", () => {
+      const rows = Array.from(table.querySelectorAll("tbody tr"));
+      rows.sort((a, b) => {
+        const aVal = a.cells[idx].textContent.trim();
+        const bVal = b.cells[idx].textContent.trim();
+        const aNum = parseFloat(aVal), bNum = parseFloat(bVal);
+        
+        if (!isNaN(aNum) && !isNaN(bNum)) return (aNum - bNum) * order;
+        return aVal.localeCompare(bVal) * order;
+      });
+      rows.forEach(row => table.querySelector("tbody").appendChild(row));
+      order *= -1;
+    });
+  });
 }
 
-// ====================== 渲染页面 ======================
-async function renderAll() {
+// ====================== 整页渲染 ======================
+function renderPage() {
   const app = document.getElementById("app");
-  
-  if (platformData.length === 0) {
-    platformData = await Promise.all(platformRepos.map(fetchRepo));
-  }
-  if (skillData.length === 0) {
-    skillData = await Promise.all(skillRepos.map(fetchRepo));
-  }
-
   app.innerHTML = `
-    <h1>Pantheon - Automated Research</h1>
-    <div class="poem">
+    <div class="hero">
+      <h1>Automated Research</h1>
+      <h1>Wisdom Unlocks the Path</h1>
+    </div>
+
+    <!-- 两列诗歌布局 -->
+    <style>
+      .poem-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin: 40px 0;
+        line-height: 1.8;
+        white-space: pre-wrap;
+      }
+      .poem-column {
+        font-style: italic;
+        font-size: 1.1em;
+      }
+    </style>
+
+<div align="center">
+    <div class="poem-container">
+      <div class="poem-column">
 When chaos first gave way to hidden truths profound,
 Mortal seekers wandered lost, with no clear way bound.
 No need to toil through volumes thousand-fold,
 For wit unbodied breaks the darkness cold.
-    </div>
 
-    ${renderTable("platformTable", "Platform Dashboard", platformData)}
+Since ancient times, all who sought wisdom's gate,
+Faced mountains of texts, vast seas of reason,
+Trials of experiment, strokes of fate,
+Too often spent their years in endless season.
+      </div>
+      <div class="poem-column">
+Now a new path dawns: a bodiless mind,
+Without form or voice, yet with logic refined.
+It reads, it knows, it reasons, it reveals,
+Crossing every barrier truth conceals.
+
+May this art guide all who wander far,
+To find the light, and reach the shining star.
+      </div>
+    </div>
+</div>
+
+    ${renderTable("dashboardTable", "Platform Dashboard", platformData)}
     ${renderTable("skillTable", "Skill Dashboard", skillData)}
 
-    <div class="license">
-        <h3>License</h3>
-        <p>MIT License</p>
+    <div class="footer">
+      <h3>License</h3>
+      <p>MIT License</p>
     </div>
   `;
 }
 
-window.onload = renderAll;
+// 启动
+window.onload = renderPage;
 </script>
 </body>
 </html>
