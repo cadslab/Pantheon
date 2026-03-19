@@ -41,6 +41,13 @@
             margin-bottom: 10px;
         }
 
+        .hero h2 {
+            font-size: 22px;
+            color: #475569;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
         .hero h3 {
             font-size: 24px;
             color: #475569;
@@ -48,7 +55,6 @@
             margin-bottom: 20px;
         }
 
-        /* 统计数字样式 */
         .stats-row {
             display: flex;
             justify-content: center;
@@ -69,7 +75,6 @@
             color: #0f172a;
         }
 
-        /* Add more 按钮样式 */
         .add-more-btn {
             margin-top: 15px;
             padding: 10px 24px;
@@ -81,12 +86,12 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 4px 12px rgba(37, 99, 235,0.2);
         }
         .add-more-btn:hover {
             background-color: #1d4ed8;
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 6px 16px rgba(37,99,235,0.3);
             text-decoration: none;
         }
         .add-more-btn:active {
@@ -133,14 +138,13 @@
             padding-left: 12px;
         }
 
-        /* 表格容器横向滚动，防止内容出框 */
         .table-wrapper {
             overflow-x: auto;
             border-radius: 10px;
         }
         table {
             width: 100%;
-            min-width: 900px; /* 保证列足够宽，同时不撑爆容器 */
+            min-width: 1100px;
             border-collapse: collapse;
         }
 
@@ -164,7 +168,6 @@
             padding: 12px 8px;
             border-bottom: 1px solid #f1f5f9;
             color: #475569;
-            /* 防止徽章/文字撑爆单元格 */
             max-width: 150px;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -196,7 +199,6 @@
             font-size: 14px;
         }
 
-        /* 响应式适配 */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 32px;
@@ -224,46 +226,54 @@
 </div>
 
 <script>
+// ====================== 优化后数据格式：developer/project ======================
 const platformData = [
-  {name:"EvoScientist",url:"https://github.com/EvoScientist/EvoScientist"},
-  {name:"scientify",url:"https://github.com/tsingyuai/scientify"},
-  {name:"Research-Claw",url:"https://github.com/wentorai/Research-Claw"},
-  {name:"ResearchClaw",url:"https://github.com/ymx10086/ResearchClaw"},
-  {name:"Auto-claude-code",url:"https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep"},
-  {name:"dr-claw",url:"https://github.com/OpenLAIR/dr-claw"},
-  {name:"AutoResearchClaw",url:"https://github.com/aiming-lab/AutoResearchClaw"},
-  {name:"DrClaw",url:"https://github.com/InternScience/DrClaw"},
-  {name:"Biomni",url:"https://github.com/snap-stanford/Biomni"},
-  {name:"chemcrow-public",url:"https://github.com/ur-whitelab/chemcrow-public"},
-  {name:"ScholarForge",url:"https://github.com/shawnleeai/ScholarForge"},
-  {name:"Prismer",url:"https://github.com/Prismer-AI/Prismer"},
-  {name:"ClawPhD",url:"https://github.com/ZhihaoAIRobotic/ClawPhD"},
-  {name:"local-deep-researcher",url:"https://github.com/langchain-ai/local-deep-researcher"},
-  {name:"InnoClaw",url:"https://github.com/zjowowen/InnoClaw"}
+  "EvoScientist/EvoScientist",
+  "tsingyuai/scientify",
+  "wentorai/Research-Claw",
+  "ymx10086/ResearchClaw",
+  "wanshuiyin/Auto-claude-code-research-in-sleep",
+  "OpenLAIR/dr-claw",
+  "aiming-lab/AutoResearchClaw",
+  "InternScience/DrClaw",
+  "snap-stanford/Biomni",
+  "ur-whitelab/chemcrow-public",
+  "shawnleeai/ScholarForge",
+  "Prismer-AI/Prismer",
+  "ZhihaoAIRobotic/ClawPhD",
+  "langchain-ai/local-deep-researcher",
+  "zjowowen/InnoClaw",
+  "Noietch/ResearchClaw",
 ];
 
 const skillData = [
-  {name:"awesome-ai-research-writing",url:"https://github.com/Leey21/awesome-ai-research-writing"},
-  {name:"Paper-Polish-Workflow-skill",url:"https://github.com/Lylll9436/Paper-Polish-Workflow-skill"},
-  {name:"DoctorClaw",url:"https://github.com/lulaiao/DoctorClaw"},
-  {name:"autoresearch",url:"https://github.com/karpathy/autoresearch"},
-  {name:"ARIS",url:"https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep"}    
+  "Leey21/awesome-ai-research-writing",
+  "Lylll9436/Paper-Polish-Workflow-skill",
+  "lulaiao/DoctorClaw",
+  "karpathy/autoresearch",
+  "wanshuiyin/Auto-claude-code-research-in-sleep",
 ];
+// ============================================================================
 
-// 统计总数
 const totalProjects = platformData.length;
 const totalSkills = skillData.length;
-// 跳转链接
 const addMoreUrl = "https://github.com/cadslab/Pantheon/issues";
 
-function getBadge(url, type) {
+// 解析路径 => developer + project + url
+function parseRepo(path) {
+  const [dev, proj] = path.split('/');
+  return {
+    developer: dev,
+    project: proj,
+    url: `https://github.com/${path}`
+  };
+}
+
+function getBadge(path, type) {
   const base = "https://img.shields.io/github/";
-  const path = url.replace("https://github.com/", "");
-
-  if (type === "open-pulls") return `<img src="https://img.shields.io/github/issues-pr/${path}?style=flat-square" alt="Open PRs">`;
-  if (type === "closed-pulls") return `<img src="https://img.shields.io/github/issues-pr-closed/${path}?style=flat-square" alt="Closed PRs">`;
+  if (type === "open-pulls") return `<img src="${base}issues-pr/${path}?style=flat-square" alt="Open PRs">`;
+  if (type === "closed-pulls") return `<img src="${base}issues-pr-closed/${path}?style=flat-square" alt="Closed PRs">`;
   if (type === "closed-issues") return `<img src="${base}issues-closed/${path}?style=flat-square" alt="Closed Issues">`;
-
   return `<img src="${base}${type}/${path}?style=flat-square" alt="${type}">`;
 }
 
@@ -276,6 +286,7 @@ function renderTable(id, title, data) {
         <thead>
           <tr>
             <th>Project</th>
+            <th>Developer</th>
             <th>⭐ Stars</th>
             <th>🍴 Forks</th>
             <th>🐛 Open Issues</th>
@@ -288,17 +299,19 @@ function renderTable(id, title, data) {
         </thead>
         <tbody>`;
 
-  data.forEach(item => {
+  data.forEach(path => {
+    const { developer, project, url } = parseRepo(path);
     html += `<tr>
-      <td><a href="${item.url}" target="_blank">${item.name}</a></td>
-      <td>${getBadge(item.url, "stars")}</td>
-      <td>${getBadge(item.url, "forks")}</td>
-      <td>${getBadge(item.url, "issues")}</td>
-      <td>${getBadge(item.url, "closed-issues")}</td>
-      <td>${getBadge(item.url, "open-pulls")}</td>
-      <td>${getBadge(item.url, "closed-pulls")}</td>
-      <td>${getBadge(item.url, "contributors")}</td>
-      <td>${getBadge(item.url, "last-commit")}</td>
+      <td><a href="${url}" target="_blank">${project}</a></td>
+      <td>${developer}</td>
+      <td>${getBadge(path, "stars")}</td>
+      <td>${getBadge(path, "forks")}</td>
+      <td>${getBadge(path, "issues")}</td>
+      <td>${getBadge(path, "closed-issues")}</td>
+      <td>${getBadge(path, "open-pulls")}</td>
+      <td>${getBadge(path, "closed-pulls")}</td>
+      <td>${getBadge(path, "contributors")}</td>
+      <td>${getBadge(path, "last-commit")}</td>
     </tr>`;
   });
 
@@ -315,11 +328,9 @@ function makeTableSortable(tableId) {
     th.addEventListener("click", () => {
       const rows = Array.from(table.querySelectorAll("tbody tr"));
       rows.sort((a, b) => {
-        // 提取徽章中的数字（处理 GitHub 徽章的 alt 文本或图片标题）
         const extractNum = (cell) => {
           const img = cell.querySelector("img");
           if (img) {
-            // 从徽章 alt 文本或 src 中提取数字
             const altText = img.alt || "";
             const numMatch = altText.match(/\d+/);
             return numMatch ? parseInt(numMatch[0]) : 0;
@@ -327,10 +338,8 @@ function makeTableSortable(tableId) {
           const text = cell.textContent.trim();
           return !isNaN(parseFloat(text)) ? parseFloat(text) : text;
         };
-
         const aVal = extractNum(a.cells[idx]);
         const bVal = extractNum(b.cells[idx]);
-
         if (typeof aVal === "number" && typeof bVal === "number") {
           return (aVal - bVal) * order;
         }
@@ -350,11 +359,9 @@ function renderPage() {
       <h1> <strong>Pantheon</strong></h1>
       <h2>Automated Research </h2>
       <h3> Unlock the Path, Lead the Way</h3>
-      <!-- 统计展示区域 -->
       <div class="stats-row">
         <div class="stat-item">Known Projects: <span>${totalProjects}</span></div>
         <div class="stat-item">Known Skills: <span>${totalSkills}</span></div>
-        <!-- Add more 按钮 -->
         <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
           Add more Skills/Projects
         </button>
