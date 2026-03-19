@@ -48,10 +48,10 @@ function getBadge(url, type) {
   return `<img src="${base}${type}/${path}?style=flat-square" alt="${type}">`;
 }
 
-// ====================== 表格渲染 + 排序功能 ======================
+// ====================== 表格渲染 ======================
 function renderTable(id, title, data) {
   let html = `<h2>${title}</h2><table id="${id}"><thead><tr>
-    <th>Project</th><th>⭐ Stars</th><th>🍴 Forks</th><th>🐛 Open Issues</th><th>👥 Contributors</th><th>🕒 Last Commit</th>
+    <th>Project</th><th data-sort="number">⭐ Stars</th><th data-sort="number">🍴 Forks</th><th data-sort="number">🐛 Open Issues</th><th data-sort="number">👥 Contributors</th><th data-sort="date">🕒 Last Commit</th>
   </tr></thead><tbody>`;
 
   data.forEach(item => {
@@ -69,26 +69,69 @@ function renderTable(id, title, data) {
   return html;
 }
 
-// 排序核心逻辑
+// ====================== ✅ 修复排序：数字+日期 ======================
 function makeTableSortable(tableId) {
   const table = document.getElementById(tableId);
   const headers = table.querySelectorAll("th");
-  headers.forEach((th, idx) => {
-    let order = 1;
+  
+  headers.forEach((th, index) => {
+    let sortOrder = 1; // 1=升序，-1=降序
+    const sortType = th.dataset.sort; // number / date
+
     th.addEventListener("click", () => {
       const rows = Array.from(table.querySelectorAll("tbody tr"));
-      rows.sort((a, b) => {
-        const aVal = a.cells[idx].textContent.trim();
-        const bVal = b.cells[idx].textContent.trim();
-        const aNum = parseFloat(aVal), bNum = parseFloat(bVal);
+
+      rows.sort((rowA, rowB) => {
+        const cellA = rowA.cells[index];
+        const cellB = rowB.cells[index];
         
-        if (!isNaN(aNum) && !isNaN(bNum)) return (aNum - bNum) * order;
-        return aVal.localeCompare(bVal) * order;
+        let valA, valB;
+
+        // ---------- 数字类型：stars forks issues contributors ----------
+        if (sortType === "number") {
+          valA = extractNumberFromBadge(cellA);
+          valB = extractNumberFromBadge(cellB);
+          return (valA - valB) * sortOrder;
+        }
+
+        // ---------- 日期类型：last-commit ----------
+        if (sortType === "date") {
+          valA = extractDateFromBadge(cellA);
+          valB = extractDateFromBadge(cellB);
+          return (valA - valB) * sortOrder;
+        }
+
+        // ---------- 默认文本排序 ----------
+        valA = cellA.textContent.trim();
+        valB = cellB.textContent.trim();
+        return valA.localeCompare(valB) * sortOrder;
       });
-      rows.forEach(row => table.querySelector("tbody").appendChild(row));
-      order *= -1;
+
+      // 重新渲染行
+      const tbody = table.querySelector("tbody");
+      rows.forEach(row => tbody.appendChild(row));
+      sortOrder *= -1;
     });
   });
+}
+
+// 从徽章图片中提取数字（stars/forks/issues/contributors）
+function extractNumberFromBadge(cell) {
+  const img = cell.querySelector("img");
+  if (!img) return 0;
+  const src = img.src;
+  const match = src.match(/\/([\d,.]+)\?/);
+  return match ? parseInt(match[1].replace(/,/g, "")) : 0;
+}
+
+// 从徽章中提取日期时间戳（last-commit）
+function extractDateFromBadge(cell) {
+  const img = cell.querySelector("img");
+  if (!img) return 0;
+  const src = img.src;
+  const dateMatch = src.match(/(\d{4}-\d{2}-\d{2})/);
+  if (dateMatch) return new Date(dateMatch[1]).getTime();
+  return 0;
 }
 
 // ====================== 整页渲染 ======================
@@ -119,12 +162,10 @@ function renderPage() {
     <p>MIT License</p>
   `;
 
-  // 启用排序
   makeTableSortable("dashboardTable");
   makeTableSortable("skillTable");
 }
 
-// 启动
 window.onload = renderPage;
 </script>
 </body>
