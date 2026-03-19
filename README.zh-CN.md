@@ -4,8 +4,8 @@
 </div>
 
 <div align="center">
+<strong>钻研进化·灵智破迷</strong>
 
-<h1> 钻研进化·灵智破迷 </h1>
 
 混沌初分玄理藏，
 凡心求索路茫茫。
