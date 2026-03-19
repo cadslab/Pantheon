@@ -66,7 +66,10 @@ To find the light, and reach the shining star.
 ## Skill Dashboard
 </div>
 <div align="center">
-  
+
+
+| Project | ⭐ Stars | 🍴 Forks | 🐛 Open Issues | 👥 Contributors | 🕒 Last Commit |
+| :--- | :---: | :---: | :---: | :---: | :---: |
 | [![Last Commit](https://img.shields.io/github/last-commit/zjowowen/InnoClaw?style=flat-square)](https://github.com/zjowowen/InnoClaw/commits/main) |
 | [awesome-ai-research-writing](https://github.com/Leey21/awesome-ai-research-writing) | [![Stars](https://img.shields.io/github/stars/Leey21/awesome-ai-research-writing?style=flat-square)](https://github.com/Leey21/awesome-ai-research-writing/stargazers) | [![Forks](https://img.shields.io/github/forks/Leey21/awesome-ai-research-writing?style=flat-square)](https://github.com/Leey21/awesome-ai-research-writing/network/members) | [![Issues](https://img.shields.io/github/issues/Leey21/awesome-ai-research-writing?style=flat-square)](https://github.com/Leey21/awesome-ai-research-writing/issues) | [![Contributors](https://img.shields.io/github/contributors/Leey21/awesome-ai-research-writing?style=flat-square)](https://github.com/Leey21/awesome-ai-research-writing/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/Leey21/awesome-ai-research-writing?style=flat-square)](https://github.com/Leey21/awesome-ai-research-writing/commits/main) |
 | [Paper-Polish-Workflow-skill](https://github.com/Lylll9436/Paper-Polish-Workflow-skill) | [![Stars](https://img.shields.io/github/stars/Lylll9436/Paper-Polish-Workflow-skill?style=flat-square)](https://github.com/Lylll9436/Paper-Polish-Workflow-skill/stargazers) | [![Forks](https://img.shields.io/github/forks/Lylll9436/Paper-Polish-Workflow-skill?style=flat-square)](https://github.com/Lylll9436/Paper-Polish-Workflow-skill/network/members) | [![Issues](https://img.shields.io/github/issues/Lylll9436/Paper-Polish-Workflow-skill?style=flat-square)](https://github.com/Lylll9436/Paper-Polish-Workflow-skill/issues) | [![Contributors](https://img.shields.io/github/contributors/Lylll9436/Paper-Polish-Workflow-skill?style=flat-square)](https://github.com/Lylll9436/Paper-Polish-Workflow-skill/graphs/contributors) | [![Last Commit](https://img.shields.io/github/last-commit/Lylll9436/Paper-Polish-Workflow-skill?style=flat-square)](https://github.com/Lylll9436/Paper-Polish-Workflow-skill/commits/main) |
