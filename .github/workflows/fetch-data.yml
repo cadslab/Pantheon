@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "0 0 * *"
+    - cron: "0 0 * * *" # 每天 UTC 0点（北京时间8点）运行
 
 jobs:
   sync:
