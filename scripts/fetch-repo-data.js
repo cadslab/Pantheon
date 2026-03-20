@@ -3,8 +3,30 @@ const path = require('path');
 
 // ===================== 配置区：owner/name 字符串形式 =====================
 const TARGET_REPOS = [
-  "cadslab/Pantheon",
-  // 可以继续加："owner/repo1", "owner/repo2"
+    "EvoScientist/EvoScientist",
+    "tsingyuai/scientify",
+    "wentorai/Research-Claw",
+    "ymx10086/ResearchClaw",
+    "wanshuiyin/Auto-claude-code-research-in-sleep",
+    "OpenLAIR/dr-claw",
+    "aiming-lab/AutoResearchClaw",
+    "InternScience/DrClaw",
+    "snap-stanford/Biomni",
+    "ur-whitelab/chemcrow-public",
+    "shawnleeai/ScholarForge",
+    "Prismer-AI/Prismer",
+    "ZhihaoAIRobotic/ClawPhD",
+    "langchain-ai/local-deep-researcher",
+    "zjowowen/InnoClaw",
+    "Noietch/ResearchClaw",
+    "Mr-Tieguigui/Vibe-Scholar",
+    "Leey21/awesome-ai-research-writing",
+    "Lylll9436/Paper-Polish-Workflow-skill",
+    "lulaiao/DoctorClaw",
+    "karpathy/autoresearch",
+    "wanshuiyin/Auto-claude-code-research-in-sleep",
+    "Orchestra-Research/AI-Research-SKILLs",
+    // 可以继续加："owner/repo1", "owner/repo2"
 ];
 // ======================================================================
 
