@@ -226,7 +226,7 @@
 
     <script>
       // ====================== 优化后数据格式：developer/project ======================
-      const platformData = [
+      const projectData = [
         "EvoScientist/EvoScientist",
         "tsingyuai/scientify",
         "wentorai/Research-Claw",
@@ -244,9 +244,6 @@
         "zjowowen/InnoClaw",
         "Noietch/ResearchClaw",
         "Mr-Tieguigui/Vibe-Scholar",
-      ];
-
-      const skillData = [
         "Leey21/awesome-ai-research-writing",
         "Lylll9436/Paper-Polish-Workflow-skill",
         "lulaiao/DoctorClaw",
@@ -256,8 +253,7 @@
       ];
       // ============================================================================
 
-      const totalProjects = platformData.length;
-      const totalSkills = skillData.length;
+      const totalProjects = projectData.length;
       const addMoreUrl = "https://github.com/cadslab/Pantheon/issues";
 
       // 解析路径 => developer + project + url
@@ -367,15 +363,14 @@
       <h3> Unlock the Path, Lead the Way</h3>
       <div class="stats-row">
         <div class="stat-item">Known Projects: <span>${totalProjects}</span></div>
-        <div class="stat-item">Known Skills: <span>${totalSkills}</span></div>
         <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
-          Add more Skills/Platforms
+          Add more
         </button>
       </div>
     </div>
 
     <div class="section">
-      ${renderTable("dashboardTable", "Platform Dashboard", platformData)}
+      ${renderTable("dashboardTable", "Platform Dashboard", projectData)}
     </div>
 
     <div class="section">
@@ -403,10 +398,6 @@ To find the light, and reach the shining star.
       </div>
     </div>
 
-    <div class="section">
-      ${renderTable("skillTable", "Skill Dashboard", skillData)}
-    </div>
-
     <div class="footer">
       <h3>License</h3>
       <p>MIT License</p>
@@ -415,7 +406,6 @@ To find the light, and reach the shining star.
 
         setTimeout(() => {
           makeTableSortable("dashboardTable");
-          makeTableSortable("skillTable");
         }, 0);
       }
 
