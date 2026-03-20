@@ -1,1 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantheon - Automated Research</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .hero h2 {
+            font-size: 22px;
+            color: #475569;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .hero h3 {
+            font-size: 24px;
+            color: #475569;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .stat-item span {
+            font-size: 26px;
+            color: #0f172a;
+        }
+
+        .add-more-btn {
+            margin-top: 15px;
+            padding: 10px 24px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(37, 99, 235,0.2);
+        }
+        .add-more-btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37,99,235,0.3);
+            text-decoration: none;
+        }
+        .add-more-btn:active {
+            transform: translateY(0);
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .poem-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            line-height: 1.9;
+            white-space: pre-wrap;
+        }
+        .poem-column {
+            font-style: italic;
+            font-size: 16px;
+            color: #334155;
+            padding: 24px;
+            background: rgba(255,255,255,0.85);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+
+        .card h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #1e293b;
+            border-left: 5px solid #3b82f6;
+            padding-left: 12px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 10px;
+        }
+        table {
+            width: 100%;
+            min-width: 1100px;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f1f5f9;
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        th:hover {
+            background: #e2e8f0;
+        }
+
+        td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #475569;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            .hero h3 {
+                font-size: 20px;
+            }
+            .stats-row {
+                gap: 20px;
+            }
+            .poem-container {
+                grid-template-columns: 1fr;
+            }
+            .add-more-btn {
+                padding: 8px 18px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="app"></div>
+</div>
+
+<script>
+const addMoreUrl = "https://github.com/cadslab/Pantheon/issues";
+let repoDataCache = [];
+
+// 从 repo-data.json 加载数据
+async function loadRepoData() {
+  try {
+    const res = await fetch('./repo-data.json');
+    repoDataCache = await res.json();
+    renderPage();
+  } catch (err) {
+    console.error('Failed to load repo data', err);
+    renderPage();
+  }
+}
+
+// 统一 Projects 表格
+function renderTable(id, title, data) {
+  let html = `
+  <div class="card">
+    <h2>${title}</h2>
+    <div class="table-wrapper">
+      <table id="${id}">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Developer</th>
+            <th>⭐ Stars</th>
+            <th>🍴 Forks</th>
+            <th>🐛 Open Issues</th>
+            <th>✅ Closed Issues</th>
+            <th>🔀 Open PRs</th>
+            <th>🔒 Closed PRs</th>
+            <th>👥 Contributors</th>
+            <th>🕒 Last Commit</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+  data.forEach(repo => {
+    const [dev, proj] = repo.repoFullName.split('/');
+    html += `<tr>
+      <td><a href="${repo.repoUrl}" target="_blank">${proj}</a></td>
+      <td>${dev}</td>
+      <td>${repo.stars}</td>
+      <td>${repo.forks}</td>
+      <td>${repo.openIssues}</td>
+      <td>${repo.closedIssues}</td>
+      <td>${repo.openPRs}</td>
+      <td>${repo.closedPRs}</td>
+      <td>${repo.contributors}</td>
+      <td>${repo.lastCommit}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table></div></div>`;
+  return html;
+}
+
+// 表格排序
+function makeTableSortable(tableId) {
+  const table = document.getElementById(tableId);
+  if (!table) return;
+  const headers = table.querySelectorAll("th");
+  headers.forEach((th, idx) => {
+    let order = 1;
+    th.addEventListener("click", () => {
+      const rows = Array.from(table.querySelectorAll("tbody tr"));
+      rows.sort((a, b) => {
+        const getVal = (cell) => {
+          const t = cell.textContent.trim();
+          return isNaN(t) ? t : Number(t);
+        };
+        const aVal = getVal(a.cells[idx]);
+        const bVal = getVal(b.cells[idx]);
+        if (typeof aVal === 'number' && typeof bVal === 'number') {
+          return (aVal - bVal) * order;
+        }
+        return String(aVal).localeCompare(String(bVal)) * order;
+      });
+      rows.forEach(row => table.querySelector("tbody").appendChild(row));
+      order *= -1;
+    });
+  });
+}
+
+// 渲染页面
+function renderPage() {
+  const totalProjects = repoDataCache.length;
+  const app = document.getElementById("app");
+
+  app.innerHTML = `
+    <div class="hero">
+      <h1>🏛️</h1>
+      <h1><strong>Pantheon</strong></h1>
+      <h2>Automated Research</h2>
+      <h3>Unlock the Path, Lead the Way</h3>
+      <div class="stats-row">
+        <div class="stat-item">Total Projects: <span>${totalProjects}</span></div>
+        <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
+          Add more Projects
+        </button>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="poem-container">
+        <div class="poem-column">
+When chaos first gave way to hidden truths profound,
+Mortal seekers wandered lost, with no clear way bound.
+No need to toil through volumes thousand-fold,
+For wit unbodied breaks the darkness cold.
+
+Since ancient times, all who sought wisdom's gate,
+Faced mountains of texts, vast seas of reason,
+Trials of experiment, strokes of fate,
+Too often spent their years in endless season.
+        </div>
+        <div class="poem-column">
+Now a new path dawns: a bodiless mind,
+Without form or voice, yet with logic refined.
+It reads, it knows, it reasons, it reveals,
+Crossing every barrier truth conceals.
+
+May this art guide all who wander far,
+To find the light, and reach the shining star.
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      ${renderTable("projectsTable", "Projects Dashboard", repoDataCache)}
+    </div>
+
+    <div class="footer">
+      <h3>License</h3>
+      <p>MIT License</p>
+    </div>
+  `;
+
+  setTimeout(() => makeTableSortable("projectsTable"), 0);
+}
+
+window.onload = loadRepoData;
+</script>
+</body>
+</html>
