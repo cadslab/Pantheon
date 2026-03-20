@@ -8,25 +8,28 @@ on:
 jobs:
   fetch-and-save:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # 强制使用 Node24，消除警告
     steps:
       - name: 拉取代码
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
 
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
-      - name: 抓取数据
+      - name: 抓取仓库数据
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          node scripts/fetch-repo-data.js
+        run: node scripts/fetch-repo-data.js
 
-      - name: 提交并推送数据
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/repo-data.json
-          git commit -m "📊 更新仓库数据 $(date +'%Y-%m-%d %H:%M:%S')" || exit 0
-          git push
+      - name: 提交并推送更新
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          branch: main
+          message: "📊 更新仓库数据"
