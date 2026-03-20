@@ -2,7 +2,7 @@ name: Update Pantheon Stats
 
 on:
   schedule:
-    - cron: "0 * * * *" # 每小时 UTC 运行
+    - cron: "0 0 * * *" # 每天 UTC 0 时运行
   workflow_dispatch: # 允许手动触发
 
 jobs:
