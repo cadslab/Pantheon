@@ -1,0 +1,50 @@
+name: Update Pantheon Stats
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # 每天 UTC 0点运行
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # 👇 新增：请求写入权限
+    permissions:
+      contents: write # 允许读写仓库内容
+      # workflows: write # 如果你需要更新 Actions 本身才需要这行，一般不需要
+
+    steps:
+      - uses: actions/checkout@v3
+        # 👇 关键：显式指定使用你的 Token 进行检出
+        with:
+          token: ${{ secrets.PANTHEON_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Run Script
+        env:
+          PANTHEON_TOKEN: ${{ secrets.PANTHEON_TOKEN }}
+        run: python fetch_stats.py
+
+      - name: Commit and Push Data
+        # 👇 使用 git commit 和 push
+        # 注意：这里不需要再指定 token，因为 checkout 时已经配置了凭据
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+          # 只有当 data.json 发生变化时才提交
+          if git diff --quiet HEAD data.json; then
+            echo "No changes in data.json"
+          else
+            git add data.json
+            git commit -m "chore: auto update stats data [ci skip]" --no-verify
+            git push origin main
+          fi

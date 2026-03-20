@@ -13,7 +13,7 @@
 
       body {
         font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
         min-height: 100vh;
         padding: 40px 20px;
         color: #1e293b;
@@ -21,127 +21,158 @@
       }
 
       .container {
-        max-width: 1200px;
+        max-width: 1400px;
         margin: 0 auto;
       }
 
+      /* 顶部标题卡片美化 */
       .hero {
         text-align: center;
-        margin-bottom: 30px;
-        padding: 30px;
+        margin-bottom: 40px;
+        padding: 50px 30px;
         background: white;
-        border-radius: 20px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.8);
       }
 
       .hero h1 {
-        font-size: 42px;
-        font-weight: 700;
+        font-size: 52px;
+        font-weight: 800;
         color: #0f172a;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+        letter-spacing: -0.5px;
       }
 
       .hero h2 {
-        font-size: 22px;
+        font-size: 24px;
         color: #475569;
         font-weight: 500;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
       }
 
       .hero h3 {
-        font-size: 24px;
-        color: #475569;
+        font-size: 26px;
+        color: #64748b;
         font-weight: 400;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
       }
 
+      /* 统计栏美化 */
       .stats-row {
         display: flex;
         justify-content: center;
-        gap: 40px;
-        margin-top: 20px;
+        align-items: center;
+        gap: 36px;
+        margin-top: 24px;
         flex-wrap: wrap;
       }
+
       .stat-item {
         font-size: 18px;
         font-weight: 600;
-        color: #2563eb;
+        color: #334155;
         display: flex;
         align-items: center;
-        gap: 8px;
-      }
-      .stat-item span {
-        font-size: 26px;
-        color: #0f172a;
+        gap: 10px;
+        padding: 10px 16px;
+        background: #f1f5f9;
+        border-radius: 12px;
       }
 
+      .stat-item span {
+        font-size: 26px;
+        color: #2563eb;
+        font-weight: 700;
+      }
+
+      /* 按钮美化 */
       .add-more-btn {
         margin-top: 15px;
-        padding: 10px 24px;
-        background-color: #2563eb;
+        padding: 12px 28px;
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
         color: white;
         border: none;
-        border-radius: 8px;
+        border-radius: 12px;
         font-size: 16px;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
       }
+
       .add-more-btn:hover {
-        background-color: #1d4ed8;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
-        text-decoration: none;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
       }
+
       .add-more-btn:active {
         transform: translateY(0);
       }
 
+      /* 区块间距 */
       .section {
-        margin-bottom: 40px;
+        margin-bottom: 50px;
       }
 
+      /* 诗歌卡片美化 */
       .poem-container {
         max-width: 900px;
         margin: 0 auto;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 30px;
-        line-height: 1.9;
+        line-height: 2;
         white-space: pre-wrap;
       }
+
       .poem-column {
         font-style: italic;
-        font-size: 16px;
+        font-size: 17px;
         color: #334155;
-        padding: 24px;
-        background: rgba(255, 255, 255, 0.85);
-        border-radius: 16px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        padding: 32px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+        border-left: 4px solid #2563eb;
       }
 
+      /* 数据卡片美化（核心列表外观） */
       .card {
         background: white;
-        border-radius: 16px;
-        padding: 30px;
-        margin-bottom: 20px;
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+        border-radius: 20px;
+        padding: 36px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
         transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
       }
 
       .card h2 {
-        font-size: 24px;
-        margin-bottom: 20px;
+        font-size: 26px;
+        margin-bottom: 24px;
         color: #1e293b;
-        border-left: 5px solid #3b82f6;
-        padding-left: 12px;
-      }
-
-      .table-wrapper {
-        overflow-x: auto;
+        border-left: 6px solid #3b82f6;
+        padding: 8px 16px;
+        font-weight: 700;
+        background: #f8fafc;
         border-radius: 10px;
       }
+
+      /* 表格容器美化 */
+      .table-wrapper {
+        overflow-x: auto;
+        border-radius: 14px;
+        background: white;
+        box-shadow: inset 0 0 0 1px #e2e8f0;
+      }
+
+      /* 表格样式（列表美化核心） */
       table {
         width: 100%;
         min-width: 1100px;
@@ -149,149 +180,145 @@
       }
 
       th {
-        background: #f1f5f9;
-        padding: 12px 8px;
+        background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+        padding: 16px 14px;
         text-align: left;
-        font-weight: 600;
+        font-weight: 700;
         color: #334155;
         cursor: pointer;
         user-select: none;
-        transition: background 0.2s;
         white-space: nowrap;
+        border-bottom: 2px solid #e2e8f0;
+        font-size: 15px;
+        letter-spacing: 0.3px;
       }
 
       th:hover {
         background: #e2e8f0;
+        color: #2563eb;
+      }
+      /* 表格数字列美化 */
+      .num-col {
+        text-align: right !important;
+      }
+
+      .num {
+        text-align: right !important;
+        font-family: "Segoe UI Mono", "Roboto Mono", monospace;
+        font-weight: 600;
+        color: #0f172a;
+        letter-spacing: 0.3px;
+      }
+      tbody tr:hover .num {
+        color: #2563eb;
       }
 
       td {
-        padding: 12px 8px;
+        padding: 16px 14px;
         border-bottom: 1px solid #f1f5f9;
         color: #475569;
-        max-width: 150px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        font-size: 15px;
+        transition: background 0.2s;
+      }
+
+      tbody tr:last-child td {
+        border-bottom: none;
       }
 
       tbody tr:hover {
         background: #f8fafc;
       }
 
+      /* 链接美化 */
       a {
         color: #2563eb;
         text-decoration: none;
-        font-weight: 500;
+        font-weight: 600;
+        padding: 4px 0;
+        display: inline-block;
       }
 
       a:hover {
         text-decoration: underline;
+        color: #1d4ed8;
       }
 
-      img {
-        vertical-align: middle;
-      }
-
+      /* 页脚美化 */
       .footer {
         text-align: center;
-        margin-top: 60px;
+        margin-top: 80px;
         color: #64748b;
-        font-size: 14px;
+        font-size: 15px;
+        padding: 30px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
       }
 
+      /* 响应式优化 */
       @media (max-width: 768px) {
         .hero h1 {
-          font-size: 32px;
+          font-size: 38px;
         }
+
         .hero h3 {
-          font-size: 20px;
+          font-size: 22px;
         }
+
         .stats-row {
-          gap: 20px;
+          gap: 16px;
         }
+
         .poem-container {
           grid-template-columns: 1fr;
         }
+
+        .card {
+          padding: 24px;
+        }
+
         .add-more-btn {
-          padding: 8px 18px;
-          font-size: 14px;
+          padding: 10px 22px;
+          font-size: 15px;
         }
       }
     </style>
   </head>
+
   <body>
     <div class="container">
       <div id="app"></div>
     </div>
 
     <script>
-      // ====================== 优化后数据格式：developer/project ======================
-      const projectData = [
-  "EvoScientist/EvoScientist",
-  "tsingyuai/scientify",
-  "wentorai/Research-Claw",
-  "ymx10086/ResearchClaw",
-  "wanshuiyin/Auto-claude-code-research-in-sleep",
-  "OpenLAIR/dr-claw",
-  "aiming-lab/AutoResearchClaw",
-  "InternScience/DrClaw",
-  "snap-stanford/Biomni",
-  "ur-whitelab/chemcrow-public",
-  "shawnleeai/ScholarForge",
-  "Prismer-AI/Prismer",
-  "ZhihaoAIRobotic/ClawPhD",
-  "langchain-ai/local-deep-researcher",
-  "zjowowen/InnoClaw",
-  "Noietch/ResearchClaw",
-  "Mr-Tieguigui/Vibe-Scholar",
-  "Leey21/awesome-ai-research-writing",
-  "Lylll9436/Paper-Polish-Workflow-skill",
-  "lulaiao/DoctorClaw",
-  "karpathy/autoresearch",
-  "Orchestra-Research/AI-Research-SKILLs",
-  "InternScience/InternAgent",
-  "SakanaAI/AI-Scientist",
-  "SakanaAI/AI-Scientist-v2",
-  "SamuelSchmidgall/AgentLaboratory",
-  "hkuds/ai-researcher",
-  "K-Rohit-Reddy/Novelseek",
-  "InternScience/Dolphin",
-  "ltjed/freephdlabor",
-  "Technion-Kishony-lab/data-to-paper",
-  "allenai/codescientist",
-  "AgentForceTeamOfficial/Baby-AIGS",
-  "ResearAI/DeepScientist",
-  "Alibaba-NLP/DeepResearch",
-  "jimmc414/Kosmos",
-  "jarrycyx/openlens-ai"
-      ];
-      // ============================================================================
-
-      const totalProjects = projectData.length;
       const addMoreUrl = "https://github.com/cadslab/Pantheon/issues";
+      let projectData = [];
 
-      // 解析路径 => developer + project + url
-      function parseRepo(path) {
-        const [dev, proj] = path.split("/");
-        return {
-          developer: dev,
-          project: proj,
-          url: `https://github.com/${path}`,
-        };
+      // 格式化时间
+      function formatDate(dateStr) {
+        const date = new Date(dateStr);
+        return date.toLocaleString();
       }
 
-      function getBadge(path, type) {
-        const base = "https://img.shields.io/github/";
-        if (type === "open-pulls")
-          return `<img src="${base}issues-pr/${path}?style=flat-square" alt="Open PRs">`;
-        if (type === "closed-pulls")
-          return `<img src="${base}issues-pr-closed/${path}?style=flat-square" alt="Closed PRs">`;
-        if (type === "closed-issues")
-          return `<img src="${base}issues-closed/${path}?style=flat-square" alt="Closed Issues">`;
-        return `<img src="${base}${type}/${path}?style=flat-square" alt="${type}">`;
+      // 从 data.json 加载数据
+      async function loadData() {
+        try {
+          const res = await fetch("./data.json");
+          projectData = await res.json();
+          renderPage();
+        } catch (err) {
+          console.error("加载数据失败", err);
+        }
       }
 
+      // 渲染表格
+      // 渲染表格
       function renderTable(id, title, data) {
+        // 数字千分位格式化
+        function formatNum(n) {
+          return Number(n || 0).toLocaleString();
+        }
+
         let html = `
   <div class="card">
     <h2>${title}</h2>
@@ -301,31 +328,29 @@
           <tr>
             <th>Project</th>
             <th>Developer</th>
-            <th>⭐ Stars</th>
-            <th>🍴 Forks</th>
-            <th>🐛 Open Issues</th>
-            <th>✅ Closed Issues</th>
-            <th>🔀 Open PRs</th>
-            <th>🔒 Closed PRs</th>
-            <th>👥 Contributors</th>
-            <th>🕒 Last Commit</th>
+            <th class="num-col">Stars</th>
+            <th class="num-col">Forks</th>
+            <th class="num-col">Closed Issues</th>
+            <th class="num-col">Open Pulls</th>
+            <th class="num-col">Closed Pulls</th>
+            <th class="num-col">Contributors</th>
+            <th>Last Commit</th>
           </tr>
         </thead>
         <tbody>`;
 
-        data.forEach((path) => {
-          const { developer, project, url } = parseRepo(path);
+        data.forEach((item) => {
+          const [dev, proj] = item.name.split("/");
           html += `<tr>
-      <td><a href="${url}" target="_blank">${project}</a></td>
-      <td>${developer}</td>
-      <td>${getBadge(path, "stars")}</td>
-      <td>${getBadge(path, "forks")}</td>
-      <td>${getBadge(path, "issues")}</td>
-      <td>${getBadge(path, "closed-issues")}</td>
-      <td>${getBadge(path, "open-pulls")}</td>
-      <td>${getBadge(path, "closed-pulls")}</td>
-      <td>${getBadge(path, "contributors")}</td>
-      <td>${getBadge(path, "last-commit")}</td>
+      <td><a href="${item.url}" target="_blank">${proj}</a></td>
+      <td>${dev}</td>
+      <td class="num">${formatNum(item.stars)}</td>
+      <td class="num">${formatNum(item.forks)}</td>
+      <td class="num">${formatNum(item.closed_issues)}</td>
+      <td class="num">${formatNum(item.open_prs)}</td>
+      <td class="num">${formatNum(item.closed_prs)}</td>
+      <td class="num">${formatNum(item.contributors)}</td>
+      <td>${formatDate(item.last_commit)}</td>
     </tr>`;
         });
 
@@ -333,63 +358,87 @@
         return html;
       }
 
+      // 表格排序
       function makeTableSortable(tableId) {
         const table = document.getElementById(tableId);
         if (!table) return;
         const headers = table.querySelectorAll("th");
         headers.forEach((th, idx) => {
-          let order = 1;
+          let sortOrder = 1;
           th.addEventListener("click", () => {
             const rows = Array.from(table.querySelectorAll("tbody tr"));
             rows.sort((a, b) => {
-              const extractNum = (cell) => {
-                const img = cell.querySelector("img");
-                if (img) {
-                  const altText = img.alt || "";
-                  const numMatch = altText.match(/\d+/);
-                  return numMatch ? parseInt(numMatch[0]) : 0;
-                }
-                const text = cell.textContent.trim();
-                return !isNaN(parseFloat(text)) ? parseFloat(text) : text;
-              };
-              const aVal = extractNum(a.cells[idx]);
-              const bVal = extractNum(b.cells[idx]);
-              if (typeof aVal === "number" && typeof bVal === "number") {
-                return (aVal - bVal) * order;
-              }
-              return String(aVal).localeCompare(String(bVal)) * order;
+              const aText = a.cells[idx].textContent.trim().toLowerCase();
+              const bText = b.cells[idx].textContent.trim().toLowerCase();
+              return aText.localeCompare(bText) * sortOrder;
             });
             rows.forEach((row) =>
               table.querySelector("tbody").appendChild(row),
             );
-            order *= -1;
+            sortOrder *= -1;
           });
         });
       }
 
+      // 渲染页面
+      // 渲染页面
       function renderPage() {
         const app = document.getElementById("app");
+
+        // ====== 新增：计算各项排名 ======
+        const sortedByStars = [...projectData].sort(
+          (a, b) => b.stars - a.stars,
+        );
+        const sortedByUpdate = [...projectData].sort(
+          (a, b) => new Date(b.last_commit) - new Date(a.last_commit),
+        );
+        const sortedByClosedIssues = [...projectData].sort(
+          (a, b) => b.closed_issues - a.closed_issues,
+        );
+        const sortedByOpenIssues = [...projectData].sort(
+          (a, b) => b.open_prs - a.open_prs,
+        );
+
+        const topStarProject = sortedByStars[0]?.name.split("/")[1] || "无";
+        const latestUpdateProject =
+          sortedByUpdate[0]?.name.split("/")[1] || "无";
+        const mostForkedProject = sortedByStars[0]?.name.split("/")[1] || "无";
+        const mostFixedProject =
+          sortedByClosedIssues[0]?.name.split("/")[1] || "无";
+        const mostOpenIssuesProject =
+          sortedByOpenIssues[0]?.name.split("/")[1] || "无";
+        // ====== 新增结束 ======
+
         app.innerHTML = `
-    <div class="hero">
-      <h1>🏛️</h1>
-      <h1> <strong>Pantheon</strong></h1>
-      <h2>Automated Research </h2>
-      <h3> Unlock the Path, Lead the Way</h3>
-      <div class="stats-row">
-        <div class="stat-item">Known Projects: <span>${totalProjects}</span></div>
-        <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
-          Add more
-        </button>
+      <div class="hero">
+        <h1>🏛️</h1>
+        <h1><strong>Pantheon</strong></h1>
+        <h2>Automated Research</h2>
+        <h3>Unlock the Path, Lead the Way</h3>
+        <div class="stats-row">
+          <div class="stat-item">Known Projects: <span>${projectData.length}</span></div>
+          <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
+            Add more
+          </button>
+        </div>
+
+        <div style="margin-top: 20px; font-size: 15px; color: #475569; line-height: 1.8;">
+          Most Forked: <b>${mostForkedProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+          Latest Updated: <b>${latestUpdateProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+          Most Stars: <b>${topStarProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+          Most Fixed: <b>${mostFixedProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+          Most Open Issues: <b>${mostOpenIssuesProject}</b>
+        </div>
+
       </div>
-    </div>
 
-    <div class="section">
-      ${renderTable("dashboardTable", "Platform Dashboard", projectData)}
-    </div>
+      <div class="section">
+        ${renderTable("dashboardTable", "Projects Dashboard", projectData)}
+      </div>
 
-    <div class="section">
-      <div class="poem-container">
-        <div class="poem-column">
+      <div class="section">
+        <div class="poem-container">
+          <div class="poem-column">
 When chaos first gave way to hidden truths profound,
 Mortal seekers wandered lost, with no clear way bound.
 No need to toil through volumes thousand-fold,
@@ -399,8 +448,8 @@ Since ancient times, all who sought wisdom's gate,
 Faced mountains of texts, vast seas of reason,
 Trials of experiment, strokes of fate,
 Too often spent their years in endless season.
-        </div>
-        <div class="poem-column">
+          </div>
+          <div class="poem-column">
 Now a new path dawns: a bodiless mind,
 Without form or voice, yet with logic refined.
 It reads, it knows, it reasons, it reveals,
@@ -408,22 +457,21 @@ Crossing every barrier truth conceals.
 
 May this art guide all who wander far,
 To find the light, and reach the shining star.
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="footer">
-      <h3>License</h3>
-      <p>MIT License</p>
-    </div>
-  `;
+      <div class="footer">
+        <h3>License</h3>
+        <p>MIT License</p>
+      </div>
+    `;
 
-        setTimeout(() => {
-          makeTableSortable("dashboardTable");
-        }, 0);
+        setTimeout(() => makeTableSortable("dashboardTable"), 0);
       }
 
-      window.onload = renderPage;
+      // 启动
+      window.onload = loadData;
     </script>
   </body>
 </html>
