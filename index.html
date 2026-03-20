@@ -25,7 +25,6 @@
         margin: 0 auto;
       }
 
-      /* 顶部标题卡片美化 */
       .hero {
         text-align: center;
         margin-bottom: 40px;
@@ -58,7 +57,6 @@
         margin-bottom: 30px;
       }
 
-      /* 统计栏美化 */
       .stats-row {
         display: flex;
         justify-content: center;
@@ -78,6 +76,7 @@
         padding: 10px 16px;
         background: #f1f5f9;
         border-radius: 12px;
+        height: 48px;
       }
 
       .stat-item span {
@@ -86,19 +85,21 @@
         font-weight: 700;
       }
 
-      /* 按钮美化 */
       .add-more-btn {
-        margin-top: 15px;
-        padding: 12px 28px;
+        height: 48px;
+        padding: 0 28px;
         background: linear-gradient(135deg, #3b82f6, #2563eb);
         color: white;
         border: none;
         border-radius: 12px;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
         box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .add-more-btn:hover {
@@ -110,12 +111,10 @@
         transform: translateY(0);
       }
 
-      /* 区块间距 */
       .section {
         margin-bottom: 50px;
       }
 
-      /* 诗歌卡片美化 */
       .poem-container {
         max-width: 900px;
         margin: 0 auto;
@@ -137,7 +136,6 @@
         border-left: 4px solid #2563eb;
       }
 
-      /* 数据卡片美化（核心列表外观） */
       .card {
         background: white;
         border-radius: 20px;
@@ -164,7 +162,6 @@
         border-radius: 10px;
       }
 
-      /* 表格容器美化 */
       .table-wrapper {
         overflow-x: auto;
         border-radius: 14px;
@@ -172,7 +169,6 @@
         box-shadow: inset 0 0 0 1px #e2e8f0;
       }
 
-      /* 表格样式（列表美化核心） */
       table {
         width: 100%;
         min-width: 1100px;
@@ -197,7 +193,7 @@
         background: #e2e8f0;
         color: #2563eb;
       }
-      /* 表格数字列美化 */
+
       .num-col {
         text-align: right !important;
       }
@@ -209,6 +205,7 @@
         color: #0f172a;
         letter-spacing: 0.3px;
       }
+
       tbody tr:hover .num {
         color: #2563eb;
       }
@@ -229,7 +226,6 @@
         background: #f8fafc;
       }
 
-      /* 链接美化 */
       a {
         color: #2563eb;
         text-decoration: none;
@@ -243,7 +239,6 @@
         color: #1d4ed8;
       }
 
-      /* 页脚美化 */
       .footer {
         text-align: center;
         margin-top: 80px;
@@ -255,31 +250,21 @@
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
       }
 
-      /* 响应式优化 */
       @media (max-width: 768px) {
         .hero h1 {
           font-size: 38px;
         }
-
         .hero h3 {
           font-size: 22px;
         }
-
         .stats-row {
           gap: 16px;
         }
-
         .poem-container {
           grid-template-columns: 1fr;
         }
-
         .card {
           padding: 24px;
-        }
-
-        .add-more-btn {
-          padding: 10px 22px;
-          font-size: 15px;
         }
       }
     </style>
@@ -294,151 +279,161 @@
       const addMoreUrl = "https://github.com/cadslab/Pantheon/issues";
       let projectData = [];
 
-      // 格式化时间
       function formatDate(dateStr) {
         const date = new Date(dateStr);
         return date.toLocaleString();
       }
 
-      // 从 data.json 加载数据
       async function loadData() {
         try {
           const res = await fetch("./data.json");
+          if (!res.ok) throw new Error("Failed to load data.json");
           projectData = await res.json();
           renderPage();
         } catch (err) {
-          console.error("加载数据失败", err);
+          document.getElementById("app").innerHTML = `
+          <div class="hero">
+            <h1>⚠️ Failed to load</h1>
+            <h3>Make sure data.json is in the same folder</h3>
+          </div>
+        `;
+          console.error("Load failed", err);
         }
       }
 
-      // 渲染表格
-      // 渲染表格
       function renderTable(id, title, data) {
-        // 数字千分位格式化
         function formatNum(n) {
           return Number(n || 0).toLocaleString();
         }
 
         let html = `
-  <div class="card">
-    <h2>${title}</h2>
-    <div class="table-wrapper">
-      <table id="${id}">
-        <thead>
-          <tr>
-            <th>Project</th>
-            <th>Developer</th>
-            <th class="num-col">Stars</th>
-            <th class="num-col">Forks</th>
-            <th class="num-col">Closed Issues</th>
-            <th class="num-col">Open Pulls</th>
-            <th class="num-col">Closed Pulls</th>
-            <th class="num-col">Contributors</th>
-            <th>Last Commit</th>
-          </tr>
-        </thead>
-        <tbody>`;
+      <div class="card">
+        <h2>${title}</h2>
+        <div class="table-wrapper">
+          <table id="${id}">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Developer</th>
+                <th class="num-col">Stars</th>
+                <th class="num-col">Forks</th>
+                <th class="num-col">Closed Issues</th>
+                <th class="num-col">Open Pulls</th>
+                <th class="num-col">Closed Pulls</th>
+                <th class="num-col">Contributors</th>
+                <th>Last Commit</th>
+              </tr>
+            </thead>
+            <tbody>`;
 
         data.forEach((item) => {
           const [dev, proj] = item.name.split("/");
           html += `<tr>
-      <td><a href="${item.url}" target="_blank">${proj}</a></td>
-      <td>${dev}</td>
-      <td class="num">${formatNum(item.stars)}</td>
-      <td class="num">${formatNum(item.forks)}</td>
-      <td class="num">${formatNum(item.closed_issues)}</td>
-      <td class="num">${formatNum(item.open_prs)}</td>
-      <td class="num">${formatNum(item.closed_prs)}</td>
-      <td class="num">${formatNum(item.contributors)}</td>
-      <td>${formatDate(item.last_commit)}</td>
-    </tr>`;
+          <td><a href="${item.url}" target="_blank">${proj}</a></td>
+          <td>${dev}</td>
+          <td class="num">${formatNum(item.stars)}</td>
+          <td class="num">${formatNum(item.forks)}</td>
+          <td class="num">${formatNum(item.closed_issues)}</td>
+          <td class="num">${formatNum(item.open_prs)}</td>
+          <td class="num">${formatNum(item.closed_prs)}</td>
+          <td class="num">${formatNum(item.contributors)}</td>
+          <td>${formatDate(item.last_commit)}</td>
+        </tr>`;
         });
 
         html += `</tbody></table></div></div>`;
         return html;
       }
 
-      // 表格排序
       function makeTableSortable(tableId) {
         const table = document.getElementById(tableId);
         if (!table) return;
         const headers = table.querySelectorAll("th");
+        const numColumns = [2, 3, 4, 5, 6, 7];
+
         headers.forEach((th, idx) => {
           let sortOrder = 1;
           th.addEventListener("click", () => {
             const rows = Array.from(table.querySelectorAll("tbody tr"));
             rows.sort((a, b) => {
-              const aText = a.cells[idx].textContent.trim().toLowerCase();
-              const bText = b.cells[idx].textContent.trim().toLowerCase();
+              const aText = a.cells[idx].textContent.trim().replace(/,/g, "");
+              const bText = b.cells[idx].textContent.trim().replace(/,/g, "");
+
+              if (numColumns.includes(idx)) {
+                const aNum = parseFloat(aText) || 0;
+                const bNum = parseFloat(bText) || 0;
+                return (aNum - bNum) * sortOrder;
+              }
               return aText.localeCompare(bText) * sortOrder;
             });
-            rows.forEach((row) =>
-              table.querySelector("tbody").appendChild(row),
-            );
+
+            const tbody = table.querySelector("tbody");
+            rows.forEach((row) => tbody.appendChild(row));
             sortOrder *= -1;
           });
         });
       }
 
-      // 渲染页面
-      // 渲染页面
       function renderPage() {
         const app = document.getElementById("app");
+        if (!projectData.length) {
+          app.innerHTML = `<div class="hero"><h1>📊 No project data</h1></div>`;
+          return;
+        }
 
-        // ====== 新增：计算各项排名 ======
-        const sortedByStars = [...projectData].sort(
-          (a, b) => b.stars - a.stars,
-        );
-        const sortedByUpdate = [...projectData].sort(
+        // All sorting using toSorted()
+        const sortedByStars = projectData.toSorted((a, b) => b.stars - a.stars);
+        const sortedByForks = projectData.toSorted((a, b) => b.forks - a.forks);
+        const sortedByUpdate = projectData.toSorted(
           (a, b) => new Date(b.last_commit) - new Date(a.last_commit),
         );
-        const sortedByClosedIssues = [...projectData].sort(
+        const sortedByClosedIssues = projectData.toSorted(
           (a, b) => b.closed_issues - a.closed_issues,
         );
-        const sortedByOpenIssues = [...projectData].sort(
+        const sortedByOpenIssues = projectData.toSorted(
           (a, b) => b.open_prs - a.open_prs,
         );
 
-        const topStarProject = sortedByStars[0]?.name.split("/")[1] || "无";
+        const topStarProject = sortedByStars[0]?.name.split("/")[1] || "None";
+        const mostForkedProject =
+          sortedByForks[0]?.name.split("/")[1] || "None";
         const latestUpdateProject =
-          sortedByUpdate[0]?.name.split("/")[1] || "无";
-        const mostForkedProject = sortedByStars[0]?.name.split("/")[1] || "无";
+          sortedByUpdate[0]?.name.split("/")[1] || "None";
         const mostFixedProject =
-          sortedByClosedIssues[0]?.name.split("/")[1] || "无";
+          sortedByClosedIssues[0]?.name.split("/")[1] || "None";
         const mostOpenIssuesProject =
-          sortedByOpenIssues[0]?.name.split("/")[1] || "无";
-        // ====== 新增结束 ======
+          sortedByOpenIssues[0]?.name.split("/")[1] || "None";
 
         app.innerHTML = `
-      <div class="hero">
-        <h1>🏛️</h1>
-        <h1><strong>Pantheon</strong></h1>
-        <h2>Automated Research</h2>
-        <h3>Unlock the Path, Lead the Way</h3>
-        <div class="stats-row">
-          <div class="stat-item">Known Projects: <span>${projectData.length}</span></div>
-          <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
-            Add more
-          </button>
+        <div class="hero">
+          <h1>🏛️</h1>
+          <h1><strong>Pantheon</strong></h1>
+          <h2>Automated Research</h2>
+          <h3>Unlock the Path, Lead the Way</h3>
+
+          <div class="stats-row">
+            <div class="stat-item">Known Projects: <span>${projectData.length}</span></div>
+            <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
+              Add more
+            </button>
+          </div>
+
+          <div style="margin-top: 20px; font-size: 15px; color: #475569; line-height: 1.8;">
+            Most Stars: <b>${topStarProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Most Forked: <b>${mostForkedProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Latest Updated: <b>${latestUpdateProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Most Fixed: <b>${mostFixedProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Most Open Issues: <b>${mostOpenIssuesProject}</b>
+          </div>
         </div>
 
-        <div style="margin-top: 20px; font-size: 15px; color: #475569; line-height: 1.8;">
-          Most Forked: <b>${mostForkedProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-          Latest Updated: <b>${latestUpdateProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-          Most Stars: <b>${topStarProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-          Most Fixed: <b>${mostFixedProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-          Most Open Issues: <b>${mostOpenIssuesProject}</b>
+        <div class="section">
+          ${renderTable("dashboardTable", "Projects Dashboard", projectData)}
         </div>
 
-      </div>
-
-      <div class="section">
-        ${renderTable("dashboardTable", "Projects Dashboard", projectData)}
-      </div>
-
-      <div class="section">
-        <div class="poem-container">
-          <div class="poem-column">
+        <div class="section">
+          <div class="poem-container">
+            <div class="poem-column">
 When chaos first gave way to hidden truths profound,
 Mortal seekers wandered lost, with no clear way bound.
 No need to toil through volumes thousand-fold,
@@ -448,8 +443,8 @@ Since ancient times, all who sought wisdom's gate,
 Faced mountains of texts, vast seas of reason,
 Trials of experiment, strokes of fate,
 Too often spent their years in endless season.
-          </div>
-          <div class="poem-column">
+            </div>
+            <div class="poem-column">
 Now a new path dawns: a bodiless mind,
 Without form or voice, yet with logic refined.
 It reads, it knows, it reasons, it reveals,
@@ -457,20 +452,19 @@ Crossing every barrier truth conceals.
 
 May this art guide all who wander far,
 To find the light, and reach the shining star.
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="footer">
-        <h3>License</h3>
-        <p>MIT License</p>
-      </div>
-    `;
+        <div class="footer">
+          <h3>License</h3>
+          <p>MIT License</p>
+        </div>
+      `;
 
         setTimeout(() => makeTableSortable("dashboardTable"), 0);
       }
 
-      // 启动
       window.onload = loadData;
     </script>
   </body>
