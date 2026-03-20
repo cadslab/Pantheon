@@ -1,10 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 
-// ===================== 配置区：修改为你要查询的仓库 =====================
+// ===================== 配置区：owner/name 字符串形式 =====================
 const TARGET_REPOS = [
-  { owner: "cadslab", name: "Pantheon" },
-  // 可添加多个仓库：{ owner: "cadslab", name: "你的仓库名" },
+  "cadslab/Pantheon",
+  // 可以继续加："owner/repo1", "owner/repo2"
 ];
 // ======================================================================
 
@@ -18,7 +18,7 @@ if (!GH_TOKEN) {
   process.exit(1);
 }
 
-// GraphQL 查询语句（精准获取你需要的所有指标）
+// GraphQL 查询语句
 const GET_REPO_DATA_QUERY = `
 query getRepoData($owner: String!, $name: String!) {
   repository(owner: $owner, name: $name) {
@@ -30,11 +30,11 @@ query getRepoData($owner: String!, $name: String!) {
     # PR 统计
     pullRequests(states: OPEN) { totalCount }
     closedPullRequests: pullRequests(states: CLOSED) { totalCount }
-    # 贡献者（前100名）
+    # 贡献者
     contributors: collaborators(first: 100) { totalCount }
     # 最后提交时间
     defaultBranchRef { target { committedDate } }
-    # 仓库基础信息
+    # 基础信息
     nameWithOwner
     url
     description
@@ -80,18 +80,28 @@ function formatRepoData(data) {
   };
 }
 
-// 主函数：批量查询 + 保存数据
+// 工具：把 "owner/name" 拆分成 { owner, name }
+function parseRepoFullName(fullName) {
+  const [owner, name] = fullName.split('/');
+  if (!owner || !name) {
+    throw new Error(`仓库格式错误：${fullName}，必须是 owner/name 形式`);
+  }
+  return { owner, name };
+}
+
+// 主函数
 async function main() {
   try {
     const repoDataList = [];
-    for (const repo of TARGET_REPOS) {
-      console.log(`正在抓取：${repo.owner}/${repo.name}`);
-      const rawData = await fetchRepoData(repo.owner, repo.name);
+    for (const fullName of TARGET_REPOS) {
+      console.log(`正在抓取：${fullName}`);
+      const { owner, name } = parseRepoFullName(fullName);
+      const rawData = await fetchRepoData(owner, name);
       const formattedData = formatRepoData(rawData);
       repoDataList.push(formattedData);
     }
 
-    // 保存数据到 docs 目录（GitHub Pages 读取）
+    // 保存到 docs 目录
     const outputPath = path.join(__dirname, "../docs/repo-data.json");
     fs.mkdirSync(path.dirname(outputPath), { recursive: true });
     fs.writeFileSync(outputPath, JSON.stringify(repoDataList, null, 2), "utf8");
