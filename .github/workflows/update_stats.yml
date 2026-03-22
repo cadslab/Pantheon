@@ -1,50 +1,41 @@
 name: Update Pantheon Stats
-
 on:
   schedule:
-    - cron: "0 0 * * *" # 每天 UTC 0 时运行
+    - cron: "0 0 * * *" # 每天 UTC 0点运行
   workflow_dispatch: # 允许手动触发
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    # 👇 新增：请求写入权限
+    # 新增：请求写入权限（原配置保留，无需修改）
     permissions:
       contents: write # 允许读写仓库内容
-      # workflows: write # 如果你需要更新 Actions 本身才需要这行，一般不需要
-
+      # workflows: write # 如需更新Actions本身才启用，默认注释
     steps:
       - uses: actions/checkout@v3
-        # 👇 关键：显式指定使用你的 Token 进行检出
         with:
-          token: ${{ secrets.PANTHEON_TOKEN }}
-
+          token: ${{ secrets.PANTHEON_TOKEN }} # 显式指定Token检出
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
-
+          python-version: "3.9" # 与原脚本依赖的Python版本一致
       - name: Install Dependencies
-        run: pip install requests
-
+        run: pip install requests # 仅需requests，与脚本依赖一致
       - name: Run Script
         env:
-          PANTHEON_TOKEN: ${{ secrets.PANTHEON_TOKEN }}
+          PANTHEON_TOKEN: ${{ secrets.PANTHEON_TOKEN }} # 传递Token给脚本
         run: python fetch_stats.py
-
       - name: Commit and Push Data
-        # 👇 使用 git commit 和 push
-        # 注意：这里不需要再指定 token，因为 checkout 时已经配置了凭据
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-
-          # 只有当 data.json 发生变化时才提交
-          if git diff --quiet HEAD data.json; then
-            echo "No changes in data.json"
+          # 核心修改：检测三个JSON文件的变更（匹配脚本输出的data_previous/current/change.json）
+          if git diff --quiet HEAD data_previous.json data_current.json data_change.json; then
+            echo "No changes in stats data files, skip commit"
           else
-            git add data.json
-            git commit -m "chore: auto update stats data [ci skip]" --no-verify
+            # 批量添加所有变更的统计数据文件
+            git add data_previous.json data_current.json data_change.json
+            # 提交信息标注自动更新，[ci skip]避免触发二次CI
+            git commit -m "chore: auto update pantheon stats data [ci skip]" --no-verify
+            # 推送到主分支（若你的分支是main/master，按需修改）
             git push origin main
           fi
