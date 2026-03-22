@@ -1,10 +1,14 @@
 <div align="center">
 
-# Pantheon
+# Pantheon -AI Research
+
+<p align="center">
+  <a href="#Overview">Overview</a> · <a href="#Advantages">Advantages</a> · <a href="#Quick-Start">Quick Start</a> · <a href="#Project-Structure">Project Structure</a> · <a href="#Roadmap">Roadmap</a> · <a href="#License">License</a> · <a href="#Contributing">Contributing</a> · <a href="#Contact--Support">Contact & Support</a>
+</p>
 
 </div>
 <div align="center">
-  <img src="https://placeholder.pics/svg/800x200/Pantheon%20-%20Wisdom%20Unlocks%20the%20Path/FFFFFF/333333" alt="Pantheon Banner" width="100%">
+  <img src="./assets/pantheon.png" alt="Pantheon Banner" width="100%">
   <p>✨ Wisdom Unlocks the Path · Automated Research ✨</p>
   <p>
     <a href="#license"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
