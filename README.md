@@ -66,6 +66,9 @@ Pantheon/
   - [x] Fit Phone Screen
 - **Phase 1**: Project Experience - 2026.03.22
   - [ ] Research-Claw by wentorai
+  - [ ] dr-Claw by OpenLAIR
+  - [ ] DrClaw by InternScience
+  - [ ] EvoScientist by EvoScientist
 
 ## License
 
