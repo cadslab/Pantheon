@@ -63,7 +63,9 @@ Pantheon/
   - [x] Quick Start Guide
   - [x] Page online
   - [x] Project Ranking by Daily Change
+  - [x] Fit Phone Screen
 - **Phase 1**: Project Experience - 2026.03.22
+  - [ ] Research-Claw by wentorai
 
 ## License
 
