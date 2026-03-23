@@ -1,6 +1,6 @@
 <div align="center">
 
-# Pantheon -AI Research
+# Pantheon for Auto Research
 
 <p align="center">
   <a href="#Overview">Overview</a> · <a href="#Advantages">Advantages</a> · <a href="#Quick-Start">Quick Start</a> · <a href="#Project-Structure">Project Structure</a> · <a href="#Roadmap">Roadmap</a> · <a href="#License">License</a> · <a href="#Contributing">Contributing</a> · <a href="#Contact--Support">Contact & Support</a>
