@@ -194,13 +194,13 @@
 
       .table-wrapper-daily {
         box-shadow:
-          inset 0 0 0 1px #93c5fd,
+          inset 0 0 0 1px #93cfd5,
           0 4px 12px rgba(37, 99, 235, 0.08);
       }
 
       table {
         width: 100%;
-        min-width: 900px;
+        min-width: 1000px;
         border-collapse: collapse;
         margin: 0 auto;
       }
@@ -302,6 +302,15 @@
         color: #1d4ed8;
       }
 
+      .language-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #fff;
+      }
+
       .footer {
         text-align: center;
         margin-top: 40px;
@@ -313,7 +322,7 @@
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
       }
 
-      /* 移动端核心适配 */
+      /* 移动端适配 */
       @media (max-width: 768px) {
         .hero h1 {
           font-size: 32px;
@@ -350,7 +359,7 @@
           font-size: 18px;
         }
         table {
-          min-width: 800px;
+          min-width: 900px;
         }
         th,
         td {
@@ -366,14 +375,8 @@
         .hero {
           padding: 20px 15px;
         }
-        .hero-stats-info,
-        .hero > div[style*="margin-top"] {
-          font-size: 12px !important;
-          line-height: 1.6 !important;
-          padding: 0 4px;
-        }
         table {
-          min-width: 700px;
+          min-width: 800px;
         }
       }
     </style>
@@ -446,6 +449,7 @@
             <tr>
               <th>Project</th>
               <th>Developer</th>
+              <th>Language</th>
               <th class="num-col">Stars</th>
               <th class="num-col">Forks</th>
               <th class="num-col">Open Issues</th>
@@ -460,6 +464,8 @@
 
         data.forEach((item) => {
           const [dev, proj] = item.name.split("/");
+          const language = item.language || "Unknown";
+          const langColor = item.language_color || "#64748b";
 
           const starsCell = isDaily
             ? formatDailyChange(item.stars)
@@ -486,6 +492,7 @@
           html += `<tr>
         <td><a href="${item.url}" target="_blank">${proj}</a></td>
         <td>${dev}</td>
+        <td><span class="language-badge" style="background:${langColor}">${language}</span></td>
         <td class="num">${starsCell}</td>
         <td class="num">${forksCell}</td>
         <td class="num">${openIssuesCell}</td>
@@ -505,7 +512,7 @@
         const table = document.getElementById(tableId);
         if (!table) return;
         const headers = table.querySelectorAll("th");
-        const numColumns = [2, 3, 4, 5, 6, 7, 8];
+        const numColumns = [3, 4, 5, 6, 7, 8, 9];
 
         headers.forEach((th, idx) => {
           let sortOrder = 1;
@@ -575,7 +582,6 @@
           return;
         }
 
-        // 修复手机浏览器不支持 toSorted 的问题
         const sortedByStars = [...projectData].sort(
           (a, b) => b.stars - a.stars,
         );
