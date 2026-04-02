@@ -1,15 +1,43 @@
 [
   {
+    "name": "openclaw/openclaw",
+    "url": "https://github.com/openclaw/openclaw",
+    "stars": 344665,
+    "forks": 68387,
+    "open_issues": 10326,
+    "closed_issues": 14763,
+    "open_prs": 6751,
+    "closed_prs": 21375,
+    "contributors": 1450,
+    "last_commit": "2026-04-02T01:40:23Z",
+    "language": "TypeScript",
+    "language_color": "#3178c6"
+  },
+  {
     "name": "karpathy/autoresearch",
     "url": "https://github.com/karpathy/autoresearch",
-    "stars": 63480,
-    "forks": 8940,
+    "stars": 63502,
+    "forks": 8943,
     "open_issues": 47,
     "closed_issues": 45,
     "open_prs": 116,
     "closed_prs": 153,
     "contributors": 10,
     "last_commit": "2026-03-26T00:07:37Z",
+    "language": "Python",
+    "language_color": "#3572A5"
+  },
+  {
+    "name": "stanford-oval/storm",
+    "url": "https://github.com/stanford-oval/storm",
+    "stars": 28040,
+    "forks": 2554,
+    "open_issues": 58,
+    "closed_issues": 165,
+    "open_prs": 33,
+    "closed_prs": 53,
+    "contributors": 26,
+    "last_commit": "2025-09-30T18:07:17Z",
     "language": "Python",
     "language_color": "#3572A5"
   },
@@ -30,8 +58,8 @@
   {
     "name": "K-Dense-AI/claude-scientific-skills",
     "url": "https://github.com/K-Dense-AI/claude-scientific-skills",
-    "stars": 17055,
-    "forks": 1862,
+    "stars": 17060,
+    "forks": 1864,
     "open_issues": 6,
     "closed_issues": 29,
     "open_prs": 21,
@@ -44,8 +72,8 @@
   {
     "name": "Leey21/awesome-ai-research-writing",
     "url": "https://github.com/Leey21/awesome-ai-research-writing",
-    "stars": 15250,
-    "forks": 1202,
+    "stars": 15254,
+    "forks": 1203,
     "open_issues": 8,
     "closed_issues": 12,
     "open_prs": 5,
@@ -59,7 +87,7 @@
     "name": "SakanaAI/AI-Scientist",
     "url": "https://github.com/SakanaAI/AI-Scientist",
     "stars": 12975,
-    "forks": 1853,
+    "forks": 1854,
     "open_issues": 90,
     "closed_issues": 49,
     "open_prs": 21,
@@ -72,7 +100,7 @@
   {
     "name": "aiming-lab/AutoResearchClaw",
     "url": "https://github.com/aiming-lab/AutoResearchClaw",
-    "stars": 9928,
+    "stars": 9934,
     "forks": 1090,
     "open_issues": 0,
     "closed_issues": 111,
@@ -100,7 +128,7 @@
   {
     "name": "Orchestra-Research/AI-Research-SKILLs",
     "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs",
-    "stars": 5968,
+    "stars": 5969,
     "forks": 461,
     "open_issues": 5,
     "closed_issues": 14,
@@ -128,7 +156,7 @@
   {
     "name": "wanshuiyin/Auto-claude-code-research-in-sleep",
     "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep",
-    "stars": 5164,
+    "stars": 5168,
     "forks": 429,
     "open_issues": 9,
     "closed_issues": 30,
@@ -156,8 +184,8 @@
   {
     "name": "SakanaAI/AI-Scientist-v2",
     "url": "https://github.com/SakanaAI/AI-Scientist-v2",
-    "stars": 4371,
-    "forks": 635,
+    "stars": 4376,
+    "forks": 638,
     "open_issues": 39,
     "closed_issues": 30,
     "open_prs": 22,
@@ -170,8 +198,8 @@
   {
     "name": "aiming-lab/MetaClaw",
     "url": "https://github.com/aiming-lab/MetaClaw",
-    "stars": 3403,
-    "forks": 363,
+    "stars": 3407,
+    "forks": 364,
     "open_issues": 6,
     "closed_issues": 29,
     "open_prs": 4,
@@ -224,6 +252,48 @@
     "language_color": "#3572A5"
   },
   {
+    "name": "EvoScientist/EvoScientist",
+    "url": "https://github.com/EvoScientist/EvoScientist",
+    "stars": 2556,
+    "forks": 136,
+    "open_issues": 9,
+    "closed_issues": 29,
+    "open_prs": 9,
+    "closed_prs": 12,
+    "contributors": 16,
+    "last_commit": "2026-03-31T08:52:46Z",
+    "language": "Python",
+    "language_color": "#3572A5"
+  },
+  {
+    "name": "getcompanion-ai/feynman",
+    "url": "https://github.com/getcompanion-ai/feynman",
+    "stars": 1535,
+    "forks": 144,
+    "open_issues": 0,
+    "closed_issues": 11,
+    "open_prs": 1,
+    "closed_prs": 7,
+    "contributors": 5,
+    "last_commit": "2026-03-31T18:02:07Z",
+    "language": "TypeScript",
+    "language_color": "#3178c6"
+  },
+  {
+    "name": "HKUDS/Auto-Deep-Research",
+    "url": "https://github.com/HKUDS/Auto-Deep-Research",
+    "stars": 1472,
+    "forks": 205,
+    "open_issues": 32,
+    "closed_issues": 2,
+    "open_prs": 0,
+    "closed_prs": 0,
+    "contributors": 5,
+    "last_commit": "2025-10-16T06:38:48Z",
+    "language": "Python",
+    "language_color": "#3572A5"
+  },
+  {
     "name": "K-Dense-AI/claude-scientific-writer",
     "url": "https://github.com/K-Dense-AI/claude-scientific-writer",
     "stars": 1374,
@@ -254,7 +324,7 @@
   {
     "name": "trevin-creator/autoresearch-mlx",
     "url": "https://github.com/trevin-creator/autoresearch-mlx",
-    "stars": 1189,
+    "stars": 1188,
     "forks": 246,
     "open_issues": 5,
     "closed_issues": 0,
@@ -308,6 +378,20 @@
     "language_color": "#3178c6"
   },
   {
+    "name": "xjtulyc/MedgeClaw",
+    "url": "https://github.com/xjtulyc/MedgeClaw",
+    "stars": 936,
+    "forks": 320,
+    "open_issues": 3,
+    "closed_issues": 0,
+    "open_prs": 2,
+    "closed_prs": 0,
+    "contributors": 3,
+    "last_commit": "2026-03-10T09:27:52Z",
+    "language": "TeX",
+    "language_color": "#3D6117"
+  },
+  {
     "name": "wu-yc/LabClaw",
     "url": "https://github.com/wu-yc/LabClaw",
     "stars": 915,
@@ -338,7 +422,7 @@
   {
     "name": "mshumer/autonomous-researcher",
     "url": "https://github.com/mshumer/autonomous-researcher",
-    "stars": 800,
+    "stars": 799,
     "forks": 168,
     "open_issues": 1,
     "closed_issues": 1,
@@ -380,7 +464,7 @@
   {
     "name": "ResearAI/DeepScientist",
     "url": "https://github.com/ResearAI/DeepScientist",
-    "stars": 662,
+    "stars": 665,
     "forks": 35,
     "open_issues": 7,
     "closed_issues": 2,
@@ -392,9 +476,23 @@
     "language_color": "#3178c6"
   },
   {
+    "name": "EurekaClaw/EurekaClaw",
+    "url": "https://github.com/EurekaClaw/EurekaClaw",
+    "stars": 639,
+    "forks": 62,
+    "open_issues": 5,
+    "closed_issues": 5,
+    "open_prs": 2,
+    "closed_prs": 2,
+    "contributors": 11,
+    "last_commit": "2026-03-30T21:03:30Z",
+    "language": "Python",
+    "language_color": "#3572A5"
+  },
+  {
     "name": "TIGER-AI-Lab/OpenResearcher",
     "url": "https://github.com/TIGER-AI-Lab/OpenResearcher",
-    "stars": 612,
+    "stars": 613,
     "forks": 64,
     "open_issues": 3,
     "closed_issues": 1,
@@ -408,7 +506,7 @@
   {
     "name": "ClawBio/ClawBio",
     "url": "https://github.com/ClawBio/ClawBio",
-    "stars": 569,
+    "stars": 570,
     "forks": 105,
     "open_issues": 15,
     "closed_issues": 11,
@@ -418,6 +516,20 @@
     "last_commit": "2026-04-01T08:49:16Z",
     "language": "HTML",
     "language_color": "#e34c26"
+  },
+  {
+    "name": "beita6969/ScienceClaw",
+    "url": "https://github.com/beita6969/ScienceClaw",
+    "stars": 549,
+    "forks": 51,
+    "open_issues": 0,
+    "closed_issues": 0,
+    "open_prs": 7,
+    "closed_prs": 7,
+    "contributors": 2,
+    "last_commit": "2026-03-12T12:09:59Z",
+    "language": "TypeScript",
+    "language_color": "#3178c6"
   },
   {
     "name": "wentorai/Research-Claw",
@@ -450,7 +562,7 @@
   {
     "name": "jimmc414/Kosmos",
     "url": "https://github.com/jimmc414/Kosmos",
-    "stars": 480,
+    "stars": 481,
     "forks": 92,
     "open_issues": 4,
     "closed_issues": 44,
@@ -478,7 +590,7 @@
   {
     "name": "OpenRaiser/NanoResearch",
     "url": "https://github.com/OpenRaiser/NanoResearch",
-    "stars": 372,
+    "stars": 375,
     "forks": 57,
     "open_issues": 4,
     "closed_issues": 0,
@@ -490,9 +602,23 @@
     "language_color": "#3572A5"
   },
   {
+    "name": "aristoteleo/PantheonOS",
+    "url": "https://github.com/aristoteleo/PantheonOS",
+    "stars": 350,
+    "forks": 44,
+    "open_issues": 7,
+    "closed_issues": 14,
+    "open_prs": 9,
+    "closed_prs": 7,
+    "contributors": 11,
+    "last_commit": "2026-03-31T09:03:20Z",
+    "language": "Python",
+    "language_color": "#3572A5"
+  },
+  {
     "name": "SpectrAI-Initiative/InnoClaw",
     "url": "https://github.com/SpectrAI-Initiative/InnoClaw",
-    "stars": 349,
+    "stars": 350,
     "forks": 20,
     "open_issues": 8,
     "closed_issues": 21,
@@ -520,7 +646,7 @@
   {
     "name": "Runchuan-BU/BioClaw",
     "url": "https://github.com/Runchuan-BU/BioClaw",
-    "stars": 297,
+    "stars": 298,
     "forks": 37,
     "open_issues": 3,
     "closed_issues": 0,
@@ -630,6 +756,20 @@
     "language_color": "#3572A5"
   },
   {
+    "name": "zaixizhang/STELLA",
+    "url": "https://github.com/zaixizhang/STELLA",
+    "stars": 122,
+    "forks": 15,
+    "open_issues": 0,
+    "closed_issues": 1,
+    "open_prs": 0,
+    "closed_prs": 0,
+    "contributors": 4,
+    "last_commit": "2026-03-19T05:42:25Z",
+    "language": "Python",
+    "language_color": "#3572A5"
+  },
+  {
     "name": "zjYao36/Auto-Research-Refine",
     "url": "https://github.com/zjYao36/Auto-Research-Refine",
     "stars": 114,
@@ -654,6 +794,20 @@
     "closed_prs": 3,
     "contributors": 4,
     "last_commit": "2026-03-31T12:50:50Z",
+    "language": "Python",
+    "language_color": "#3572A5"
+  },
+  {
+    "name": "jameslemon2002/research-idea-explorer",
+    "url": "https://github.com/jameslemon2002/research-idea-explorer",
+    "stars": 106,
+    "forks": 7,
+    "open_issues": 1,
+    "closed_issues": 0,
+    "open_prs": 0,
+    "closed_prs": 0,
+    "contributors": 1,
+    "last_commit": "2026-04-02T01:11:56Z",
     "language": "Python",
     "language_color": "#3572A5"
   },
@@ -742,6 +896,34 @@
     "language_color": "#3572A5"
   },
   {
+    "name": "nanoAgentTeam/research-claw",
+    "url": "https://github.com/nanoAgentTeam/research-claw",
+    "stars": 62,
+    "forks": 8,
+    "open_issues": 0,
+    "closed_issues": 3,
+    "open_prs": 0,
+    "closed_prs": 0,
+    "contributors": 3,
+    "last_commit": "2026-03-29T13:00:42Z",
+    "language": "Python",
+    "language_color": "#3572A5"
+  },
+  {
+    "name": "GAIR-NLP/ASI-Evolve",
+    "url": "https://github.com/GAIR-NLP/ASI-Evolve",
+    "stars": 60,
+    "forks": 6,
+    "open_issues": 0,
+    "closed_issues": 0,
+    "open_prs": 0,
+    "closed_prs": 0,
+    "contributors": 3,
+    "last_commit": "2026-04-01T04:02:59Z",
+    "language": "Python",
+    "language_color": "#3572A5"
+  },
+  {
     "name": "Noietch/ResearchClaw",
     "url": "https://github.com/Noietch/ResearchClaw",
     "stars": 59,
@@ -784,6 +966,34 @@
     "language_color": "#3572A5"
   },
   {
+    "name": "Zaoqu-Liu/ScienceClaw",
+    "url": "https://github.com/Zaoqu-Liu/ScienceClaw",
+    "stars": 42,
+    "forks": 7,
+    "open_issues": 0,
+    "closed_issues": 2,
+    "open_prs": 0,
+    "closed_prs": 0,
+    "contributors": 1,
+    "last_commit": "2026-03-18T07:39:50Z",
+    "language": "Shell",
+    "language_color": "#89e051"
+  },
+  {
+    "name": "Schuture/Meissa",
+    "url": "https://github.com/Schuture/Meissa",
+    "stars": 41,
+    "forks": 2,
+    "open_issues": 0,
+    "closed_issues": 1,
+    "open_prs": 0,
+    "closed_prs": 0,
+    "contributors": 1,
+    "last_commit": "2026-03-17T17:46:41Z",
+    "language": "Python",
+    "language_color": "#3572A5"
+  },
+  {
     "name": "InternScience/Dolphin",
     "url": "https://github.com/InternScience/Dolphin",
     "stars": 41,
@@ -800,7 +1010,7 @@
   {
     "name": "drpedapati/sciclaw",
     "url": "https://github.com/drpedapati/sciclaw",
-    "stars": 37,
+    "stars": 38,
     "forks": 7,
     "open_issues": 20,
     "closed_issues": 78,
@@ -882,6 +1092,20 @@
     "language_color": "#ccc"
   },
   {
+    "name": "THU-KEG/Awesome-AI-for-Research",
+    "url": "https://github.com/THU-KEG/Awesome-AI-for-Research",
+    "stars": 23,
+    "forks": 0,
+    "open_issues": 0,
+    "closed_issues": 0,
+    "open_prs": 0,
+    "closed_prs": 0,
+    "contributors": 11,
+    "last_commit": "2026-04-01T15:11:06Z",
+    "language": "Python",
+    "language_color": "#3572A5"
+  },
+  {
     "name": "OwnLabAI/ownlab",
     "url": "https://github.com/OwnLabAI/ownlab",
     "stars": 19,
@@ -892,6 +1116,20 @@
     "closed_prs": 0,
     "contributors": 1,
     "last_commit": "2026-04-01T15:46:11Z",
+    "language": "Python",
+    "language_color": "#3572A5"
+  },
+  {
+    "name": "Biajin-PKU/PaperIndex",
+    "url": "https://github.com/Biajin-PKU/PaperIndex",
+    "stars": 17,
+    "forks": 2,
+    "open_issues": 0,
+    "closed_issues": 0,
+    "open_prs": 0,
+    "closed_prs": 0,
+    "contributors": 1,
+    "last_commit": "2026-03-15T11:57:06Z",
     "language": "Python",
     "language_color": "#3572A5"
   },
@@ -910,6 +1148,20 @@
     "language_color": "#3572A5"
   },
   {
+    "name": "albert-ying/autonomous-lab",
+    "url": "https://github.com/albert-ying/autonomous-lab",
+    "stars": 7,
+    "forks": 4,
+    "open_issues": 0,
+    "closed_issues": 0,
+    "open_prs": 2,
+    "closed_prs": 0,
+    "contributors": 2,
+    "last_commit": "2026-03-25T23:50:39Z",
+    "language": "Python",
+    "language_color": "#3572A5"
+  },
+  {
     "name": "Biajin-PKU/ScholarForge",
     "url": "https://github.com/Biajin-PKU/ScholarForge",
     "stars": 7,
@@ -922,6 +1174,20 @@
     "last_commit": "2026-03-18T16:02:26Z",
     "language": "Python",
     "language_color": "#3572A5"
+  },
+  {
+    "name": "sciclaw/sciclaw",
+    "url": "https://github.com/sciclaw/sciclaw",
+    "stars": 4,
+    "forks": 0,
+    "open_issues": 0,
+    "closed_issues": 0,
+    "open_prs": 0,
+    "closed_prs": 0,
+    "contributors": 42,
+    "last_commit": "2026-03-18T18:50:55Z",
+    "language": "Go",
+    "language_color": "#00ADD8"
   },
   {
     "name": "esmailnaim/Autonomous-Research-Agent",
@@ -1003,7 +1269,7 @@
     "open_prs": 0,
     "closed_prs": 0,
     "contributors": 30,
-    "last_commit": "2026-04-01T22:29:29Z",
+    "last_commit": "2026-04-02T01:41:47Z",
     "language": "Python",
     "language_color": "#3572A5"
   },
@@ -1087,7 +1353,7 @@
     "open_prs": 0,
     "closed_prs": 0,
     "contributors": 2,
-    "last_commit": "2026-04-01T22:28:53Z",
+    "last_commit": "2026-04-02T01:41:14Z",
     "language": "Unknown",
     "language_color": "#ccc"
   },
