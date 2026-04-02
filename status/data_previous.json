@@ -2,8 +2,8 @@
   {
     "name": "karpathy/autoresearch",
     "url": "https://github.com/karpathy/autoresearch",
-    "stars": 63577,
-    "forks": 8960,
+    "stars": 63592,
+    "forks": 8964,
     "open_issues": 47,
     "closed_issues": 45,
     "open_prs": 116,
@@ -44,7 +44,7 @@
   {
     "name": "K-Dense-AI/claude-scientific-skills",
     "url": "https://github.com/K-Dense-AI/claude-scientific-skills",
-    "stars": 17072,
+    "stars": 17073,
     "forks": 1866,
     "open_issues": 6,
     "closed_issues": 29,
@@ -58,7 +58,7 @@
   {
     "name": "Leey21/awesome-ai-research-writing",
     "url": "https://github.com/Leey21/awesome-ai-research-writing",
-    "stars": 15276,
+    "stars": 15281,
     "forks": 1205,
     "open_issues": 9,
     "closed_issues": 12,
@@ -100,7 +100,7 @@
   {
     "name": "aiming-lab/AutoResearchClaw",
     "url": "https://github.com/aiming-lab/AutoResearchClaw",
-    "stars": 9951,
+    "stars": 9953,
     "forks": 1090,
     "open_issues": 1,
     "closed_issues": 111,
@@ -128,7 +128,7 @@
   {
     "name": "Orchestra-Research/AI-Research-SKILLs",
     "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs",
-    "stars": 5970,
+    "stars": 5972,
     "forks": 462,
     "open_issues": 5,
     "closed_issues": 14,
@@ -156,7 +156,7 @@
   {
     "name": "wanshuiyin/Auto-claude-code-research-in-sleep",
     "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep",
-    "stars": 5180,
+    "stars": 5181,
     "forks": 430,
     "open_issues": 9,
     "closed_issues": 30,
@@ -184,7 +184,7 @@
   {
     "name": "SakanaAI/AI-Scientist-v2",
     "url": "https://github.com/SakanaAI/AI-Scientist-v2",
-    "stars": 4390,
+    "stars": 4393,
     "forks": 640,
     "open_issues": 39,
     "closed_issues": 30,
@@ -198,8 +198,8 @@
   {
     "name": "aiming-lab/MetaClaw",
     "url": "https://github.com/aiming-lab/MetaClaw",
-    "stars": 3413,
-    "forks": 364,
+    "stars": 3415,
+    "forks": 365,
     "open_issues": 6,
     "closed_issues": 29,
     "open_prs": 4,
@@ -254,7 +254,7 @@
   {
     "name": "EvoScientist/EvoScientist",
     "url": "https://github.com/EvoScientist/EvoScientist",
-    "stars": 2562,
+    "stars": 2563,
     "forks": 136,
     "open_issues": 9,
     "closed_issues": 29,
@@ -322,9 +322,23 @@
     "language_color": "#3572A5"
   },
   {
+    "name": "mims-harvard/ToolUniverse",
+    "url": "https://github.com/mims-harvard/ToolUniverse",
+    "stars": 1204,
+    "forks": 189,
+    "open_issues": 15,
+    "closed_issues": 22,
+    "open_prs": 13,
+    "closed_prs": 32,
+    "contributors": 20,
+    "last_commit": "2026-03-29T22:42:22Z",
+    "language": "Python",
+    "language_color": "#3572A5"
+  },
+  {
     "name": "trevin-creator/autoresearch-mlx",
     "url": "https://github.com/trevin-creator/autoresearch-mlx",
-    "stars": 1188,
+    "stars": 1189,
     "forks": 246,
     "open_issues": 5,
     "closed_issues": 0,
@@ -506,7 +520,7 @@
   {
     "name": "ClawBio/ClawBio",
     "url": "https://github.com/ClawBio/ClawBio",
-    "stars": 570,
+    "stars": 571,
     "forks": 105,
     "open_issues": 15,
     "closed_issues": 11,
@@ -590,8 +604,8 @@
   {
     "name": "OpenRaiser/NanoResearch",
     "url": "https://github.com/OpenRaiser/NanoResearch",
-    "stars": 377,
-    "forks": 58,
+    "stars": 378,
+    "forks": 59,
     "open_issues": 4,
     "closed_issues": 0,
     "open_prs": 0,
@@ -600,6 +614,20 @@
     "last_commit": "2026-03-30T05:00:30Z",
     "language": "Python",
     "language_color": "#3572A5"
+  },
+  {
+    "name": "SpectrAI-Initiative/InnoClaw",
+    "url": "https://github.com/SpectrAI-Initiative/InnoClaw",
+    "stars": 351,
+    "forks": 20,
+    "open_issues": 8,
+    "closed_issues": 21,
+    "open_prs": 0,
+    "closed_prs": 1,
+    "contributors": 8,
+    "last_commit": "2026-04-01T17:03:30Z",
+    "language": "TypeScript",
+    "language_color": "#3178c6"
   },
   {
     "name": "aristoteleo/PantheonOS",
@@ -614,20 +642,6 @@
     "last_commit": "2026-03-31T09:03:20Z",
     "language": "Python",
     "language_color": "#3572A5"
-  },
-  {
-    "name": "SpectrAI-Initiative/InnoClaw",
-    "url": "https://github.com/SpectrAI-Initiative/InnoClaw",
-    "stars": 350,
-    "forks": 20,
-    "open_issues": 8,
-    "closed_issues": 21,
-    "open_prs": 0,
-    "closed_prs": 1,
-    "contributors": 8,
-    "last_commit": "2026-04-01T17:03:30Z",
-    "language": "TypeScript",
-    "language_color": "#3178c6"
   },
   {
     "name": "allenai/codescientist",
@@ -688,7 +702,7 @@
   {
     "name": "Sibyl-Research-Team/AutoResearch-SibylSystem",
     "url": "https://github.com/Sibyl-Research-Team/AutoResearch-SibylSystem",
-    "stars": 209,
+    "stars": 210,
     "forks": 27,
     "open_issues": 0,
     "closed_issues": 1,
@@ -800,7 +814,7 @@
   {
     "name": "jameslemon2002/research-idea-explorer",
     "url": "https://github.com/jameslemon2002/research-idea-explorer",
-    "stars": 107,
+    "stars": 108,
     "forks": 7,
     "open_issues": 1,
     "closed_issues": 0,
@@ -1213,7 +1227,7 @@
     "open_prs": 0,
     "closed_prs": 0,
     "contributors": 2,
-    "last_commit": "2026-04-02T01:05:07Z",
+    "last_commit": "2026-04-02T03:27:19Z",
     "language": "Python",
     "language_color": "#3572A5"
   },

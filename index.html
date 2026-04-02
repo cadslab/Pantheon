@@ -2,11 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no"
-    />
-    <title>Pantheon for Auto Research</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pantheon - Automated Research</title>
     <style>
       * {
         margin: 0;
@@ -18,7 +15,7 @@
         font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
         min-height: 100vh;
-        padding: 20px 12px;
+        padding: 40px 20px;
         color: #1e293b;
         line-height: 1.6;
       }
@@ -26,21 +23,20 @@
       .container {
         max-width: 1400px;
         margin: 0 auto;
-        width: 100%;
       }
 
       .hero {
         text-align: center;
-        margin-bottom: 30px;
-        padding: 30px 20px;
+        margin-bottom: 40px;
+        padding: 50px 30px;
         background: white;
-        border-radius: 20px;
+        border-radius: 24px;
         box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
         border: 1px solid rgba(255, 255, 255, 0.8);
       }
 
       .hero h1 {
-        font-size: 42px;
+        font-size: 52px;
         font-weight: 800;
         color: #0f172a;
         margin-bottom: 12px;
@@ -48,57 +44,55 @@
       }
 
       .hero h2 {
-        font-size: 20px;
+        font-size: 24px;
         color: #475569;
         font-weight: 500;
         margin-bottom: 8px;
       }
 
       .hero h3 {
-        font-size: 20px;
+        font-size: 26px;
         color: #64748b;
         font-weight: 400;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
       }
 
       .stats-row {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 16px;
-        margin-top: 20px;
+        gap: 36px;
+        margin-top: 24px;
         flex-wrap: wrap;
       }
 
       .stat-item {
-        font-size: 15px;
+        font-size: 18px;
         font-weight: 600;
         color: #334155;
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 8px;
-        padding: 8px 14px;
+        gap: 10px;
+        padding: 10px 16px;
         background: #f1f5f9;
         border-radius: 12px;
-        min-height: 44px;
-        white-space: nowrap;
+        height: 48px;
       }
 
       .stat-item span {
-        font-size: 20px;
+        font-size: 26px;
         color: #2563eb;
         font-weight: 700;
       }
 
       .add-more-btn {
-        height: 44px;
-        padding: 0 24px;
+        height: 48px;
+        padding: 0 28px;
         background: linear-gradient(135deg, #3b82f6, #2563eb);
         color: white;
         border: none;
         border-radius: 12px;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -106,7 +100,6 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        white-space: nowrap;
       }
 
       .add-more-btn:hover {
@@ -119,7 +112,7 @@
       }
 
       .section {
-        margin-bottom: 30px;
+        margin-bottom: 50px;
       }
 
       .poem-container {
@@ -127,44 +120,42 @@
         margin: 0 auto;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        line-height: 1.8;
+        gap: 30px;
+        line-height: 2;
         white-space: pre-wrap;
       }
 
       .poem-column {
         font-style: italic;
-        font-size: 15px;
+        font-size: 17px;
         color: #334155;
-        padding: 20px;
+        padding: 32px;
         background: white;
-        border-radius: 16px;
+        border-radius: 20px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
         border-left: 4px solid #2563eb;
       }
 
       .card {
         background: white;
-        border-radius: 16px;
-        padding: 20px;
-        margin-bottom: 20px;
+        border-radius: 20px;
+        padding: 36px;
+        margin-bottom: 30px;
         box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
         transition: all 0.3s ease;
         border: 1px solid rgba(255, 255, 255, 0.9);
         text-align: center;
-        width: 100%;
-        overflow: hidden;
       }
 
       .card h2 {
-        font-size: 20px;
-        margin-bottom: 16px;
+        font-size: 26px;
+        margin-bottom: 24px;
         color: #1e293b;
         border-left: 6px solid #3b82f6;
-        padding: 8px 16px;
+        padding: 10px 20px;
         font-weight: 700;
         background: #f8fafc;
-        border-radius: 8px;
+        border-radius: 10px;
         display: inline-block;
         text-align: center;
       }
@@ -185,38 +176,55 @@
 
       .table-wrapper {
         overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        border-radius: 12px;
+        border-radius: 14px;
         background: white;
         box-shadow: inset 0 0 0 1px #e2e8f0;
-        width: 100%;
       }
 
       .table-wrapper-daily {
         box-shadow:
-          inset 0 0 0 1px #93cfd5,
+          inset 0 0 0 1px #93c5fd,
           0 4px 12px rgba(37, 99, 235, 0.08);
       }
 
       table {
         width: 100%;
-        min-width: 1000px;
         border-collapse: collapse;
         margin: 0 auto;
+        /* 自动布局：根据内容自动调整列宽 */
+        table-layout: auto;
       }
 
       th {
         background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
-        padding: 12px 10px;
+        padding: 16px 12px;
         text-align: left;
         font-weight: 700;
         color: #334155;
         cursor: pointer;
         user-select: none;
-        white-space: nowrap;
+        white-space: normal;
         border-bottom: 2px solid #e2e8f0;
-        font-size: 13px;
+        font-size: 15px;
         letter-spacing: 0.3px;
+        line-height: 1.4;
+      }
+
+      /* Developer 列：限制最大宽度，超长省略 */
+      th:nth-child(2),
+      td:nth-child(2) {
+        max-width: 140px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* 所有数字列：右对齐（不设固定宽度） */
+      th.num-col,
+      td.num {
+        text-align: right !important;
+        padding: 16px 12px;
+        white-space: nowrap;
       }
 
       th:hover {
@@ -234,12 +242,7 @@
         background: linear-gradient(135deg, #2563eb, #1d4ed8);
       }
 
-      .num-col {
-        text-align: right !important;
-      }
-
       .num {
-        text-align: right !important;
         font-family: "Segoe UI Mono", "Roboto Mono", monospace;
         font-weight: 600;
         color: #0f172a;
@@ -248,7 +251,7 @@
 
       .table-daily .num {
         font-weight: 700;
-        font-size: 13px;
+        font-size: 15px;
       }
 
       .num-positive {
@@ -266,13 +269,12 @@
       }
 
       td {
-        padding: 12px 10px;
+        padding: 16px 12px;
         border-bottom: 1px solid #f1f5f9;
         color: #475569;
-        font-size: 13px;
+        font-size: 15px;
         transition: all 0.2s ease;
         text-align: left;
-        white-space: nowrap;
       }
 
       tbody tr:last-child td {
@@ -293,7 +295,7 @@
         color: #2563eb;
         text-decoration: none;
         font-weight: 600;
-        padding: 2px 0;
+        padding: 4px 0;
         display: inline-block;
       }
 
@@ -302,81 +304,32 @@
         color: #1d4ed8;
       }
 
-      .language-badge {
-        display: inline-block;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: 600;
-        color: #fff;
-      }
-
       .footer {
         text-align: center;
-        margin-top: 40px;
+        margin-top: 80px;
         color: #64748b;
-        font-size: 14px;
-        padding: 20px;
+        font-size: 15px;
+        padding: 30px;
         background: white;
-        border-radius: 16px;
+        border-radius: 20px;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
       }
 
-      /* 移动端适配 */
       @media (max-width: 768px) {
         .hero h1 {
-          font-size: 32px;
-        }
-        .hero h2 {
-          font-size: 18px;
+          font-size: 38px;
         }
         .hero h3 {
-          font-size: 16px;
+          font-size: 22px;
         }
         .stats-row {
-          gap: 12px;
-        }
-        .stat-item {
-          font-size: 14px;
-          padding: 6px 12px;
-        }
-        .add-more-btn {
-          font-size: 14px;
-          padding: 0 20px;
+          gap: 16px;
         }
         .poem-container {
           grid-template-columns: 1fr;
-          gap: 16px;
-        }
-        .poem-column {
-          font-size: 14px;
-          padding: 16px;
         }
         .card {
-          padding: 16px;
-        }
-        .card h2 {
-          font-size: 18px;
-        }
-        table {
-          min-width: 900px;
-        }
-        th,
-        td {
-          padding: 10px 8px;
-          font-size: 12px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        body {
-          padding: 15px 8px;
-        }
-        .hero {
-          padding: 20px 15px;
-        }
-        table {
-          min-width: 800px;
+          padding: 24px;
         }
       }
     </style>
@@ -391,10 +344,13 @@
       const addMoreUrl = "https://github.com/cadslab/Pantheon/issues";
       let projectData = [];
       let dailyChangeData = [];
+      let generalData = [];
+      let generalChangeData = [];
 
       function formatDate(dateStr) {
+        if (!dateStr) return "Unknown";
         const date = new Date(dateStr);
-        return date.toLocaleString();
+        return isNaN(date.getTime()) ? "Invalid date" : date.toLocaleString();
       }
 
       function formatDailyChange(value) {
@@ -408,23 +364,36 @@
 
       async function loadData() {
         try {
-          const currentRes = await fetch("./data_current.json");
+          const currentRes = await fetch("./status/science_data_current.json");
           if (!currentRes.ok)
-            throw new Error("Failed to load data_current.json");
+            throw new Error("Failed to load science_data_current.json");
           projectData = await currentRes.json();
 
-          const changeRes = await fetch("./data_change.json");
-          if (!changeRes.ok) throw new Error("Failed to load data_change.json");
+          const changeRes = await fetch("./status/science_data_change.json");
+          if (!changeRes.ok)
+            throw new Error("Failed to load science_data_change.json");
           dailyChangeData = await changeRes.json();
+
+          const generalRes = await fetch("./status/general_data_current.json");
+          if (!generalRes.ok)
+            throw new Error("Failed to load general_data_current.json");
+          generalData = await generalRes.json();
+
+          const generalChangeRes = await fetch(
+            "./status/general_data_change.json",
+          );
+          if (!generalChangeRes.ok)
+            throw new Error("Failed to load general_data_change.json");
+          generalChangeData = await generalChangeRes.json();
 
           renderPage();
         } catch (err) {
           document.getElementById("app").innerHTML = `
-        <div class="hero">
-          <h1>⚠️ Failed to load</h1>
-          <h3>Make sure data_current.json and data_change.json are in the same folder</h3>
-        </div>
-      `;
+          <div class="hero">
+            <h1>⚠️ Failed to load</h1>
+            <h3>Make sure all 4 JSON files are in the /status/ folder</h3>
+          </div>
+        `;
           console.error("Load failed", err);
         }
       }
@@ -441,31 +410,29 @@
           : "table-wrapper";
 
         let html = `
-    <div class="${cardClass}">
-      <h2>${title}</h2>
-      <div class="${wrapperClass}">
-        <table id="${id}" class="${tableClass}">
-          <thead>
-            <tr>
-              <th>Project</th>
-              <th>Developer</th>
-              <th>Language</th>
-              <th class="num-col">Stars</th>
-              <th class="num-col">Forks</th>
-              <th class="num-col">Open Issues</th>
-              <th class="num-col">Closed Issues</th>
-              <th class="num-col">Open Pulls</th>
-              <th class="num-col">Closed Pulls</th>
-              <th class="num-col">Contributors</th>
-              <th>Last Commit</th>
-            </tr>
-          </thead>
-          <tbody>`;
+      <div class="${cardClass}">
+        <h2>${title}</h2>
+        <div class="${wrapperClass}">
+          <table id="${id}" class="${tableClass}">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Developer</th>
+                <th class="num-col">Stars</th>
+                <th class="num-col">Forks</th>
+                <th class="num-col">Open<br>Issues</th>
+                <th class="num-col">Closed<br>Issues</th>
+                <th class="num-col">Open<br>Pulls</th>
+                <th class="num-col">Closed<br>Pulls</th>
+                <th class="num-col">Contributors</th>
+                <th>Last Commit</th>
+              </tr>
+            </thead>
+            <tbody>`;
 
         data.forEach((item) => {
+          if (!item.name) return;
           const [dev, proj] = item.name.split("/");
-          const language = item.language || "Unknown";
-          const langColor = item.language_color || "#64748b";
 
           const starsCell = isDaily
             ? formatDailyChange(item.stars)
@@ -490,18 +457,17 @@
             : formatNum(item.contributors);
 
           html += `<tr>
-        <td><a href="${item.url}" target="_blank">${proj}</a></td>
-        <td>${dev}</td>
-        <td><span class="language-badge" style="background:${langColor}">${language}</span></td>
-        <td class="num">${starsCell}</td>
-        <td class="num">${forksCell}</td>
-        <td class="num">${openIssuesCell}</td>
-        <td class="num">${closedIssuesCell}</td>
-        <td class="num">${openPrsCell}</td>
-        <td class="num">${closedPrsCell}</td>
-        <td class="num">${contributorsCell}</td>
-        <td>${formatDate(item.last_commit)}</td>
-      </tr>`;
+          <td><a href="${item.url}" target="_blank">${proj || item.name}</a></td>
+          <td>${dev || "-"}</td>
+          <td class="num">${starsCell}</td>
+          <td class="num">${forksCell}</td>
+          <td class="num">${openIssuesCell}</td>
+          <td class="num">${closedIssuesCell}</td>
+          <td class="num">${openPrsCell}</td>
+          <td class="num">${closedPrsCell}</td>
+          <td class="num">${contributorsCell}</td>
+          <td>${formatDate(item.last_commit)}</td>
+        </tr>`;
         });
 
         html += `</tbody></table></div></div>`;
@@ -512,7 +478,7 @@
         const table = document.getElementById(tableId);
         if (!table) return;
         const headers = table.querySelectorAll("th");
-        const numColumns = [3, 4, 5, 6, 7, 8, 9];
+        const numColumns = [2, 3, 4, 5, 6, 7, 8];
 
         headers.forEach((th, idx) => {
           let sortOrder = 1;
@@ -552,7 +518,6 @@
             contributorGainer: "None",
           };
         }
-
         const sortedByStars = [...dailyChangeData].sort(
           (a, b) => b.stars - a.stars,
         );
@@ -567,21 +532,50 @@
         );
 
         return {
-          starGainer: sortedByStars[0]?.name.split("/")[1] || "None",
-          forkGainer: sortedByForks[0]?.name.split("/")[1] || "None",
-          fixedIssues: sortedByClosedIssues[0]?.name.split("/")[1] || "None",
+          starGainer: sortedByStars[0]?.name?.split("/")[1] || "None",
+          forkGainer: sortedByForks[0]?.name?.split("/")[1] || "None",
+          fixedIssues: sortedByClosedIssues[0]?.name?.split("/")[1] || "None",
           contributorGainer:
-            sortedByContributors[0]?.name.split("/")[1] || "None",
+            sortedByContributors[0]?.name?.split("/")[1] || "None",
+        };
+      }
+
+      function getGeneralDailyTopGainers() {
+        if (!generalChangeData.length) {
+          return {
+            starGainer: "None",
+            forkGainer: "None",
+            fixedIssues: "None",
+            contributorGainer: "None",
+          };
+        }
+        const sortedByStars = [...generalChangeData].sort(
+          (a, b) => b.stars - a.stars,
+        );
+        const sortedByForks = [...generalChangeData].sort(
+          (a, b) => b.forks - a.forks,
+        );
+        const sortedByClosedIssues = [...generalChangeData].sort(
+          (a, b) => b.closed_issues - a.closed_issues,
+        );
+        const sortedByContributors = [...generalChangeData].sort(
+          (a, b) => b.contributors - a.contributors,
+        );
+
+        return {
+          starGainer: sortedByStars[0]?.name?.split("/")[1] || "None",
+          forkGainer: sortedByForks[0]?.name?.split("/")[1] || "None",
+          fixedIssues: sortedByClosedIssues[0]?.name?.split("/")[1] || "None",
+          contributorGainer:
+            sortedByContributors[0]?.name?.split("/")[1] || "None",
         };
       }
 
       function renderPage() {
         const app = document.getElementById("app");
-        if (!projectData.length || !dailyChangeData.length) {
-          app.innerHTML = `<div class="hero"><h1>📊 No project data</h1></div>`;
-          return;
-        }
+        const totalProjects = projectData.length + generalData.length;
 
+        const dailyStats = getDailyTopGainers();
         const sortedByStars = [...projectData].sort(
           (a, b) => b.stars - a.stars,
         );
@@ -608,55 +602,100 @@
         const mostOpenIssuesProject =
           sortedByOpenIssues[0]?.name.split("/")[1] || "None";
 
-        const dailyStats = getDailyTopGainers();
-        const topDailyStarGainer = dailyStats.starGainer;
-        const topDailyForkGainer = dailyStats.forkGainer;
-        const topDailyFixedIssues = dailyStats.fixedIssues;
-        const topDailyContributorGainer = dailyStats.contributorGainer;
+        const generalDailyStats = getGeneralDailyTopGainers();
+        const generalSortedByStars = [...generalData].sort(
+          (a, b) => b.stars - a.stars,
+        );
+        const generalSortedByForks = [...generalData].sort(
+          (a, b) => b.forks - a.forks,
+        );
+        const generalSortedByUpdate = [...generalData].sort(
+          (a, b) => new Date(b.last_commit) - new Date(a.last_commit),
+        );
+        const generalSortedByClosedIssues = [...generalData].sort(
+          (a, b) => b.closed_issues - a.closed_issues,
+        );
+        const generalSortedByOpenIssues = [...generalData].sort(
+          (a, b) => b.open_issues - a.open_issues,
+        );
+
+        const generalTopStar =
+          generalSortedByStars[0]?.name.split("/")[1] || "None";
+        const generalMostForked =
+          generalSortedByForks[0]?.name.split("/")[1] || "None";
+        const generalLatestUpdate =
+          generalSortedByUpdate[0]?.name.split("/")[1] || "None";
+        const generalMostFixed =
+          generalSortedByClosedIssues[0]?.name.split("/")[1] || "None";
+        const generalMostOpenIssues =
+          generalSortedByOpenIssues[0]?.name.split("/")[1] || "None";
 
         app.innerHTML = `
-      <div class="hero">
-        <h1>🏛️</h1>
-        <h1><strong>Pantheon</strong></h1>
-        <h2>Auto Research</h2>
-        <h3>Unlock the Path, Lead the Way</h3>
+        <div class="hero">
+          <h1>🏛️</h1>
+          <h1><strong>Pantheon</strong></h1>
+          <h2>Automated Research</h2>
+          <h3>Unlock the Path, Lead the Way</h3>
 
-        <div class="stats-row">
-          <div class="stat-item">Known Projects: <span>${projectData.length}</span></div>
-          <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
-            Add more
-          </button>
+          <div class="stats-row">
+            <div class="stat-item">Known Projects: <span>${totalProjects}</span></div>
+            <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
+              Add more
+            </button>
+          </div>
+
+          <div class="hero-stats-info" style="margin-top: 20px;">
+            <b>Science Daily:</b> &nbsp;&nbsp;
+            Stars Growth: <b style="color:#059669">${dailyStats.starGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Forks Growth: <b style="color:#059669">${dailyStats.forkGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Fixed Issues: <b style="color:#059669">${dailyStats.fixedIssues}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Contributors: <b style="color:#059669">${dailyStats.contributorGainer}</b>
+          </div>
+
+          <div class="hero-stats-info" style="margin-top: 10px;">
+            <b>General Daily:</b> &nbsp;&nbsp;
+            Stars Growth: <b style="color:#059669">${generalDailyStats.starGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Forks Growth: <b style="color:#059669">${generalDailyStats.forkGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Fixed Issues: <b style="color:#059669">${generalDailyStats.fixedIssues}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Contributors: <b style="color:#059669">${generalDailyStats.contributorGainer}</b>
+          </div>
+
+          <div style="margin-top: 20px; font-size: 15px; color: #475569; line-height: 1.8;">
+            <b>Science Total:</b> &nbsp;&nbsp;
+            Stars: <b>${topStarProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Forked: <b>${mostForkedProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Updated: <b>${latestUpdateProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Fixed: <b>${mostFixedProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Open Issues: <b>${mostOpenIssuesProject}</b>
+          </div>
+
+          <div style="margin-top: 10px; font-size: 15px; color: #475569; line-height: 1.8;">
+            <b>General Total:</b> &nbsp;&nbsp;
+            Stars: <b>${generalTopStar}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Forked: <b>${generalMostForked}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Updated: <b>${generalLatestUpdate}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Fixed: <b>${generalMostFixed}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Open Issues: <b>${generalMostOpenIssues}</b>
+          </div>
         </div>
 
-        <div class="hero-stats-info" style="margin-top: 20px; font-size:14px; color:#475569; line-height:1.8;">
-          <b>Daily:</b> &nbsp;&nbsp;
-          Most Stars Growth: <b style="color:#059669">${topDailyStarGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-          Most Forks Growth: <b style="color:#059669">${topDailyForkGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-          Most Fixed Issues: <b style="color:#059669">${topDailyFixedIssues}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-          Most Contributors Added: <b style="color:#059669">${topDailyContributorGainer}</b>
+        <div class="section">
+          ${renderTable("dailyTable", "📈 Science - Daily Dashboard", dailyChangeData, true)}
+        </div>
+        <div class="section">
+          ${renderTable("dashboardTable", "🔬 Science - Projects Dashboard", projectData)}
         </div>
 
-        <div style="margin-top: 15px; font-size: 14px; color: #475569; line-height: 1.8;">
-          <b>Total:</b> &nbsp;&nbsp;
-          Most Stars: <b>${topStarProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-          Most Forked: <b>${mostForkedProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-          Latest Updated: <b>${latestUpdateProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-          Most Fixed: <b>${mostFixedProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-          Most Open Issues: <b>${mostOpenIssuesProject}</b>
+        <div class="section">
+          ${renderTable("generalDailyTable", "📊 General - Daily Dashboard", generalChangeData, true)}
         </div>
-      </div>
+        <div class="section">
+          ${renderTable("generalDashboardTable", "📦 General - Projects Dashboard", generalData)}
+        </div>
 
-      <div class="section">
-        ${renderTable("dailyTable", "📈 Daily Dashboard", dailyChangeData, true)}
-      </div>
-
-      <div class="section">
-        ${renderTable("dashboardTable", "Projects Dashboard", projectData)}
-      </div>
-
-      <div class="section">
-        <div class="poem-container">
-          <div class="poem-column">
+        <div class="section">
+          <div class="poem-container">
+            <div class="poem-column">
 When chaos first gave way to hidden truths profound,
 Mortal seekers wandered lost, with no clear way bound.
 No need to toil through volumes thousand-fold,
@@ -666,8 +705,8 @@ Since ancient times, all who sought wisdom's gate,
 Faced mountains of texts, vast seas of reason,
 Trials of experiment, strokes of fate,
 Too often spent their years in endless season.
-          </div>
-          <div class="poem-column">
+            </div>
+            <div class="poem-column">
 Now a new path dawns: a bodiless mind,
 Without form or voice, yet with logic refined.
 It reads, it knows, it reasons, it reveals,
@@ -675,19 +714,21 @@ Crossing every barrier truth conceals.
 
 May this art guide all who wander far,
 To find the light, and reach the shining star.
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="footer">
-        <h3>License</h3>
-        <p>MIT License</p>
-      </div>
-    `;
+        <div class="footer">
+          <h3>License</h3>
+          <p>MIT License</p>
+        </div>
+      `;
 
         setTimeout(() => {
           makeTableSortable("dailyTable");
           makeTableSortable("dashboardTable");
+          makeTableSortable("generalDailyTable");
+          makeTableSortable("generalDashboardTable");
         }, 0);
       }
 
