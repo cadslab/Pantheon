@@ -6,10 +6,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # 新增：请求写入权限（原配置保留，无需修改）
     permissions:
       contents: write # 允许读写仓库内容
-      # workflows: write # 如需更新Actions本身才启用，默认注释
     steps:
       - uses: actions/checkout@v3
         with:
@@ -23,19 +21,17 @@ jobs:
       - name: Run Script
         env:
           PANTHEON_TOKEN: ${{ secrets.PANTHEON_TOKEN }} # 传递Token给脚本
-        run: python fetch_stats.py
+        run: python fetch_stats.py # 注意：改为批量脚本文件名
       - name: Commit and Push Data
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          # 核心修改：检测三个JSON文件的变更（匹配脚本输出的data_previous/current/change.json）
-          if git diff --quiet HEAD data_previous.json data_current.json data_change.json; then
-            echo "No changes in stats data files, skip commit"
-          else
-            # 批量添加所有变更的统计数据文件
-            git add data_previous.json data_current.json data_change.json
-            # 提交信息标注自动更新，[ci skip]避免触发二次CI
+          # 核心修复：1. 检测status文件夹下所有json 2. 用--分隔路径避免歧义 3. 兼容文件夹不存在
+          if [ -d "status" ] && ! git diff --quiet HEAD -- status/*.json; then
+            echo "Detected changes in status stats files, start commit"
+            git add status/*.json # 添加status下所有变更的统计json
             git commit -m "chore: auto update pantheon stats data [ci skip]" --no-verify
-            # 推送到主分支（若你的分支是main/master，按需修改）
-            git push origin main
+            git push origin main # 分支为master则改为master
+          else
+            echo "No changes in status stats files or status folder not exist, skip commit"
           fi
