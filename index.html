@@ -25,6 +25,13 @@
         margin: 0 auto;
       }
 
+      .loading {
+        text-align: center;
+        padding: 60px 20px;
+        font-size: 20px;
+        color: #475569;
+      }
+
       .hero {
         text-align: center;
         margin-bottom: 40px;
@@ -191,7 +198,6 @@
         width: 100%;
         border-collapse: collapse;
         margin: 0 auto;
-        /* 自动布局：根据内容自动调整列宽 */
         table-layout: auto;
       }
 
@@ -210,7 +216,6 @@
         line-height: 1.4;
       }
 
-      /* Developer 列：限制最大宽度，超长省略 */
       th:nth-child(2),
       td:nth-child(2) {
         max-width: 140px;
@@ -219,7 +224,6 @@
         text-overflow: ellipsis;
       }
 
-      /* 所有数字列：右对齐（不设固定宽度） */
       th.num-col,
       td.num {
         text-align: right !important;
@@ -331,13 +335,19 @@
         .card {
           padding: 24px;
         }
+        .hero-stats-info {
+          font-size: 14px !important;
+          line-height: 1.6 !important;
+        }
       }
     </style>
   </head>
 
   <body>
     <div class="container">
-      <div id="app"></div>
+      <div id="app">
+        <div class="loading">⏳ Loading Pantheon Dashboard Data...</div>
+      </div>
     </div>
 
     <script>
@@ -350,7 +360,7 @@
       function formatDate(dateStr) {
         if (!dateStr) return "Unknown";
         const date = new Date(dateStr);
-        return isNaN(date.getTime()) ? "Invalid date" : date.toLocaleString();
+        return isNaN(date.getTime()) ? "Unknown" : date.toLocaleString();
       }
 
       function formatDailyChange(value) {
@@ -359,50 +369,48 @@
           return `<span class="num-positive">↑ +${num.toLocaleString()}</span>`;
         if (num < 0)
           return `<span class="num-negative">↓ ${num.toLocaleString()}</span>`;
-        return `<span class="num-zero">${num}</span>`;
+        return `<span class="num-zero">—</span>`;
       }
 
       async function loadData() {
         try {
-          const currentRes = await fetch("./status/science_data_current.json");
+          const [currentRes, changeRes, generalRes, generalChangeRes] =
+            await Promise.all([
+              fetch("./status/science_data_current.json"),
+              fetch("./status/science_data_change.json"),
+              fetch("./status/general_data_current.json"),
+              fetch("./status/general_data_change.json"),
+            ]);
+
           if (!currentRes.ok)
-            throw new Error("Failed to load science_data_current.json");
-          projectData = await currentRes.json();
-
-          const changeRes = await fetch("./status/science_data_change.json");
+            throw new Error("science_data_current.json 加载失败");
           if (!changeRes.ok)
-            throw new Error("Failed to load science_data_change.json");
-          dailyChangeData = await changeRes.json();
-
-          const generalRes = await fetch("./status/general_data_current.json");
+            throw new Error("science_data_change.json 加载失败");
           if (!generalRes.ok)
-            throw new Error("Failed to load general_data_current.json");
-          generalData = await generalRes.json();
-
-          const generalChangeRes = await fetch(
-            "./status/general_data_change.json",
-          );
+            throw new Error("general_data_current.json 加载失败");
           if (!generalChangeRes.ok)
-            throw new Error("Failed to load general_data_change.json");
-          generalChangeData = await generalChangeRes.json();
+            throw new Error("general_data_change.json 加载失败");
+
+          projectData = (await currentRes.json()) || [];
+          dailyChangeData = (await changeRes.json()) || [];
+          generalData = (await generalRes.json()) || [];
+          generalChangeData = (await generalChangeRes.json()) || [];
 
           renderPage();
         } catch (err) {
           document.getElementById("app").innerHTML = `
-          <div class="hero">
-            <h1>⚠️ Failed to load</h1>
-            <h3>Make sure all 4 JSON files are in the /status/ folder</h3>
-          </div>
-        `;
+                <div class="hero">
+                  <h1>⚠️ Data Load Failed</h1>
+                  <h3>Please check if the /status/ folder contains all 4 JSON files</h3>
+                  <p style="margin-top:20px; color:#dc2626">${err.message}</p>
+                </div>
+              `;
           console.error("Load failed", err);
         }
       }
 
       function renderTable(id, title, data, isDaily = false) {
-        function formatNum(n) {
-          return Number(n || 0).toLocaleString();
-        }
-
+        const formatNum = (n) => Number(n || 0).toLocaleString();
         const cardClass = isDaily ? "card card-daily" : "card";
         const tableClass = isDaily ? "table-daily" : "";
         const wrapperClass = isDaily
@@ -410,64 +418,77 @@
           : "table-wrapper";
 
         let html = `
-      <div class="${cardClass}">
-        <h2>${title}</h2>
-        <div class="${wrapperClass}">
-          <table id="${id}" class="${tableClass}">
-            <thead>
-              <tr>
-                <th>Project</th>
-                <th>Developer</th>
-                <th class="num-col">Stars</th>
-                <th class="num-col">Forks</th>
-                <th class="num-col">Open<br>Issues</th>
-                <th class="num-col">Closed<br>Issues</th>
-                <th class="num-col">Open<br>Pulls</th>
-                <th class="num-col">Closed<br>Pulls</th>
-                <th class="num-col">Contributors</th>
-                <th>Last Commit</th>
-              </tr>
-            </thead>
-            <tbody>`;
+            <div class="${cardClass}">
+              <h2>${title}</h2>
+              <div class="${wrapperClass}">
+                <table id="${id}" class="${tableClass}">
+                  <thead>
+                    <tr>
+                      <th>Project</th>
+                      <th>Developer</th>
+                      <th class="num-col">Stars</th>
+                      <th class="num-col">Forks</th>
+                      <th class="num-col">Watching</th>
+                      <th class="num-col">Open<br>Issues</th>
+                      <th class="num-col">Closed<br>Issues</th>
+                      <th class="num-col">Open<br>Pulls</th>
+                      <th class="num-col">Closed<br>Pulls</th>
+                      <th class="num-col">Contributors</th>
+                      <th>Last Commit</th>
+                    </tr>
+                  </thead>
+                  <tbody>`;
+
+        if (!data || data.length === 0) {
+          html += `<tr><td colspan="11" style="text-align:center; padding:30px;">No Data Available</td></tr>`;
+          html += `</tbody></table></div></div>`;
+          return html;
+        }
 
         data.forEach((item) => {
-          if (!item.name) return;
-          const [dev, proj] = item.name.split("/");
+          if (!item?.name) return;
+          const [dev, proj] = item.name.split("/") || ["-", item.name];
 
-          const starsCell = isDaily
-            ? formatDailyChange(item.stars)
-            : formatNum(item.stars);
-          const forksCell = isDaily
-            ? formatDailyChange(item.forks)
-            : formatNum(item.forks);
-          const openIssuesCell = isDaily
-            ? formatDailyChange(item.open_issues)
-            : formatNum(item.open_issues);
-          const closedIssuesCell = isDaily
-            ? formatDailyChange(item.closed_issues)
-            : formatNum(item.closed_issues);
-          const openPrsCell = isDaily
-            ? formatDailyChange(item.open_prs)
-            : formatNum(item.open_prs);
-          const closedPrsCell = isDaily
-            ? formatDailyChange(item.closed_prs)
-            : formatNum(item.closed_prs);
-          const contributorsCell = isDaily
-            ? formatDailyChange(item.contributors)
-            : formatNum(item.contributors);
+          const cells = {
+            stars: isDaily
+              ? formatDailyChange(item.stars)
+              : formatNum(item.stars),
+            forks: isDaily
+              ? formatDailyChange(item.forks)
+              : formatNum(item.forks),
+            watching: isDaily
+              ? formatDailyChange(item.watching)
+              : formatNum(item.watching),
+            openIssues: isDaily
+              ? formatDailyChange(item.open_issues)
+              : formatNum(item.open_issues),
+            closedIssues: isDaily
+              ? formatDailyChange(item.closed_issues)
+              : formatNum(item.closed_issues),
+            openPrs: isDaily
+              ? formatDailyChange(item.open_prs)
+              : formatNum(item.open_prs),
+            closedPrs: isDaily
+              ? formatDailyChange(item.closed_prs)
+              : formatNum(item.closed_prs),
+            contributors: isDaily
+              ? formatDailyChange(item.contributors)
+              : formatNum(item.contributors),
+          };
 
           html += `<tr>
-          <td><a href="${item.url}" target="_blank">${proj || item.name}</a></td>
-          <td>${dev || "-"}</td>
-          <td class="num">${starsCell}</td>
-          <td class="num">${forksCell}</td>
-          <td class="num">${openIssuesCell}</td>
-          <td class="num">${closedIssuesCell}</td>
-          <td class="num">${openPrsCell}</td>
-          <td class="num">${closedPrsCell}</td>
-          <td class="num">${contributorsCell}</td>
-          <td>${formatDate(item.last_commit)}</td>
-        </tr>`;
+                <td><a href="${item.url || "#"}" target="_blank">${proj || item.name}</a></td>
+                <td title="${dev || "-"}">${dev || "-"}</td>
+                <td class="num">${cells.stars}</td>
+                <td class="num">${cells.forks}</td>
+                <td class="num">${cells.watching}</td>
+                <td class="num">${cells.openIssues}</td>
+                <td class="num">${cells.closedIssues}</td>
+                <td class="num">${cells.openPrs}</td>
+                <td class="num">${cells.closedPrs}</td>
+                <td class="num">${cells.contributors}</td>
+                <td>${formatDate(item.last_commit)}</td>
+              </tr>`;
         });
 
         html += `</tbody></table></div></div>`;
@@ -478,13 +499,21 @@
         const table = document.getElementById(tableId);
         if (!table) return;
         const headers = table.querySelectorAll("th");
-        const numColumns = [2, 3, 4, 5, 6, 7, 8];
+        const numColumns = [2, 3, 4, 5, 6, 7, 8, 9];
+        const dateColumn = 10;
 
         headers.forEach((th, idx) => {
           let sortOrder = 1;
           th.addEventListener("click", () => {
             const rows = Array.from(table.querySelectorAll("tbody tr"));
+
             rows.sort((a, b) => {
+              if (idx === dateColumn) {
+                const dateA = new Date(a.cells[idx].textContent);
+                const dateB = new Date(b.cells[idx].textContent);
+                return (dateB - dateA) * sortOrder;
+              }
+
               const aText = a.cells[idx].textContent
                 .trim()
                 .replace(/,/g, "")
@@ -499,6 +528,7 @@
                 const bNum = parseFloat(bText) || 0;
                 return (aNum - bNum) * sortOrder;
               }
+
               return aText.localeCompare(bText) * sortOrder;
             });
 
@@ -509,226 +539,196 @@
         });
       }
 
-      function getDailyTopGainers() {
-        if (!dailyChangeData.length) {
+      function getTopGainers(data) {
+        if (!data || data.length === 0) {
           return {
             starGainer: "None",
             forkGainer: "None",
+            watchGainer: "None",
             fixedIssues: "None",
             contributorGainer: "None",
           };
         }
-        const sortedByStars = [...dailyChangeData].sort(
-          (a, b) => b.stars - a.stars,
-        );
-        const sortedByForks = [...dailyChangeData].sort(
-          (a, b) => b.forks - a.forks,
-        );
-        const sortedByClosedIssues = [...dailyChangeData].sort(
-          (a, b) => b.closed_issues - a.closed_issues,
-        );
-        const sortedByContributors = [...dailyChangeData].sort(
-          (a, b) => b.contributors - a.contributors,
-        );
-
         return {
-          starGainer: sortedByStars[0]?.name?.split("/")[1] || "None",
-          forkGainer: sortedByForks[0]?.name?.split("/")[1] || "None",
-          fixedIssues: sortedByClosedIssues[0]?.name?.split("/")[1] || "None",
+          starGainer:
+            [...data]
+              .sort((a, b) => b.stars - a.stars)[0]
+              ?.name?.split("/")[1] || "None",
+          forkGainer:
+            [...data]
+              .sort((a, b) => b.forks - a.forks)[0]
+              ?.name?.split("/")[1] || "None",
+          watchGainer:
+            [...data]
+              .sort((a, b) => b.watchers - a.watchers)[0]
+              ?.name?.split("/")[1] || "None",
+          fixedIssues:
+            [...data]
+              .sort((a, b) => b.closed_issues - a.closed_issues)[0]
+              ?.name?.split("/")[1] || "None",
           contributorGainer:
-            sortedByContributors[0]?.name?.split("/")[1] || "None",
+            [...data]
+              .sort((a, b) => b.contributors - a.contributors)[0]
+              ?.name?.split("/")[1] || "None",
         };
       }
 
-      function getGeneralDailyTopGainers() {
-        if (!generalChangeData.length) {
+      function getTotalTopProjects(data) {
+        if (!data || data.length === 0) {
           return {
-            starGainer: "None",
-            forkGainer: "None",
-            fixedIssues: "None",
-            contributorGainer: "None",
+            topStar: "None",
+            mostForked: "None",
+            mostWatched: "None",
+            latestUpdate: "None",
+            mostFixed: "None",
+            mostOpenIssues: "None",
           };
         }
-        const sortedByStars = [...generalChangeData].sort(
-          (a, b) => b.stars - a.stars,
-        );
-        const sortedByForks = [...generalChangeData].sort(
-          (a, b) => b.forks - a.forks,
-        );
-        const sortedByClosedIssues = [...generalChangeData].sort(
-          (a, b) => b.closed_issues - a.closed_issues,
-        );
-        const sortedByContributors = [...generalChangeData].sort(
-          (a, b) => b.contributors - a.contributors,
-        );
-
         return {
-          starGainer: sortedByStars[0]?.name?.split("/")[1] || "None",
-          forkGainer: sortedByForks[0]?.name?.split("/")[1] || "None",
-          fixedIssues: sortedByClosedIssues[0]?.name?.split("/")[1] || "None",
-          contributorGainer:
-            sortedByContributors[0]?.name?.split("/")[1] || "None",
+          topStar:
+            [...data]
+              .sort((a, b) => b.stars - a.stars)[0]
+              ?.name.split("/")[1] || "None",
+          mostForked:
+            [...data]
+              .sort((a, b) => b.forks - a.forks)[0]
+              ?.name.split("/")[1] || "None",
+          mostWatched:
+            [...data]
+              .sort((a, b) => b.watchers - a.watchers)[0]
+              ?.name.split("/")[1] || "None",
+          latestUpdate:
+            [...data]
+              .sort(
+                (a, b) => new Date(b.last_commit) - new Date(a.last_commit),
+              )[0]
+              ?.name.split("/")[1] || "None",
+          mostFixed:
+            [...data]
+              .sort((a, b) => b.closed_issues - a.closed_issues)[0]
+              ?.name.split("/")[1] || "None",
+          mostOpenIssues:
+            [...data]
+              .sort((a, b) => b.open_issues - a.open_issues)[0]
+              ?.name.split("/")[1] || "None",
         };
       }
 
       function renderPage() {
         const app = document.getElementById("app");
-        const totalProjects = projectData.length + generalData.length;
+        const totalProjects =
+          (projectData?.length || 0) + (generalData?.length || 0);
 
-        const dailyStats = getDailyTopGainers();
-        const sortedByStars = [...projectData].sort(
-          (a, b) => b.stars - a.stars,
-        );
-        const sortedByForks = [...projectData].sort(
-          (a, b) => b.forks - a.forks,
-        );
-        const sortedByUpdate = [...projectData].sort(
-          (a, b) => new Date(b.last_commit) - new Date(a.last_commit),
-        );
-        const sortedByClosedIssues = [...projectData].sort(
-          (a, b) => b.closed_issues - a.closed_issues,
-        );
-        const sortedByOpenIssues = [...projectData].sort(
-          (a, b) => b.open_issues - a.open_issues,
-        );
-
-        const topStarProject = sortedByStars[0]?.name.split("/")[1] || "None";
-        const mostForkedProject =
-          sortedByForks[0]?.name.split("/")[1] || "None";
-        const latestUpdateProject =
-          sortedByUpdate[0]?.name.split("/")[1] || "None";
-        const mostFixedProject =
-          sortedByClosedIssues[0]?.name.split("/")[1] || "None";
-        const mostOpenIssuesProject =
-          sortedByOpenIssues[0]?.name.split("/")[1] || "None";
-
-        const generalDailyStats = getGeneralDailyTopGainers();
-        const generalSortedByStars = [...generalData].sort(
-          (a, b) => b.stars - a.stars,
-        );
-        const generalSortedByForks = [...generalData].sort(
-          (a, b) => b.forks - a.forks,
-        );
-        const generalSortedByUpdate = [...generalData].sort(
-          (a, b) => new Date(b.last_commit) - new Date(a.last_commit),
-        );
-        const generalSortedByClosedIssues = [...generalData].sort(
-          (a, b) => b.closed_issues - a.closed_issues,
-        );
-        const generalSortedByOpenIssues = [...generalData].sort(
-          (a, b) => b.open_issues - a.open_issues,
-        );
-
-        const generalTopStar =
-          generalSortedByStars[0]?.name.split("/")[1] || "None";
-        const generalMostForked =
-          generalSortedByForks[0]?.name.split("/")[1] || "None";
-        const generalLatestUpdate =
-          generalSortedByUpdate[0]?.name.split("/")[1] || "None";
-        const generalMostFixed =
-          generalSortedByClosedIssues[0]?.name.split("/")[1] || "None";
-        const generalMostOpenIssues =
-          generalSortedByOpenIssues[0]?.name.split("/")[1] || "None";
+        const dailyStats = getTopGainers(dailyChangeData);
+        const totalScienceStats = getTotalTopProjects(projectData);
+        const generalDailyStats = getTopGainers(generalChangeData);
+        const totalGeneralStats = getTotalTopProjects(generalData);
 
         app.innerHTML = `
-        <div class="hero">
-          <h1>🏛️</h1>
-          <h1><strong>Pantheon</strong></h1>
-          <h2>Automated Research</h2>
-          <h3>Unlock the Path, Lead the Way</h3>
+              <div class="hero">
+                <h1>🏛️</h1>
+                <h1><strong>Pantheon</strong></h1>
+                <h2>Automated Research</h2>
+                <h3>Unlock the Path, Lead the Way</h3>
 
-          <div class="stats-row">
-            <div class="stat-item">Known Projects: <span>${totalProjects}</span></div>
-            <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
-              Add more
-            </button>
-          </div>
+                <div class="stats-row">
+                  <div class="stat-item">Known Projects: <span>${totalProjects}</span></div>
+                  <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
+                    Add more
+                  </button>
+                </div>
 
-          <div class="hero-stats-info" style="margin-top: 20px;">
-            <b>Science Daily:</b> &nbsp;&nbsp;
-            Stars Growth: <b style="color:#059669">${dailyStats.starGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-            Forks Growth: <b style="color:#059669">${dailyStats.forkGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-            Fixed Issues: <b style="color:#059669">${dailyStats.fixedIssues}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-            Contributors: <b style="color:#059669">${dailyStats.contributorGainer}</b>
-          </div>
+                <div class="hero-stats-info" style="margin-top: 20px; font-size:15px; line-height:1.8;">
+                  <b>Science Daily:</b> &nbsp;&nbsp;
+                  Stars: <b style="color:#059669">${dailyStats.starGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Forks: <b style="color:#059669">${dailyStats.forkGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Watching: <b style="color:#059669">${dailyStats.watchGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Fixed: <b style="color:#059669">${dailyStats.fixedIssues}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Contributors: <b style="color:#059669">${dailyStats.contributorGainer}</b>
+                </div>
 
-          <div class="hero-stats-info" style="margin-top: 10px;">
-            <b>General Daily:</b> &nbsp;&nbsp;
-            Stars Growth: <b style="color:#059669">${generalDailyStats.starGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-            Forks Growth: <b style="color:#059669">${generalDailyStats.forkGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-            Fixed Issues: <b style="color:#059669">${generalDailyStats.fixedIssues}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-            Contributors: <b style="color:#059669">${generalDailyStats.contributorGainer}</b>
-          </div>
+                <div class="hero-stats-info" style="margin-top: 10px; font-size:15px; line-height:1.8;">
+                  <b>General Daily:</b> &nbsp;&nbsp;
+                  Stars: <b style="color:#059669">${generalDailyStats.starGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Forks: <b style="color:#059669">${generalDailyStats.forkGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Watching: <b style="color:#059669">${generalDailyStats.watchGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Fixed: <b style="color:#059669">${generalDailyStats.fixedIssues}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Contributors: <b style="color:#059669">${generalDailyStats.contributorGainer}</b>
+                </div>
 
-          <div style="margin-top: 20px; font-size: 15px; color: #475569; line-height: 1.8;">
-            <b>Science Total:</b> &nbsp;&nbsp;
-            Stars: <b>${topStarProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-            Forked: <b>${mostForkedProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-            Updated: <b>${latestUpdateProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-            Fixed: <b>${mostFixedProject}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-            Open Issues: <b>${mostOpenIssuesProject}</b>
-          </div>
+                <div style="margin-top: 20px; font-size: 15px; color: #475569; line-height: 1.8;">
+                  <b>Science Total:</b> &nbsp;&nbsp;
+                  Stars: <b>${totalScienceStats.topStar}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Forked: <b>${totalScienceStats.mostForked}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Watching: <b>${totalScienceStats.mostWatched}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Updated: <b>${totalScienceStats.latestUpdate}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Fixed: <b>${totalScienceStats.mostFixed}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Open Issues: <b>${totalScienceStats.mostOpenIssues}</b>
+                </div>
 
-          <div style="margin-top: 10px; font-size: 15px; color: #475569; line-height: 1.8;">
-            <b>General Total:</b> &nbsp;&nbsp;
-            Stars: <b>${generalTopStar}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-            Forked: <b>${generalMostForked}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-            Updated: <b>${generalLatestUpdate}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-            Fixed: <b>${generalMostFixed}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-            Open Issues: <b>${generalMostOpenIssues}</b>
-          </div>
-        </div>
+                <div style="margin-top: 10px; font-size: 15px; color: #475569; line-height: 1.8;">
+                  <b>General Total:</b> &nbsp;&nbsp;
+                  Stars: <b>${totalGeneralStats.topStar}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Forked: <b>${totalGeneralStats.mostForked}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Watching: <b>${totalGeneralStats.mostWatched}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Updated: <b>${totalGeneralStats.latestUpdate}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Fixed: <b>${totalGeneralStats.mostFixed}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                  Open Issues: <b>${totalGeneralStats.mostOpenIssues}</b>
+                </div>
+              </div>
 
-        <div class="section">
-          ${renderTable("dailyTable", "📈 Science - Daily Dashboard", dailyChangeData, true)}
-        </div>
-        <div class="section">
-          ${renderTable("dashboardTable", "🔬 Science - Projects Dashboard", projectData)}
-        </div>
+              <div class="section">
+                ${renderTable("dailyTable", "📈 Science - Daily Dashboard", dailyChangeData, true)}
+              </div>
+              <div class="section">
+                ${renderTable("dashboardTable", "🔬 Science - Projects Dashboard", projectData)}
+              </div>
 
-        <div class="section">
-          ${renderTable("generalDailyTable", "📊 General - Daily Dashboard", generalChangeData, true)}
-        </div>
-        <div class="section">
-          ${renderTable("generalDashboardTable", "📦 General - Projects Dashboard", generalData)}
-        </div>
+              <div class="section">
+                ${renderTable("generalDailyTable", "📊 General - Daily Dashboard", generalChangeData, true)}
+              </div>
+              <div class="section">
+                ${renderTable("generalDashboardTable", "📦 General - Projects Dashboard", generalData)}
+              </div>
 
-        <div class="section">
-          <div class="poem-container">
-            <div class="poem-column">
-When chaos first gave way to hidden truths profound,
-Mortal seekers wandered lost, with no clear way bound.
-No need to toil through volumes thousand-fold,
-For wit unbodied breaks the darkness cold.
+              <div class="section">
+                <div class="poem-container">
+                  <div class="poem-column">
+      When chaos first gave way to hidden truths profound,
+      Mortal seekers wandered lost, with no clear way bound.
+      No need to toil through volumes thousand-fold,
+      For wit unbodied breaks the darkness cold.
 
-Since ancient times, all who sought wisdom's gate,
-Faced mountains of texts, vast seas of reason,
-Trials of experiment, strokes of fate,
-Too often spent their years in endless season.
-            </div>
-            <div class="poem-column">
-Now a new path dawns: a bodiless mind,
-Without form or voice, yet with logic refined.
-It reads, it knows, it reasons, it reveals,
-Crossing every barrier truth conceals.
+      Since ancient times, all who sought wisdom's gate,
+      Faced mountains of texts, vast seas of reason,
+      Trials of experiment, strokes of fate,
+      Too often spent their years in endless season.
+                  </div>
+                  <div class="poem-column">
+      Now a new path dawns: a bodiless mind,
+      Without form or voice, yet with logic refined.
+      It reads, it knows, it reasons, it reveals,
+      Crossing every barrier truth conceals.
 
-May this art guide all who wander far,
-To find the light, and reach the shining star.
-            </div>
-          </div>
-        </div>
+      May this art guide all who wander far,
+      To find the light, and reach the shining star.
+                  </div>
+                </div>
+              </div>
 
-        <div class="footer">
-          <h3>License</h3>
-          <p>MIT License</p>
-        </div>
-      `;
+              <div class="footer">
+                <h3>License</h3>
+                <p>MIT License</p>
+              </div>
+            `;
 
         setTimeout(() => {
-          makeTableSortable("dailyTable");
-          makeTableSortable("dashboardTable");
-          makeTableSortable("generalDailyTable");
-          makeTableSortable("generalDashboardTable");
+          [
+            "dailyTable",
+            "dashboardTable",
+            "generalDailyTable",
+            "generalDashboardTable",
+          ].forEach(makeTableSortable);
         }, 0);
       }
 

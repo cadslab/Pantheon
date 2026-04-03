@@ -1,16 +1,15 @@
 import json
 import os
 import shutil
-
 import requests
 
-# ===================== 全局配置（与原脚本一致，仅新增文件夹配置）=====================
+# ===================== Global Configuration =====================
 TOKEN = os.getenv("PANTHEON_TOKEN")
 HEADERS = {"Authorization": f"Bearer {TOKEN}"}
 URL = "https://api.github.com/graphql"
-# 分批配置：每批查询的项目数量（建议20，单批节点数<GitHub限制，可自定义）
-BATCH_SIZE = 20
-# 定义需要计算差值的数值字段（与原数据字段名完全一致）
+BATCH_SIZE = 20  # Query batch size (follow GitHub API limits)
+
+# Numeric fields (added `watching` for difference calculation)
 NUMERIC_FIELDS = [
     "stars",
     "forks",
@@ -19,25 +18,26 @@ NUMERIC_FIELDS = [
     "open_prs",
     "closed_prs",
     "contributors",
+    "watching",  # New: GitHub repository watchers count
 ]
-# 定义非数值字段（沿用当前值，保证数据结构一致）
+
+# Non-numeric fields (unchanged)
 NON_NUMERIC_FIELDS = ["name", "url", "last_commit", "language", "language_color"]
 
-# 新增：文件夹路径配置（需确保repos文件夹存在，内含json配置文件）
-REPOS_DIR = "repos"  # 存放项目配置json的文件夹
-STATUS_DIR = "status"  # 输出统计文件的目标文件夹
-# 自动创建输出文件夹（不存在则创建）
+# Directory configuration (match your repo config & output path)
+REPOS_DIR = "repos"  # Store general.json here
+STATUS_DIR = "status"  # Output stats files here
 os.makedirs(STATUS_DIR, exist_ok=True)
 
-
-# ===================== 工具函数（原脚本复用，无修改）=====================
+# ===================== Tool Functions =====================
 def generate_batch_query(batch_projects):
-    """为单批项目生成批量查询语句（原逻辑完全复用）"""
+    """Generate GraphQL batch query (added watchers query)"""
     fragment = """
     fragment RepoStats on Repository {
         nameWithOwner
         stargazerCount
         forkCount
+        watchers { totalCount }  # New: Fetch watchers total count
         url
         openIssues: issues(states: OPEN) { totalCount }
         closedIssues: issues(states: CLOSED) { totalCount }
@@ -78,11 +78,10 @@ def generate_batch_query(batch_projects):
     """
     return full_query, query_variables
 
-
 def execute_batch_query(batch_projects, batch_num, total_batch):
-    """执行单批查询并解析结果（原逻辑完全复用）"""
+    """Execute GraphQL query & parse results (added watching field parsing)"""
     if not batch_projects:
-        return
+        return []
     batch_query, query_vars = generate_batch_query(batch_projects)
     try:
         response = requests.post(
@@ -93,28 +92,30 @@ def execute_batch_query(batch_projects, batch_num, total_batch):
         )
         response.raise_for_status()
         data = response.json()
+
         if "errors" in data and data["errors"]:
-            print(
-                f"⚠️ 第{batch_num}/{total_batch}批 - 全局查询错误: {data['errors'][0]['message']}"
-            )
-            return
+            print(f"⚠️ Batch {batch_num}/{total_batch} - Global Query Error: {data['errors'][0]['message']}")
+            return []
+
         repo_data = data.get("data", {})
         results = []
         for idx, item in enumerate(batch_projects):
             repo_alias = f"repo{idx}"
             single_repo = repo_data.get(repo_alias)
             full_name = item["full_name"]
+
             if not single_repo:
-                print(
-                    f"⚠️ 第{batch_num}/{total_batch}批 - 仓库查询失败/不存在: {full_name}"
-                )
+                print(f"⚠️ Batch {batch_num}/{total_batch} - Repo Not Found/Failed: {full_name}")
                 continue
+
+            # Parse data (added watching = watchers.totalCount)
             results.append(
                 {
                     "name": single_repo["nameWithOwner"],
                     "url": single_repo["url"],
                     "stars": single_repo["stargazerCount"],
                     "forks": single_repo["forkCount"],
+                    "watching": single_repo["watchers"]["totalCount"],  # New: Parse watchers count
                     "open_issues": single_repo["openIssues"]["totalCount"],
                     "closed_issues": single_repo["closedIssues"]["totalCount"],
                     "open_prs": single_repo["openPRs"]["totalCount"],
@@ -122,8 +123,7 @@ def execute_batch_query(batch_projects, batch_num, total_batch):
                     "contributors": single_repo["contributors"]["totalCount"],
                     "last_commit": (
                         single_repo["lastCommit"]["target"]["committedDate"]
-                        if single_repo["lastCommit"]
-                        and single_repo["lastCommit"]["target"]
+                        if single_repo["lastCommit"] and single_repo["lastCommit"]["target"]
                         else "N/A"
                     ),
                     "language": (
@@ -138,17 +138,17 @@ def execute_batch_query(batch_projects, batch_num, total_batch):
                     ),
                 }
             )
+            # Updated log: show Stars & Watching count
             print(
-                f"✅ 第{batch_num}/{total_batch}批 - 拉取成功: {full_name} | Stars: {single_repo['stargazerCount']}"
+                f"✅ Batch {batch_num}/{total_batch} - Fetched: {full_name} | Stars: {single_repo['stargazerCount']} | Watching: {single_repo['watchers']['totalCount']}"
             )
         return results
     except requests.exceptions.RequestException as e:
-        print(f"❌ 第{batch_num}/{total_batch}批 - 网络异常: {str(e)}")
+        print(f"❌ Batch {batch_num}/{total_batch} - Network Error: {str(e)}")
         return []
 
-
 def load_json(file_path):
-    """加载JSON文件，兼容文件不存在/空文件（原逻辑完全复用）"""
+    """Load JSON file (compatible with non-existent/empty files)"""
     if not os.path.exists(file_path):
         return []
     try:
@@ -158,104 +158,79 @@ def load_json(file_path):
     except (json.JSONDecodeError, PermissionError):
         return []
 
-
-# ===================== 新增：单文件处理核心函数（封装原脚本的完整逻辑）=====================
+# ===================== Core Processing Function =====================
 def process_single_config(config_file_name):
-    """
-    处理单个配置文件，生成对应统计文件
-    :param config_file_name: repos文件夹下的配置文件名（如xxx.json）
-    """
-    # 1. 解析配置文件基础信息，动态生成输出文件路径
-    config_base_name = os.path.splitext(config_file_name)[
-        0
-    ]  # 去掉后缀，如xxx.json -> xxx
+    """Process single repo config file (e.g., general.json)"""
+    config_base_name = os.path.splitext(config_file_name)[0]
     config_file_path = os.path.join(REPOS_DIR, config_file_name)
-    # 输出文件路径：status/xxx_data_current.json、status/xxx_data_previous.json、status/xxx_data_change.json
+    # Output file paths (bind to config file name)
     current_file = os.path.join(STATUS_DIR, f"{config_base_name}_data_current.json")
     previous_file = os.path.join(STATUS_DIR, f"{config_base_name}_data_previous.json")
     change_file = os.path.join(STATUS_DIR, f"{config_base_name}_data_change.json")
 
     print("=" * 80)
-    print(f"📂 开始处理配置文件：{config_file_name}")
-    print(f"🎯 输出文件前缀：{config_base_name}_")
+    print(f"📂 Processing Config File: {config_file_name}")
+    print(f"🎯 Output Prefix: {config_base_name}_")
     print("=" * 80 + "\n")
 
-    # 2. 复制当前数据为历史数据（兼容首次运行，原逻辑）
+    # Backup current data to previous data (for difference calculation)
     if os.path.exists(current_file):
         shutil.copy2(current_file, previous_file)
-        print(
-            f"📋 已将 {os.path.basename(current_file)} 备份为 {os.path.basename(previous_file)}\n"
-        )
+        print(f"📋 Backed up {os.path.basename(current_file)} to {os.path.basename(previous_file)}\n")
     else:
-        print(f"📌 未找到 {os.path.basename(current_file)}，首次运行，无历史数据备份\n")
+        print(f"📌 No previous data found (first run), skip backup\n")
 
-    # 3. 读取项目列表 + 自动去重 + 格式校验（原逻辑）
+    # Load & validate repo list from config file
     try:
         with open(config_file_path, "r", encoding="utf-8") as f:
             projects = json.load(f)
     except Exception as e:
-        print(f"❌ 读取配置文件{config_file_name}失败：{str(e)}，跳过该文件\n")
+        print(f"❌ Failed to load {config_file_name}: {str(e)}, skip this file\n")
         return
 
+    # Deduplicate & filter valid repos (format: owner/name)
     original_count = len(projects)
-    unique_projects = []
-    seen = set()
-    for repo in projects:
-        if repo not in seen and repo.strip() != "":
-            seen.add(repo)
-            unique_projects.append(repo)
-    projects = unique_projects
-    duplicate_count = original_count - len(projects)
-
-    print(f"🚀 原始项目数量: {original_count} 个")
+    unique_projects = list(set(projects))  # Deduplicate
+    duplicate_count = original_count - len(unique_projects)
+    print(f"🚀 Original Repo Count: {original_count}")
     if duplicate_count > 0:
-        print(f"🔍 自动剔除重复项: {duplicate_count} 个")
+        print(f"🔍 Removed Duplicates: {duplicate_count}")
 
-    # 格式校验：过滤无/的无效项目
     valid_projects = []
-    for repo_full_name in projects:
-        if "/" not in repo_full_name:
-            print(f"❌ 格式错误，过滤项目: {repo_full_name}")
+    for repo_full_name in unique_projects:
+        if repo_full_name.strip() == "" or "/" not in repo_full_name:
+            print(f"❌ Invalid Format, Filtered: {repo_full_name}")
             continue
         owner, name = repo_full_name.split("/", 1)
-        valid_projects.append(
-            {"full_name": repo_full_name, "owner": owner, "name": name}
-        )
+        valid_projects.append({"full_name": repo_full_name, "owner": owner, "name": name})
+
     total_valid = len(valid_projects)
-    print(f"✅ 有效项目总数: {total_valid} 个，将按每批{BATCH_SIZE}个分批查询...\n")
+    print(f"✅ Valid Repo Count: {total_valid} (batch size: {BATCH_SIZE})\n")
+    if total_valid == 0:
+        print(f"⚠️ No valid repos to query, exit\n")
+        return
 
-    # 4. 分批执行批量查询（原逻辑）
+    # Execute batch queries
     all_results = []
-    if total_valid > 0:
-        total_batch = (total_valid + BATCH_SIZE - 1) // BATCH_SIZE
-        for batch_num in range(total_batch):
-            start = batch_num * BATCH_SIZE
-            end = start + BATCH_SIZE
-            batch_projects = valid_projects[start:end]
-            print(
-                f"\n📡 开始执行第{batch_num+1}/{total_batch}批查询，本批项目数: {len(batch_projects)}"
-            )
-            batch_results = execute_batch_query(
-                batch_projects, batch_num + 1, total_batch
-            )
-            all_results.extend(batch_results)
-    else:
-        print(f"⚠️ 无有效项目可执行查询")
-        return
+    total_batch = (total_valid + BATCH_SIZE - 1) // BATCH_SIZE
+    for batch_num in range(total_batch):
+        start = batch_num * BATCH_SIZE
+        end = start + BATCH_SIZE
+        batch_projects = valid_projects[start:end]
+        print(f"\n📡 Executing Batch {batch_num+1}/{total_batch} (Repo Count: {len(batch_projects)})")
+        batch_results = execute_batch_query(batch_projects, batch_num + 1, total_batch)
+        all_results.extend(batch_results)
 
-    # 5. 排序并保存当前数据（原逻辑）
+    # Save current stats (sorted by stars descending)
     if not all_results:
-        print(f"\n⚠️ 未拉取到任何有效项目，跳过{os.path.basename(current_file)}生成\n")
+        print(f"\n⚠️ No valid data fetched, skip current file generation\n")
         return
-
     all_results.sort(key=lambda x: x["stars"], reverse=True)
     with open(current_file, "w", encoding="utf-8") as f:
         json.dump(all_results, f, indent=2, ensure_ascii=False)
-    print(
-        f"\n🎉 最新数据已保存至 {os.path.basename(current_file)}，共拉取 {len(all_results)} 个有效项目"
-    )
+    print(f"\n🎉 Current Data Saved to: {os.path.basename(current_file)} (Fetched: {len(all_results)})")
 
-    # 6. 加载历史/当前数据，计算差值并保存（原逻辑）
+    # Calculate & save data changes (including watching count difference)
     previous_data = load_json(previous_file)
     current_data = load_json(current_file)
     previous_dict = {item["name"]: item for item in previous_data}
@@ -264,10 +239,10 @@ def process_single_config(config_file_name):
     for current_item in current_data:
         repo_name = current_item["name"]
         change_item = {}
-        # 处理非数值字段
+        # Add non-numeric fields
         for field in NON_NUMERIC_FIELDS:
             change_item[field] = current_item.get(field, "")
-        # 处理数值字段，计算差值
+        # Calculate numeric field differences (auto include watching)
         if repo_name in previous_dict:
             previous_item = previous_dict[repo_name]
             for field in NUMERIC_FIELDS:
@@ -275,38 +250,33 @@ def process_single_config(config_file_name):
                 previous_val = previous_item.get(field, 0)
                 change_item[field] = current_val - previous_val
         else:
+            # First run: set difference to current value
             for field in NUMERIC_FIELDS:
                 change_item[field] = current_item.get(field, 0)
         change_data.append(change_item)
 
-    # 保存差值数据
+    # Save change data (sorted by stars difference descending)
     change_data.sort(key=lambda x: x["stars"], reverse=True)
     with open(change_file, "w", encoding="utf-8") as f:
         json.dump(change_data, f, indent=2, ensure_ascii=False)
-    print(
-        f"📊 差值数据已保存至 {os.path.basename(change_file)}，共 {len(change_data)} 个项目（含无变化项目）"
-    )
-    print(f"\n✅ 配置文件{config_file_name}处理完成！\n")
+    print(f"📊 Change Data Saved to: {os.path.basename(change_file)} (Repo Count: {len(change_data)})")
+    print(f"\n✅ {config_file_name} Processing Complete!\n")
 
-
-# ===================== 主程序：遍历repos文件夹下所有json文件并处理 =====================
+# ===================== Main Program =====================
 if __name__ == "__main__":
-    # 校验repos文件夹是否存在
+    # Check repos directory existence
     if not os.path.isdir(REPOS_DIR):
-        print(f"❌ 错误：未找到{REPOS_DIR}文件夹，请创建并放入项目配置json文件后重试！")
+        print(f"❌ Error: {REPOS_DIR} directory not found! Create it and add your config files.")
         exit(1)
-
-    # 遍历repos文件夹，仅处理.json后缀的文件
+    # Get all JSON config files in repos directory
     config_files = [f for f in os.listdir(REPOS_DIR) if f.endswith(".json")]
     if not config_files:
-        print(f"⚠️ {REPOS_DIR}文件夹下无任何.json配置文件，无需处理！")
+        print(f"⚠️ No JSON config files found in {REPOS_DIR} directory.")
         exit(0)
-
-    print(f"🚀 开始批量处理，共发现 {len(config_files)} 个配置文件：{config_files}\n")
-    # 逐个处理配置文件
+    # Process all config files
+    print(f"🚀 Starting Batch Processing (Config File Count: {len(config_files)}) : {config_files}\n")
     for file_name in config_files:
         process_single_config(file_name)
-
     print("=" * 80)
-    print(f"🎉 所有配置文件处理完成！结果文件已保存至 {STATUS_DIR} 文件夹")
+    print(f"🎉 All Config Files Processed! Results saved in {STATUS_DIR} directory.")
     print("=" * 80)
