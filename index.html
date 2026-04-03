@@ -399,12 +399,12 @@
           renderPage();
         } catch (err) {
           document.getElementById("app").innerHTML = `
-                <div class="hero">
-                  <h1>⚠️ Data Load Failed</h1>
-                  <h3>Please check if the /status/ folder contains all 4 JSON files</h3>
-                  <p style="margin-top:20px; color:#dc2626">${err.message}</p>
-                </div>
-              `;
+              <div class="hero">
+                <h1>⚠️ Data Load Failed</h1>
+                <h3>Please check if the /status/ folder contains all 4 JSON files</h3>
+                <p style="margin-top:20px; color:#dc2626">${err.message}</p>
+              </div>
+            `;
           console.error("Load failed", err);
         }
       }
@@ -418,29 +418,35 @@
           : "table-wrapper";
 
         let html = `
-            <div class="${cardClass}">
-              <h2>${title}</h2>
-              <div class="${wrapperClass}">
-                <table id="${id}" class="${tableClass}">
-                  <thead>
-                    <tr>
-                      <th>Project</th>
-                      <th>Developer</th>
-                      <th class="num-col">Stars</th>
-                      <th class="num-col">Forks</th>
-                      <th class="num-col">Watching</th>
-                      <th class="num-col">Open<br>Issues</th>
-                      <th class="num-col">Closed<br>Issues</th>
-                      <th class="num-col">Open<br>Pulls</th>
-                      <th class="num-col">Closed<br>Pulls</th>
-                      <th class="num-col">Contributors</th>
-                      <th>Last Commit</th>
-                    </tr>
-                  </thead>
-                  <tbody>`;
+          <div class="${cardClass}">
+            <h2>${title}</h2>
+            <div class="${wrapperClass}">
+              <table id="${id}" class="${tableClass}">
+                <thead>
+                  <tr>
+                    <th>Project</th>
+                    <th>Developer</th>
+                    <th class="num-col">Stars</th>
+                    <th class="num-col">Forks</th>
+                    <th class="num-col">Watching</th>
+                    <th class="num-col">Open<br>Issues</th>
+                    <th class="num-col">Closed<br>Issues</th>
+                    <th class="num-col">Open<br>Pulls</th>
+                    <th class="num-col">Closed<br>Pulls</th>
+                    <th class="num-col">Contributors</th>
+                    <th class="num-col">Commits</th>
+                    <th>Last Commit</th>
+                    <th>Last Fork</th>
+                    <th>Last Open Issue</th>
+                    <th>Last Closed Issue</th>
+                    <th>Last Open Pull</th>
+                    <th>Last Closed Pull</th>
+                  </tr>
+                </thead>
+                <tbody>`;
 
         if (!data || data.length === 0) {
-          html += `<tr><td colspan="11" style="text-align:center; padding:30px;">No Data Available</td></tr>`;
+          html += `<tr><td colspan="17" style="text-align:center; padding:30px;">No Data Available</td></tr>`;
           html += `</tbody></table></div></div>`;
           return html;
         }
@@ -474,21 +480,30 @@
             contributors: isDaily
               ? formatDailyChange(item.contributors)
               : formatNum(item.contributors),
+            commits: isDaily
+              ? formatDailyChange(item.commits)
+              : formatNum(item.commits),
           };
 
           html += `<tr>
-                <td><a href="${item.url || "#"}" target="_blank">${proj || item.name}</a></td>
-                <td title="${dev || "-"}">${dev || "-"}</td>
-                <td class="num">${cells.stars}</td>
-                <td class="num">${cells.forks}</td>
-                <td class="num">${cells.watching}</td>
-                <td class="num">${cells.openIssues}</td>
-                <td class="num">${cells.closedIssues}</td>
-                <td class="num">${cells.openPrs}</td>
-                <td class="num">${cells.closedPrs}</td>
-                <td class="num">${cells.contributors}</td>
-                <td>${formatDate(item.last_commit)}</td>
-              </tr>`;
+              <td><a href="${item.url || "#"}" target="_blank">${proj || item.name}</a></td>
+              <td title="${dev || "-"}">${dev || "-"}</td>
+              <td class="num">${cells.stars}</td>
+              <td class="num">${cells.forks}</td>
+              <td class="num">${cells.watching}</td>
+              <td class="num">${cells.openIssues}</td>
+              <td class="num">${cells.closedIssues}</td>
+              <td class="num">${cells.openPrs}</td>
+              <td class="num">${cells.closedPrs}</td>
+              <td class="num">${cells.contributors}</td>
+              <td class="num">${cells.commits}</td>
+              <td>${formatDate(item.last_commit)}</td>
+              <td>${formatDate(item.last_fork)}</td>
+              <td>${formatDate(item.last_open_issue)}</td>
+              <td>${formatDate(item.last_closed_issue)}</td>
+              <td>${formatDate(item.last_open_pr)}</td>
+              <td>${formatDate(item.last_closed_pr)}</td>
+            </tr>`;
         });
 
         html += `</tbody></table></div></div>`;
@@ -499,8 +514,8 @@
         const table = document.getElementById(tableId);
         if (!table) return;
         const headers = table.querySelectorAll("th");
-        const numColumns = [2, 3, 4, 5, 6, 7, 8, 9];
-        const dateColumn = 10;
+        const numColumns = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+        const dateColumns = [11, 12, 13, 14, 15, 16];
 
         headers.forEach((th, idx) => {
           let sortOrder = 1;
@@ -508,7 +523,7 @@
             const rows = Array.from(table.querySelectorAll("tbody tr"));
 
             rows.sort((a, b) => {
-              if (idx === dateColumn) {
+              if (dateColumns.includes(idx)) {
                 const dateA = new Date(a.cells[idx].textContent);
                 const dateB = new Date(b.cells[idx].textContent);
                 return (dateB - dateA) * sortOrder;
@@ -625,102 +640,102 @@
         const totalGeneralStats = getTotalTopProjects(generalData);
 
         app.innerHTML = `
-              <div class="hero">
-                <h1>🏛️</h1>
-                <h1><strong>Pantheon</strong></h1>
-                <h2>Automated Research</h2>
-                <h3>Unlock the Path, Lead the Way</h3>
+            <div class="hero">
+              <h1>🏛️</h1>
+              <h1><strong>Pantheon</strong></h1>
+              <h2>Automated Research</h2>
+              <h3>Unlock the Path, Lead the Way</h3>
 
-                <div class="stats-row">
-                  <div class="stat-item">Known Projects: <span>${totalProjects}</span></div>
-                  <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
-                    Add more
-                  </button>
+              <div class="stats-row">
+                <div class="stat-item">Known Projects: <span>${totalProjects}</span></div>
+                <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
+                  Add more
+                </button>
+              </div>
+
+              <div class="hero-stats-info" style="margin-top: 20px; font-size:15px; line-height:1.8;">
+                <b>Science Daily:</b> &nbsp;&nbsp;
+                Stars: <b style="color:#059669">${dailyStats.starGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Forks: <b style="color:#059669">${dailyStats.forkGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Watching: <b style="color:#059669">${dailyStats.watchGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Fixed: <b style="color:#059669">${dailyStats.fixedIssues}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Contributors: <b style="color:#059669">${dailyStats.contributorGainer}</b>
+              </div>
+
+              <div class="hero-stats-info" style="margin-top: 10px; font-size:15px; line-height:1.8;">
+                <b>General Daily:</b> &nbsp;&nbsp;
+                Stars: <b style="color:#059669">${generalDailyStats.starGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Forks: <b style="color:#059669">${generalDailyStats.forkGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Watching: <b style="color:#059669">${generalDailyStats.watchGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Fixed: <b style="color:#059669">${generalDailyStats.fixedIssues}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Contributors: <b style="color:#059669">${generalDailyStats.contributorGainer}</b>
+              </div>
+
+              <div style="margin-top: 20px; font-size: 15px; color: #475569; line-height: 1.8;">
+                <b>Science Total:</b> &nbsp;&nbsp;
+                Stars: <b>${totalScienceStats.topStar}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Forked: <b>${totalScienceStats.mostForked}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Watching: <b>${totalScienceStats.mostWatched}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Updated: <b>${totalScienceStats.latestUpdate}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Fixed: <b>${totalScienceStats.mostFixed}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Open Issues: <b>${totalScienceStats.mostOpenIssues}</b>
+              </div>
+
+              <div style="margin-top: 10px; font-size: 15px; color: #475569; line-height: 1.8;">
+                <b>General Total:</b> &nbsp;&nbsp;
+                Stars: <b>${totalGeneralStats.topStar}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Forked: <b>${totalGeneralStats.mostForked}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Watching: <b>${totalGeneralStats.mostWatched}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Updated: <b>${totalGeneralStats.latestUpdate}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Fixed: <b>${totalGeneralStats.mostFixed}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+                Open Issues: <b>${totalGeneralStats.mostOpenIssues}</b>
+              </div>
+            </div>
+
+            <div class="section">
+              ${renderTable("dailyTable", "📈 Science - Daily Dashboard", dailyChangeData, true)}
+            </div>
+            <div class="section">
+              ${renderTable("dashboardTable", "🔬 Science - Projects Dashboard", projectData)}
+            </div>
+
+            <div class="section">
+              ${renderTable("generalDailyTable", "📊 General - Daily Dashboard", generalChangeData, true)}
+            </div>
+            <div class="section">
+              ${renderTable("generalDashboardTable", "📦 General - Projects Dashboard", generalData)}
+            </div>
+
+            <div class="section">
+              <div class="poem-container">
+                <div class="poem-column">
+    When chaos first gave way to hidden truths profound,
+    Mortal seekers wandered lost, with no clear way bound.
+    No need to toil through volumes thousand-fold,
+    For wit unbodied breaks the darkness cold.
+
+    Since ancient times, all who sought wisdom's gate,
+    Faced mountains of texts, vast seas of reason,
+    Trials of experiment, strokes of fate,
+    Too often spent their years in endless season.
                 </div>
+                <div class="poem-column">
+    Now a new path dawns: a bodiless mind,
+    Without form or voice, yet with logic refined.
+    It reads, it knows, it reasons, it reveals,
+    Crossing every barrier truth conceals.
 
-                <div class="hero-stats-info" style="margin-top: 20px; font-size:15px; line-height:1.8;">
-                  <b>Science Daily:</b> &nbsp;&nbsp;
-                  Stars: <b style="color:#059669">${dailyStats.starGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Forks: <b style="color:#059669">${dailyStats.forkGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Watching: <b style="color:#059669">${dailyStats.watchGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Fixed: <b style="color:#059669">${dailyStats.fixedIssues}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Contributors: <b style="color:#059669">${dailyStats.contributorGainer}</b>
-                </div>
-
-                <div class="hero-stats-info" style="margin-top: 10px; font-size:15px; line-height:1.8;">
-                  <b>General Daily:</b> &nbsp;&nbsp;
-                  Stars: <b style="color:#059669">${generalDailyStats.starGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Forks: <b style="color:#059669">${generalDailyStats.forkGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Watching: <b style="color:#059669">${generalDailyStats.watchGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Fixed: <b style="color:#059669">${generalDailyStats.fixedIssues}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Contributors: <b style="color:#059669">${generalDailyStats.contributorGainer}</b>
-                </div>
-
-                <div style="margin-top: 20px; font-size: 15px; color: #475569; line-height: 1.8;">
-                  <b>Science Total:</b> &nbsp;&nbsp;
-                  Stars: <b>${totalScienceStats.topStar}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Forked: <b>${totalScienceStats.mostForked}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Watching: <b>${totalScienceStats.mostWatched}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Updated: <b>${totalScienceStats.latestUpdate}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Fixed: <b>${totalScienceStats.mostFixed}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Open Issues: <b>${totalScienceStats.mostOpenIssues}</b>
-                </div>
-
-                <div style="margin-top: 10px; font-size: 15px; color: #475569; line-height: 1.8;">
-                  <b>General Total:</b> &nbsp;&nbsp;
-                  Stars: <b>${totalGeneralStats.topStar}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Forked: <b>${totalGeneralStats.mostForked}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Watching: <b>${totalGeneralStats.mostWatched}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Updated: <b>${totalGeneralStats.latestUpdate}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Fixed: <b>${totalGeneralStats.mostFixed}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                  Open Issues: <b>${totalGeneralStats.mostOpenIssues}</b>
+    May this art guide all who wander far,
+    To find the light, and reach the shining star.
                 </div>
               </div>
+            </div>
 
-              <div class="section">
-                ${renderTable("dailyTable", "📈 Science - Daily Dashboard", dailyChangeData, true)}
-              </div>
-              <div class="section">
-                ${renderTable("dashboardTable", "🔬 Science - Projects Dashboard", projectData)}
-              </div>
-
-              <div class="section">
-                ${renderTable("generalDailyTable", "📊 General - Daily Dashboard", generalChangeData, true)}
-              </div>
-              <div class="section">
-                ${renderTable("generalDashboardTable", "📦 General - Projects Dashboard", generalData)}
-              </div>
-
-              <div class="section">
-                <div class="poem-container">
-                  <div class="poem-column">
-      When chaos first gave way to hidden truths profound,
-      Mortal seekers wandered lost, with no clear way bound.
-      No need to toil through volumes thousand-fold,
-      For wit unbodied breaks the darkness cold.
-
-      Since ancient times, all who sought wisdom's gate,
-      Faced mountains of texts, vast seas of reason,
-      Trials of experiment, strokes of fate,
-      Too often spent their years in endless season.
-                  </div>
-                  <div class="poem-column">
-      Now a new path dawns: a bodiless mind,
-      Without form or voice, yet with logic refined.
-      It reads, it knows, it reasons, it reveals,
-      Crossing every barrier truth conceals.
-
-      May this art guide all who wander far,
-      To find the light, and reach the shining star.
-                  </div>
-                </div>
-              </div>
-
-              <div class="footer">
-                <h3>License</h3>
-                <p>MIT License</p>
-              </div>
-            `;
+            <div class="footer">
+              <h3>License</h3>
+              <p>MIT License</p>
+            </div>
+          `;
 
         setTimeout(() => {
           [
