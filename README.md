@@ -69,10 +69,13 @@ Pantheon/
   - [x] Project Ranking by Daily Change
   - [x] Fit Phone Screen
 - **Phase 1**: Project Experience - 2026.03.22
-  - [ ] Research-Claw by wentorai
-  - [ ] dr-Claw by OpenLAIR
-  - [ ] DrClaw by InternScience
-  - [ ] EvoScientist by EvoScientist
+  - [x] Research-Claw by wentorai
+  - [x] dr-Claw by OpenLAIR
+  - [x] DrClaw by InternScience
+  - [x] EvoScientist by EvoScientist, also used ResearAI/DeepScientist
+  - So far, ai4s-research/open-science is pretty good.
+- **Phase 2**: Pantheon Score - 2026.07.21
+  - [x] Evaluate project performance with community heat score.
 
 ## License
 
