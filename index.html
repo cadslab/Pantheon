@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pantheon - Automated Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <style>
       * {
         margin: 0;
@@ -120,6 +121,23 @@
 
       .section {
         margin-bottom: 50px;
+      }
+
+      .chart-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 50px;
+      }
+      .chart-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 24px;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+      }
+      .chart-box {
+        width: 100%;
+        height: 520px;
       }
 
       .poem-container {
@@ -339,6 +357,12 @@
           font-size: 14px !important;
           line-height: 1.6 !important;
         }
+        .chart-row {
+          grid-template-columns: 1fr;
+        }
+        .chart-box {
+          height: 420px;
+        }
       }
     </style>
   </head>
@@ -351,11 +375,67 @@
     </div>
 
     <script>
+      function getDateStr(dayOffset = 0) {
+        const d = new Date();
+        d.setDate(d.getDate() + dayOffset);
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${y}${m}${day}`;
+      }
+
+      const todayDate = getDateStr(0);
+      const prevDate = getDateStr(-1);
       const addMoreUrl = "https://github.com/cadslab/Pantheon/issues";
+
       let projectData = [];
-      let dailyChangeData = [];
+      let prevProjectData = [];
       let generalData = [];
-      let generalChangeData = [];
+      let prevGeneralData = [];
+
+      // Heat score data
+      let scienceHeatData = [];
+      let generalHeatData = [];
+
+      let scienceChart = null;
+      let generalChart = null;
+
+      function calcDiff(curr, prev) {
+        const empty = {
+          stars: 0,
+          forks: 0,
+          watching: 0,
+          open_issues: 0,
+          closed_issues: 0,
+          open_prs: 0,
+          closed_prs: 0,
+          contributors: 0,
+          commits: 0,
+        };
+        if (!prev) return empty;
+        return {
+          stars: Number(curr.stars ?? 0) - Number(prev.stars ?? 0),
+          forks: Number(curr.forks ?? 0) - Number(prev.forks ?? 0),
+          watching: Number(curr.watching ?? 0) - Number(prev.watching ?? 0),
+          open_issues:
+            Number(curr.open_issues ?? 0) - Number(prev.open_issues ?? 0),
+          closed_issues:
+            Number(curr.closed_issues ?? 0) - Number(prev.closed_issues ?? 0),
+          open_prs: Number(curr.open_prs ?? 0) - Number(prev.open_prs ?? 0),
+          closed_prs:
+            Number(curr.closed_prs ?? 0) - Number(prev.closed_prs ?? 0),
+          contributors:
+            Number(curr.contributors ?? 0) - Number(prev.contributors ?? 0),
+          commits: Number(curr.commits ?? 0) - Number(prev.commits ?? 0),
+        };
+      }
+
+      function buildDiffList(todayList, prevList) {
+        return todayList.map((item) => {
+          const prevItem = prevList.find((x) => x.name === item.name);
+          return { ...item, ...calcDiff(item, prevItem) };
+        });
+      }
 
       function formatDate(dateStr) {
         if (!dateStr) return "Unknown";
@@ -372,40 +452,127 @@
         return `<span class="num-zero">—</span>`;
       }
 
+      // Sort by total_heat descending: higher heat on top
+      // 🔥 已修复：Heat high on top
+      function initHeatHorizontalBarChart(domId, title, heatList) {
+        const el = document.getElementById(domId);
+        const chart = echarts.init(el);
+
+        // 1. 先按热度 降序：大→小
+        const sorted = [...heatList].sort(
+          (a, b) => b.total_heat - a.total_heat,
+        );
+
+        const names = sorted.map((item) => {
+          const sp = item.repo.split("/");
+          return sp.length > 1 ? sp[1] : item.repo;
+        });
+        const totalHeat = sorted.map((item) => item.total_heat || 0);
+
+        const option = {
+          title: {
+            text: title,
+            left: "center",
+            textStyle: { color: "#1e293b", fontSize: 18, fontWeight: "600" },
+          },
+          tooltip: {
+            trigger: "axis",
+            axisPointer: { type: "shadow" },
+            formatter: function (params) {
+              const idx = params[0].dataIndex;
+              const d = sorted[idx];
+              return `
+        <div style="text-align:left">
+          <div>Repository: ${d.repo}</div>
+          <div>Total Heat: ${d.total_heat}</div>
+          <div>1D Heat: ${d.heat_1d}</div>
+          <div>3D Heat: ${d.heat_3d}</div>
+          <div>7D Heat: ${d.heat_7d}</div>
+          <div>Age Penalty: ${d.age_penalty}</div>
+        </div>
+      `;
+            },
+          },
+          grid: { left: "3%", right: "4%", bottom: "3%", containLabel: true },
+          xAxis: {
+            type: "value",
+            name: "Total Heat",
+            nameTextStyle: { color: "#64748b" },
+          },
+          yAxis: {
+            type: "category",
+            data: names,
+            axisLabel: { color: "#334155" },
+            // 核心：true = 反转Y轴，第一条数据显示在最顶部
+            inverse: true,
+          },
+          series: [
+            {
+              name: "Total Heat",
+              type: "bar",
+              barWidth: "60%",
+              data: totalHeat,
+              itemStyle: {
+                color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [
+                  { offset: 0, color: "#f59e0b" },
+                  { offset: 1, color: "#ef4444" },
+                ]),
+              },
+            },
+          ],
+        };
+        chart.setOption(option);
+        window.addEventListener("resize", () => chart.resize());
+        return chart;
+      }
       async function loadData() {
         try {
-          const [currentRes, changeRes, generalRes, generalChangeRes] =
-            await Promise.all([
-              fetch("./status/science_data_current.json"),
-              fetch("./status/science_data_change.json"),
-              fetch("./status/general_data_current.json"),
-              fetch("./status/general_data_change.json"),
-            ]);
+          // Load daily status files
+          const [sciToday, sciPrev, genToday, genPrev] = await Promise.all([
+            fetch(`./status/science_${todayDate}.json`),
+            fetch(`./status/science_${prevDate}.json`),
+            fetch(`./status/general_${todayDate}.json`),
+            fetch(`./status/general_${prevDate}.json`),
+          ]);
 
-          if (!currentRes.ok)
-            throw new Error("science_data_current.json 加载失败");
-          if (!changeRes.ok)
-            throw new Error("science_data_change.json 加载失败");
-          if (!generalRes.ok)
-            throw new Error("general_data_current.json 加载失败");
-          if (!generalChangeRes.ok)
-            throw new Error("general_data_change.json 加载失败");
+          projectData = (await sciToday.json()) || [];
+          prevProjectData = (await sciPrev.json()) || [];
+          generalData = (await genToday.json()) || [];
+          prevGeneralData = (await genPrev.json()) || [];
 
-          projectData = (await currentRes.json()) || [];
-          dailyChangeData = (await changeRes.json()) || [];
-          generalData = (await generalRes.json()) || [];
-          generalChangeData = (await generalChangeRes.json()) || [];
+          // Load heat score files
+          const [sciHeatRes, genHeatRes] = await Promise.all([
+            fetch(`./scores/science_heat.json`),
+            fetch(`./scores/general_heat.json`),
+          ]);
+          scienceHeatData = (await sciHeatRes.json()) || [];
+          generalHeatData = (await genHeatRes.json()) || [];
 
-          renderPage();
+          const dailyChangeData = buildDiffList(projectData, prevProjectData);
+          const generalChangeData = buildDiffList(generalData, prevGeneralData);
+
+          renderPage(dailyChangeData, generalChangeData);
+
+          // Render heat bar charts
+          scienceChart = initHeatHorizontalBarChart(
+            "scienceChart",
+            "🔬 Science Project Heat Ranking",
+            scienceHeatData,
+          );
+          generalChart = initHeatHorizontalBarChart(
+            "generalChart",
+            "📦 General Project Heat Ranking",
+            generalHeatData,
+          );
         } catch (err) {
           document.getElementById("app").innerHTML = `
-              <div class="hero">
-                <h1>⚠️ Data Load Failed</h1>
-                <h3>Please check if the /status/ folder contains all 4 JSON files</h3>
-                <p style="margin-top:20px; color:#dc2626">${err.message}</p>
-              </div>
-            `;
-          console.error("Load failed", err);
+          <div class="hero">
+            <h1>⚠️ Data Load Failed</h1>
+            <h3>Please check files in /status/ and /scores/ directory</h3>
+            <p style="margin-top:20px;color:#dc2626">${err.message}</p>
+          </div>
+        `;
+          console.error(err);
         }
       }
 
@@ -418,43 +585,30 @@
           : "table-wrapper";
 
         let html = `
-          <div class="${cardClass}">
-            <h2>${title}</h2>
-            <div class="${wrapperClass}">
-              <table id="${id}" class="${tableClass}">
-                <thead>
-                  <tr>
-                    <th>Project</th>
-                    <th>Developer</th>
-                    <th class="num-col">Stars</th>
-                    <th class="num-col">Forks</th>
-                    <th class="num-col">Watching</th>
-                    <th class="num-col">Open<br>Issues</th>
-                    <th class="num-col">Closed<br>Issues</th>
-                    <th class="num-col">Open<br>Pulls</th>
-                    <th class="num-col">Closed<br>Pulls</th>
-                    <th class="num-col">Contributors</th>
-                    <th class="num-col">Commits</th>
-                    <th>Last Commit</th>
-                    <th>Last Fork</th>
-                    <th>Last Open Issue</th>
-                    <th>Last Closed Issue</th>
-                    <th>Last Open Pull</th>
-                    <th>Last Closed Pull</th>
-                  </tr>
-                </thead>
-                <tbody>`;
+      <div class="${cardClass}">
+        <h2>${title}</h2>
+        <div class="${wrapperClass}">
+          <table id="${id}" class="${tableClass}">
+            <thead>
+              <tr>
+                <th>Project</th><th>Developer</th><th class="num-col">Stars</th>
+                <th class="num-col">Forks</th><th class="num-col">Watching</th>
+                <th class="num-col">Open Issues</th><th class="num-col">Closed Issues</th>
+                <th class="num-col">Open Pulls</th><th class="num-col">Closed Pulls</th>
+                <th class="num-col">Contributors</th><th class="num-col">Commits</th>
+                <th>Last Commit</th><th>Last Fork</th><th>Last Open Issue</th>
+                <th>Last Closed Issue</th><th>Last Open Pull</th><th>Last Closed Pull</th>
+              </tr>
+            </thead><tbody>`;
 
-        if (!data || data.length === 0) {
-          html += `<tr><td colspan="17" style="text-align:center; padding:30px;">No Data Available</td></tr>`;
-          html += `</tbody></table></div></div>`;
-          return html;
+        if (!data || !data.length) {
+          html += `<tr><td colspan="17" style="text-align:center;padding:30px;">No Data Available</td></tr>`;
+          return html + `</tbody></table></div></div>`;
         }
 
         data.forEach((item) => {
           if (!item?.name) return;
           const [dev, proj] = item.name.split("/") || ["-", item.name];
-
           const cells = {
             stars: isDaily
               ? formatDailyChange(item.stars)
@@ -484,30 +638,27 @@
               ? formatDailyChange(item.commits)
               : formatNum(item.commits),
           };
-
           html += `<tr>
-              <td><a href="${item.url || "#"}" target="_blank">${proj || item.name}</a></td>
-              <td title="${dev || "-"}">${dev || "-"}</td>
-              <td class="num">${cells.stars}</td>
-              <td class="num">${cells.forks}</td>
-              <td class="num">${cells.watching}</td>
-              <td class="num">${cells.openIssues}</td>
-              <td class="num">${cells.closedIssues}</td>
-              <td class="num">${cells.openPrs}</td>
-              <td class="num">${cells.closedPrs}</td>
-              <td class="num">${cells.contributors}</td>
-              <td class="num">${cells.commits}</td>
-              <td>${formatDate(item.last_commit)}</td>
-              <td>${formatDate(item.last_fork)}</td>
-              <td>${formatDate(item.last_open_issue)}</td>
-              <td>${formatDate(item.last_closed_issue)}</td>
-              <td>${formatDate(item.last_open_pr)}</td>
-              <td>${formatDate(item.last_closed_pr)}</td>
-            </tr>`;
+          <td><a href="${item.url || "#"}" target="_blank">${proj}</a></td>
+          <td title="${dev}">${dev}</td>
+          <td class="num">${cells.stars}</td>
+          <td class="num">${cells.forks}</td>
+          <td class="num">${cells.watching}</td>
+          <td class="num">${cells.openIssues}</td>
+          <td class="num">${cells.closedIssues}</td>
+          <td class="num">${cells.openPrs}</td>
+          <td class="num">${cells.closedPrs}</td>
+          <td class="num">${cells.contributors}</td>
+          <td class="num">${cells.commits}</td>
+          <td>${formatDate(item.last_commit)}</td>
+          <td>${formatDate(item.last_fork)}</td>
+          <td>${formatDate(item.last_open_issue)}</td>
+          <td>${formatDate(item.last_closed_issue)}</td>
+          <td>${formatDate(item.last_open_pr)}</td>
+          <td>${formatDate(item.last_closed_pr)}</td>
+        </tr>`;
         });
-
-        html += `</tbody></table></div></div>`;
-        return html;
+        return html + `</tbody></table></div></div>`;
       }
 
       function makeTableSortable(tableId) {
@@ -516,46 +667,34 @@
         const headers = table.querySelectorAll("th");
         const numColumns = [2, 3, 4, 5, 6, 7, 8, 9, 10];
         const dateColumns = [11, 12, 13, 14, 15, 16];
-
         headers.forEach((th, idx) => {
           let sortOrder = 1;
           th.addEventListener("click", () => {
             const rows = Array.from(table.querySelectorAll("tbody tr"));
-
             rows.sort((a, b) => {
               if (dateColumns.includes(idx)) {
-                const dateA = new Date(a.cells[idx].textContent);
-                const dateB = new Date(b.cells[idx].textContent);
-                return (dateB - dateA) * sortOrder;
+                let da = new Date(a.cells[idx].textContent);
+                let db = new Date(b.cells[idx].textContent);
+                return (db - da) * sortOrder;
               }
-
-              const aText = a.cells[idx].textContent
-                .trim()
-                .replace(/,/g, "")
-                .replace(/[^\d-]/g, "");
-              const bText = b.cells[idx].textContent
-                .trim()
-                .replace(/,/g, "")
-                .replace(/[^\d-]/g, "");
-
+              let aTxt = a.cells[idx].textContent.replace(/[,^\d-]/g, "");
+              let bTxt = b.cells[idx].textContent.replace(/[,^\d-]/g, "");
               if (numColumns.includes(idx)) {
-                const aNum = parseFloat(aText) || 0;
-                const bNum = parseFloat(bText) || 0;
-                return (aNum - bNum) * sortOrder;
+                let an = parseFloat(aTxt) || 0;
+                let bn = parseFloat(bTxt) || 0;
+                return (an - bn) * sortOrder;
               }
-
-              return aText.localeCompare(bText) * sortOrder;
+              return aTxt.localeCompare(bTxt) * sortOrder;
             });
-
             const tbody = table.querySelector("tbody");
-            rows.forEach((row) => tbody.appendChild(row));
+            rows.forEach((r) => tbody.appendChild(r));
             sortOrder *= -1;
           });
         });
       }
 
       function getTopGainers(data) {
-        if (!data || data.length === 0) {
+        if (!data || !data.length)
           return {
             starGainer: "None",
             forkGainer: "None",
@@ -563,187 +702,101 @@
             fixedIssues: "None",
             contributorGainer: "None",
           };
-        }
         return {
           starGainer:
             [...data]
               .sort((a, b) => b.stars - a.stars)[0]
-              ?.name?.split("/")[1] || "None",
+              ?.name.split("/")[1] || "None",
           forkGainer:
             [...data]
               .sort((a, b) => b.forks - a.forks)[0]
-              ?.name?.split("/")[1] || "None",
+              ?.name.split("/")[1] || "None",
           watchGainer:
             [...data]
-              .sort((a, b) => b.watchers - a.watchers)[0]
-              ?.name?.split("/")[1] || "None",
+              .sort((a, b) => b.watching - a.watching)[0]
+              ?.name.split("/")[1] || "None",
           fixedIssues:
             [...data]
               .sort((a, b) => b.closed_issues - a.closed_issues)[0]
-              ?.name?.split("/")[1] || "None",
+              ?.name.split("/")[1] || "None",
           contributorGainer:
             [...data]
               .sort((a, b) => b.contributors - a.contributors)[0]
-              ?.name?.split("/")[1] || "None",
-        };
-      }
-
-      function getTotalTopProjects(data) {
-        if (!data || data.length === 0) {
-          return {
-            topStar: "None",
-            mostForked: "None",
-            mostWatched: "None",
-            latestUpdate: "None",
-            mostFixed: "None",
-            mostOpenIssues: "None",
-          };
-        }
-        return {
-          topStar:
-            [...data]
-              .sort((a, b) => b.stars - a.stars)[0]
-              ?.name.split("/")[1] || "None",
-          mostForked:
-            [...data]
-              .sort((a, b) => b.forks - a.forks)[0]
-              ?.name.split("/")[1] || "None",
-          mostWatched:
-            [...data]
-              .sort((a, b) => b.watchers - a.watchers)[0]
-              ?.name.split("/")[1] || "None",
-          latestUpdate:
-            [...data]
-              .sort(
-                (a, b) => new Date(b.last_commit) - new Date(a.last_commit),
-              )[0]
-              ?.name.split("/")[1] || "None",
-          mostFixed:
-            [...data]
-              .sort((a, b) => b.closed_issues - a.closed_issues)[0]
-              ?.name.split("/")[1] || "None",
-          mostOpenIssues:
-            [...data]
-              .sort((a, b) => b.open_issues - a.open_issues)[0]
               ?.name.split("/")[1] || "None",
         };
       }
 
-      function renderPage() {
+      function renderPage(dailyChangeData, generalChangeData) {
         const app = document.getElementById("app");
         const totalProjects =
           (projectData?.length || 0) + (generalData?.length || 0);
-
         const dailyStats = getTopGainers(dailyChangeData);
-        const totalScienceStats = getTotalTopProjects(projectData);
         const generalDailyStats = getTopGainers(generalChangeData);
-        const totalGeneralStats = getTotalTopProjects(generalData);
 
         app.innerHTML = `
-            <div class="hero">
-              <h1>🏛️</h1>
-              <h1><strong>Pantheon</strong></h1>
-              <h2>Automated Research</h2>
-              <h3>Unlock the Path, Lead the Way</h3>
+        <div class="hero">
+          <h1>🏛️</h1>
+          <h1><strong>Pantheon</strong></h1>
+          <h2>Automated Research</h2>
+          <h3>Unlock the Path, Lead the Way</h3>
+          <div class="stats-row">
+            <div class="stat-item">Known Projects: <span>${totalProjects}</span></div>
+            <button class="add-more-btn" onclick="window.open('${addMoreUrl}','_blank')">Add more</button>
+          </div>
+          <div class="hero-stats-info" style="margin-top:20px;font-size:15px">
+            <b>Science Daily:</b>
+            Stars: <b style="color:#059669">${dailyStats.starGainer}</b> |
+            Forks: <b style="color:#059669">${dailyStats.forkGainer}</b> |
+            Watching: <b style="color:#059669">${dailyStats.watchGainer}</b> |
+            Fixed: <b style="color:#059669">${dailyStats.fixedIssues}</b> |
+            Contributors: <b style="color:#059669">${dailyStats.contributorGainer}</b>
+          </div>
+          <div class="hero-stats-info" style="margin-top:10px;font-size:15px">
+            <b>General Daily:</b>
+            Stars: <b style="color:#059669">${generalDailyStats.starGainer}</b> |
+            Forks: <b style="color:#059669">${generalDailyStats.forkGainer}</b> |
+            Watching: <b style="color:#059669">${generalDailyStats.watchGainer}</b> |
+            Fixed: <b style="color:#059669">${generalDailyStats.fixedIssues}</b> |
+            Contributors: <b style="color:#059669">${generalDailyStats.contributorGainer}</b>
+          </div>
+        </div>
 
-              <div class="stats-row">
-                <div class="stat-item">Known Projects: <span>${totalProjects}</span></div>
-                <button class="add-more-btn" onclick="window.open('${addMoreUrl}', '_blank')">
-                  Add more
-                </button>
-              </div>
+        <div class="chart-row">
+          <div class="chart-card"><div id="scienceChart" class="chart-box"></div></div>
+          <div class="chart-card"><div id="generalChart" class="chart-box"></div></div>
+        </div>
 
-              <div class="hero-stats-info" style="margin-top: 20px; font-size:15px; line-height:1.8;">
-                <b>Science Daily:</b> &nbsp;&nbsp;
-                Stars: <b style="color:#059669">${dailyStats.starGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Forks: <b style="color:#059669">${dailyStats.forkGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Watching: <b style="color:#059669">${dailyStats.watchGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Fixed: <b style="color:#059669">${dailyStats.fixedIssues}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Contributors: <b style="color:#059669">${dailyStats.contributorGainer}</b>
-              </div>
+        <div class="section">${renderTable("dailyTable", "📈 Science - Daily Dashboard", dailyChangeData, true)}</div>
+        <div class="section">${renderTable("generalDailyTable", "📊 General - Daily Dashboard", generalChangeData, true)}</div>
 
-              <div class="hero-stats-info" style="margin-top: 10px; font-size:15px; line-height:1.8;">
-                <b>General Daily:</b> &nbsp;&nbsp;
-                Stars: <b style="color:#059669">${generalDailyStats.starGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Forks: <b style="color:#059669">${generalDailyStats.forkGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Watching: <b style="color:#059669">${generalDailyStats.watchGainer}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Fixed: <b style="color:#059669">${generalDailyStats.fixedIssues}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Contributors: <b style="color:#059669">${generalDailyStats.contributorGainer}</b>
-              </div>
-
-              <div style="margin-top: 20px; font-size: 15px; color: #475569; line-height: 1.8;">
-                <b>Science Total:</b> &nbsp;&nbsp;
-                Stars: <b>${totalScienceStats.topStar}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Forked: <b>${totalScienceStats.mostForked}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Watching: <b>${totalScienceStats.mostWatched}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Updated: <b>${totalScienceStats.latestUpdate}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Fixed: <b>${totalScienceStats.mostFixed}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Open Issues: <b>${totalScienceStats.mostOpenIssues}</b>
-              </div>
-
-              <div style="margin-top: 10px; font-size: 15px; color: #475569; line-height: 1.8;">
-                <b>General Total:</b> &nbsp;&nbsp;
-                Stars: <b>${totalGeneralStats.topStar}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Forked: <b>${totalGeneralStats.mostForked}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Watching: <b>${totalGeneralStats.mostWatched}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Updated: <b>${totalGeneralStats.latestUpdate}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Fixed: <b>${totalGeneralStats.mostFixed}</b> &nbsp;&nbsp;|&nbsp;&nbsp;
-                Open Issues: <b>${totalGeneralStats.mostOpenIssues}</b>
-              </div>
+        <div class="section">
+          <div class="poem-container">
+            <div class="poem-column">
+When chaos first gave way to hidden truths profound,
+Mortal seekers wandered lost, with no clear way bound.
+No need to toil through volumes thousand-fold,
+For wit unbodied breaks the darkness cold.
+Since ancient times, all who sought wisdom's gate,
+Faced mountains of texts, vast seas of reason,
+Trials of experiment, strokes of fate,
+Too often spent their years in endless season.
             </div>
-
-            <div class="section">
-              ${renderTable("dailyTable", "📈 Science - Daily Dashboard", dailyChangeData, true)}
+            <div class="poem-column">
+Now a new path dawns: a bodiless mind,
+Without form or voice, yet with logic refined.
+It reads, it knows, it reasons, it reveals,
+Crossing every barrier truth conceals.
+May this art guide all who wander far,
+To find the light, and reach the shining star.
             </div>
-            <div class="section">
-              ${renderTable("dashboardTable", "🔬 Science - Projects Dashboard", projectData)}
-            </div>
+          </div>
+        </div>
 
-            <div class="section">
-              ${renderTable("generalDailyTable", "📊 General - Daily Dashboard", generalChangeData, true)}
-            </div>
-            <div class="section">
-              ${renderTable("generalDashboardTable", "📦 General - Projects Dashboard", generalData)}
-            </div>
-
-            <div class="section">
-              <div class="poem-container">
-                <div class="poem-column">
-    When chaos first gave way to hidden truths profound,
-    Mortal seekers wandered lost, with no clear way bound.
-    No need to toil through volumes thousand-fold,
-    For wit unbodied breaks the darkness cold.
-
-    Since ancient times, all who sought wisdom's gate,
-    Faced mountains of texts, vast seas of reason,
-    Trials of experiment, strokes of fate,
-    Too often spent their years in endless season.
-                </div>
-                <div class="poem-column">
-    Now a new path dawns: a bodiless mind,
-    Without form or voice, yet with logic refined.
-    It reads, it knows, it reasons, it reveals,
-    Crossing every barrier truth conceals.
-
-    May this art guide all who wander far,
-    To find the light, and reach the shining star.
-                </div>
-              </div>
-            </div>
-
-            <div class="footer">
-              <h3>License</h3>
-              <p>MIT License</p>
-            </div>
-          `;
+        <div class="footer"><h3>License</h3><p>MIT License</p></div>
+      `;
 
         setTimeout(() => {
-          [
-            "dailyTable",
-            "dashboardTable",
-            "generalDailyTable",
-            "generalDashboardTable",
-          ].forEach(makeTableSortable);
+          ["dailyTable", "generalDailyTable"].forEach(makeTableSortable);
         }, 0);
       }
 

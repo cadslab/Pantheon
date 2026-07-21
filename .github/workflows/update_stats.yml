@@ -1,37 +1,57 @@
 name: Update Pantheon Stats
 on:
   schedule:
-    - cron: "0 0 * * *" # 每天 UTC 0点运行
-  workflow_dispatch: # 允许手动触发
+    - cron: "0 16 * * *"
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # 允许读写仓库内容
+      contents: write
     steps:
-      - uses: actions/checkout@v3
+      # 先配置全局凭证
+      - name: Configure Git Global Credential
+        run: |
+          git config --global credential.helper store
+          echo "https://${{ secrets.PANTHEON_TOKEN }}@github.com" >> ~/.git-credentials
+          chmod 600 ~/.git-credentials
+
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Set up Python
-        uses: actions/setup-python@v4
+
+      - name: Pull latest changes
+        run: git pull origin main
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.9" # 与原脚本依赖的Python版本一致
-      - name: Install Dependencies
-        run: pip install requests tenacity
-      - name: Run Script
+          python-version: "3.9"
+
+      - name: Install Python Dependencies
+        run: pip install requests tenacity python-dateutil
+
+      - name: Run stats scripts
         env:
-          PANTHEON_TOKEN: ${{ secrets.PANTHEON_TOKEN }} # 传递Token给脚本
-        run: python fetch_stats.py # 注意：改为批量脚本文件名
-      - name: Commit and Push Data
+          PANTHEON_TOKEN: ${{ secrets.PANTHEON_TOKEN }}
+        run: |
+          python fetch_stats.py
+          python score.py
+
+      - name: Commit & Push updated stats data
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          # 核心修复：1. 检测status文件夹下所有json 2. 用--分隔路径避免歧义 3. 兼容文件夹不存在
-          if [ -d "status" ] && ! git diff --quiet HEAD -- status/*.json; then
-            echo "Detected changes in status stats files, start commit"
-            git add status/*.json # 添加status下所有变更的统计json
-            git commit -m "chore: auto update pantheon stats data [ci skip]" --no-verify
-            git push origin main # 分支为master则改为master
-          else
-            echo "No changes in status stats files or status folder not exist, skip commit"
+
+          if [ -d "status" ]; then
+            changed_files=$(git status --porcelain status/*.json 2>/dev/null | wc -l)
+            if [ "$changed_files" -gt 0 ]; then
+              git add status/*.json 2>/dev/null
+              git commit -m "chore: auto update pantheon stats data [ci skip]" --no-verify
+              git push origin main
+            else
+              echo "No changes"
+            fi
           fi
