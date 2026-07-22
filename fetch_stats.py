@@ -12,16 +12,13 @@ import requests
 TOKEN = os.getenv("PANTHEON_TOKEN")
 HEADERS = {"Authorization": f"Bearer {TOKEN}"}
 URL = "https://api.github.com/graphql"
-BATCH_SIZE = 5  # Request 5 repositories per batch
-BATCH_SLEEP_SEC = 1.5  # Add delay between batches to avoid rate limit
-RETRY_TIMES = 3  # Max retry attempts for failed request
-RETRY_DELAY = 3  # Seconds to wait between retries
-# Only process specified config files
+BATCH_SIZE = 5
+BATCH_SLEEP_SEC = 1.5
+RETRY_TIMES = 3
+RETRY_DELAY = 3
 TARGET_CONFIGS = ["science.json", "general.json"]
-# Mapping config filename -> category name
 CONFIG_CATEGORY_MAP = {"science.json": "science", "general.json": "general"}
 
-# Numeric metrics fields (only for logical grouping, no filtering)
 NUMERIC_FIELDS = [
     "stars",
     "forks",
@@ -51,11 +48,8 @@ BIRTH_DIR = Path("birth")
 for folder in (REPOS_DIR, STATUS_DIR, BIRTH_DIR):
     folder.mkdir(exist_ok=True)
 
-# Date config for output filename (local time)
 TODAY = datetime.now().strftime("%Y%m%d")
-MAX_KEEP_DAYS = 7  # Keep status files for latest N days
-
-# Graceful exit flag
+MAX_KEEP_DAYS = 7
 STOP_FLAG = False
 
 
@@ -68,14 +62,11 @@ def handle_signal(signum, frame):
 signal.signal(signal.SIGINT, handle_signal)
 
 
-# ===================== Utility Functions =====================
 def clean_old_files():
-    """Remove status json files older than MAX_KEEP_DAYS (local time based)"""
     print("[Cleaner] Start scanning expired status files...")
     now = datetime.now()
     cutoff = now - timedelta(days=MAX_KEEP_DAYS)
     cutoff_date = cutoff.date()
-
     print(
         f"[Cleaner] Now local date: {now.date()}, cutoff date (delete if <=): {cutoff_date}"
     )
@@ -87,26 +78,18 @@ def clean_old_files():
             date_str = name_stem.split("_")[-1]
             file_dt = datetime.strptime(date_str, "%Y%m%d")
             file_date = file_dt.date()
-
-            print(f"[Cleaner] Check file: {file_name}, extracted date: {file_date}")
-
             if file_date <= cutoff_date:
                 try:
                     file_path.unlink()
                     print(f"Removed expired file: {file_name}")
                 except Exception as del_err:
                     print(f"Failed to delete file {file_name}, error: {str(del_err)}")
-            else:
-                print(f"Keep file (within retention period): {file_name}")
-
         except (ValueError, IndexError):
-            print(f"Skip invalid file (no valid date suffix): {file_name}")
             continue
     print("[Cleaner] Expired file scan finished.\n")
 
 
 def load_birth_cache(category: str) -> Dict[str, str]:
-    """一次性加载分类对应的birth缓存到内存字典（静态缓存）"""
     birth_file = BIRTH_DIR / f"{category}_birth.json"
     cache_map: Dict[str, str] = {}
     if birth_file.exists():
@@ -117,27 +100,27 @@ def load_birth_cache(category: str) -> Dict[str, str]:
             if repo_name and create_time:
                 cache_map[repo_name] = create_time
     print(
-        f"[Birth Cache] Loaded {len(cache_map)} repo creation records for category [{category}]"
+        f"[Birth Cache Load] category [{category}], existing cached repos: {len(cache_map)}"
     )
     return cache_map
 
 
 def save_birth_cache(category: str, cache_map: Dict[str, str]):
-    """将内存birth缓存整体持久化写入文件（批量写入减少IO）"""
     birth_file = BIRTH_DIR / f"{category}_birth.json"
     export_list = [{"repo": k, "created_at": v} for k, v in cache_map.items()]
     try:
         with open(birth_file, "w", encoding="utf-8") as f:
             json.dump(export_list, f, indent=2, ensure_ascii=False)
-        print(f"[Birth Cache] Persisted updated birth cache for [{category}]")
+        print(
+            f"✅ [Birth Cache SAVE] Write {len(export_list)} entries to {birth_file.name}"
+        )
     except Exception as err:
-        print(f"[Birth Cache] Write failed! file={birth_file.name}, err={str(err)}")
+        print(f"❌ [Birth Cache] Write failed! file={birth_file.name}, err={str(err)}")
 
 
 def generate_batch_query(
     batch_projects: List[Dict[str, str]],
 ) -> Tuple[str, Dict[str, str]]:
-    """Build GraphQL batch query string for repository statistics"""
     fragment = """
     fragment RepoStats on Repository {
         nameWithOwner
@@ -146,7 +129,6 @@ def generate_batch_query(
         forkCount
         watchers { totalCount }
         url
-        # Open / Closed Issues
         openIssues: issues(states: OPEN, first: 1, orderBy: {field: UPDATED_AT, direction: DESC}) {
             totalCount
             nodes { updatedAt }
@@ -155,7 +137,6 @@ def generate_batch_query(
             totalCount
             nodes { closedAt }
         }
-        # Open / Closed Pull Requests
         openPRs: pullRequests(states: OPEN, first: 1, orderBy: {field: UPDATED_AT, direction: DESC}) {
             totalCount
             nodes { updatedAt }
@@ -164,14 +145,11 @@ def generate_batch_query(
             totalCount
             nodes { closedAt }
         }
-        # Fork information
         forks(first: 1, orderBy: {field: CREATED_AT, direction: DESC}) {
             totalCount
             nodes { createdAt }
         }
-        # Mentionable contributors count: first:0 reduce GraphQL cost
         contributors: mentionableUsers(first: 0) { totalCount }
-        # Default branch commit info
         defaultBranchRef {
             target {
                 ... on Commit {
@@ -180,7 +158,6 @@ def generate_batch_query(
                 }
             }
         }
-        # Primary programming language
         primaryLanguage { name color }
     }
     """
@@ -213,7 +190,6 @@ def execute_batch_query_with_retry(
     total_batch: int,
     birth_cache: Dict[str, str],
 ) -> List[Dict[str, Any]]:
-    """Execute GraphQL query with automatic retry mechanism"""
     if not batch_projects:
         return []
 
@@ -250,15 +226,19 @@ def execute_batch_query_with_retry(
                 full_name = item["full_name"]
                 if not single_repo:
                     print(
-                        f"Warning Batch {batch_num}/{total_batch} - Repository not found: {full_name}"
+                        f"⚠️ Batch {batch_num}/{total_batch} - Repository NOT FOUND: {full_name}"
                     )
                     continue
 
-                # ========== 核心改动：优先读取birth缓存的created_at ==========
+                raw_api_created = single_repo.get("createdAt", "N/A")
+                print(
+                    f"[DEBUG API] {full_name} raw createdAt from api: {raw_api_created}"
+                )
+
                 if full_name in birth_cache:
                     created_at_val = birth_cache[full_name]
                 else:
-                    created_at_val = single_repo.get("createdAt", "N/A")
+                    created_at_val = raw_api_created
 
                 parsed = {
                     "name": single_repo["nameWithOwner"],
@@ -310,7 +290,6 @@ def execute_batch_query_with_retry(
                     parsed["last_closed_issue"] = single_repo["closedIssues"]["nodes"][
                         0
                     ].get("closedAt", "N/A")
-
                 if single_repo["openPRs"]["nodes"]:
                     parsed["last_open_pr"] = single_repo["openPRs"]["nodes"][0].get(
                         "updatedAt", "N/A"
@@ -319,7 +298,6 @@ def execute_batch_query_with_retry(
                     parsed["last_closed_pr"] = single_repo["closedPRs"]["nodes"][0].get(
                         "closedAt", "N/A"
                     )
-
                 if single_repo["forks"]["nodes"]:
                     parsed["last_fork"] = single_repo["forks"]["nodes"][0].get(
                         "createdAt", "N/A"
@@ -327,7 +305,7 @@ def execute_batch_query_with_retry(
 
                 results.append(parsed)
                 print(
-                    f"Success Batch {batch_num}/{total_batch} - Fetched: {full_name} | Stars: {parsed['stars']}"
+                    f"✅ Success Batch {batch_num}/{total_batch} - Fetched: {full_name} | Stars: {parsed['stars']}"
                 )
             return results
 
@@ -349,7 +327,6 @@ def execute_batch_query_with_retry(
 
 
 def load_json(file_path: Path) -> List[Any]:
-    """Load json file, return empty list if file missing / invalid"""
     if not file_path.exists():
         return []
     try:
@@ -360,9 +337,7 @@ def load_json(file_path: Path) -> List[Any]:
         return []
 
 
-# ===================== Core Processing Logic =====================
 def process_target_config(config_file_name: str):
-    """Process single target repository config file"""
     global STOP_FLAG
     if config_file_name not in TARGET_CONFIGS:
         print(f"Warning Skip non-target config file: {config_file_name}")
@@ -377,8 +352,8 @@ def process_target_config(config_file_name: str):
     print(f"Output file: {output_file.name}")
     print("=" * 80 + "\n")
 
-    # 加载该分类全局birth缓存（静态内存变量）
     birth_cache = load_birth_cache(category)
+    new_add_count = 0
 
     projects = load_json(config_file_path)
     if not projects:
@@ -431,31 +406,34 @@ def process_target_config(config_file_name: str):
             repo_name = item["name"]
             create_time = item["created_at"]
             all_results.append(item)
-            # 缓存不存在，则新增到内存缓存
             if repo_name not in birth_cache and create_time != "N/A":
                 birth_cache[repo_name] = create_time
+                new_add_count += 1
                 print(
-                    f"[Birth Cache] New repo discovered, cache {repo_name} -> {create_time}"
+                    f"📥 [Birth NEW] Add repo to memory cache: {repo_name} -> {create_time}"
                 )
         time.sleep(BATCH_SLEEP_SEC)
 
-    # 批次全部跑完后，一次性写入birth文件（减少频繁IO）
+    print(
+        f"\n[Summary] category {category}: newly added birth records = {new_add_count}"
+    )
+    # 写入文件
     save_birth_cache(category, birth_cache)
 
     if not all_results:
-        print(f"\nWarning No valid data fetched, skip saving\n")
+        print(f"\nWarning No valid data fetched, skip saving status json\n")
         return
 
     all_results.sort(key=lambda x: x["stars"], reverse=True)
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(all_results, f, indent=2, ensure_ascii=False, default=str)
-    print(f"\nSaved result: {output_file.name} (repos fetched: {len(all_results)})")
+    print(
+        f"\nSaved status result: {output_file.name} (repos fetched: {len(all_results)})"
+    )
     print(f"{config_file_name} processing finished!\n")
 
 
-# ===================== Main Entry =====================
 if __name__ == "__main__":
-    # 【修复点】isdir() → is_dir()
     if not REPOS_DIR.is_dir():
         print(
             f"Error: Directory '{REPOS_DIR}' not found. Create it and place {TARGET_CONFIGS} inside."

@@ -44,11 +44,9 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-          # 同时追踪 status scores birth 目录内修改、删除的文件
           git add --update status/ scores/ birth/
           git status
 
-          # 检测三个目录下任意变更
           if [[ -n $(git status --porcelain status/ scores/ birth/) ]]; then
             git commit -m "chore: auto update pantheon stats data [ci skip]" --no-verify
             git push origin main
