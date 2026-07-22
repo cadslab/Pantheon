@@ -455,7 +455,8 @@ def process_target_config(config_file_name: str):
 
 # ===================== Main Entry =====================
 if __name__ == "__main__":
-    if not REPOS_DIR.isdir():
+    # 【修复点】isdir() → is_dir()
+    if not REPOS_DIR.is_dir():
         print(
             f"Error: Directory '{REPOS_DIR}' not found. Create it and place {TARGET_CONFIGS} inside."
         )
