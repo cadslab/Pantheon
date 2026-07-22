@@ -2,7 +2,7 @@ import glob
 import json
 import os
 import time
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import requests
@@ -43,21 +43,21 @@ BASIC_FIELDS = ["name", "url", "language", "language_color"]
 REPOS_DIR = "repos"
 STATUS_DIR = "status"
 os.makedirs(STATUS_DIR, exist_ok=True)
-# Date config for output filename (UTC time)
-TODAY = datetime.now(UTC).strftime("%Y%m%d")
+# Date config for output filename (local time)
+TODAY = datetime.now().strftime("%Y%m%d")
 MAX_KEEP_DAYS = 7  # Keep status files for latest N days
 
 
 # ===================== Utility Functions =====================
 def clean_old_files():
-    """Remove status json files older than MAX_KEEP_DAYS (UTC based)"""
+    """Remove status json files older than MAX_KEEP_DAYS (local time based)"""
     print("[Cleaner] Start scanning expired status files...")
-    now_utc = datetime.now(UTC)
-    cutoff_utc = now_utc - timedelta(days=MAX_KEEP_DAYS)
-    cutoff_date_utc = cutoff_utc.date()
+    now = datetime.now()
+    cutoff = now - timedelta(days=MAX_KEEP_DAYS)
+    cutoff_date = cutoff.date()
 
     print(
-        f"[Cleaner] Now UTC date: {now_utc.date()}, cutoff UTC date (delete if <=): {cutoff_date_utc}"
+        f"[Cleaner] Now local date: {now.date()}, cutoff date (delete if <=): {cutoff_date}"
     )
 
     status_path = Path(STATUS_DIR)
@@ -75,7 +75,7 @@ def clean_old_files():
 
             print(f"[Cleaner] Check file: {file_name}, extracted date: {file_date}")
 
-            if file_date <= cutoff_date_utc:
+            if file_date <= cutoff_date:
                 try:
                     file_path.unlink()
                     print(f"Removed expired file: {file_name}")
