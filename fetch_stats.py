@@ -53,6 +53,7 @@ def clean_old_files():
     """Remove status json files older than MAX_KEEP_DAYS"""
     print("[Cleaner] Start scanning expired status files...")
     cutoff = datetime.now() - timedelta(days=MAX_KEEP_DAYS)
+    cutoff_date = cutoff.date()
     file_pattern = os.path.join(STATUS_DIR, "*.json")
 
     for file_path in glob.glob(file_pattern):
@@ -63,16 +64,21 @@ def clean_old_files():
             date_str = name_without_ext.split("_")[-1]
             # Validate date format
             file_date = datetime.strptime(date_str, "%Y%m%d")
-            # Compare date only (ignore time part)
-            if file_date.date() < cutoff.date():
-                os.remove(file_path)
-                print(f"🗑️ Removed expired file: {file_name}")
+            file_date_only = file_date.date()
+
+            if file_date_only < cutoff_date:
+                # Add exception capture for remove operation to diagnose delete failure
+                try:
+                    os.remove(file_path)
+                    print(f"Removed expired file: {file_name}")
+                except Exception as del_err:
+                    print(f"Failed to delete file {file_name}, error: {str(del_err)}")
             else:
-                print(f"✅ Keep file (within retention period): {file_name}")
+                print(f"Keep file (within retention period): {file_name}")
         except (ValueError, OSError, IndexError):
-            # Skip files with unmatched name format or delete error
+            # Skip files with unmatched name format or access error
             print(
-                f"ℹ️ Skip invalid file (no valid date suffix): {os.path.basename(file_path)}"
+                f"Skip invalid file (no valid date suffix): {os.path.basename(file_path)}"
             )
             continue
     print("[Cleaner] Expired file scan finished.\n")
@@ -169,7 +175,7 @@ def execute_batch_query_with_retry(batch_projects, batch_num, total_batch):
             # Handle graphql logic errors
             if "errors" in data and data["errors"]:
                 print(
-                    f"⚠️ Batch {batch_num}/{total_batch} Attempt {retry+1} - GraphQL error: {data['errors'][0]['message']}"
+                    f"Warning Batch {batch_num}/{total_batch} Attempt {retry+1} - GraphQL error: {data['errors'][0]['message']}"
                 )
                 if retry == RETRY_TIMES - 1:
                     return []
@@ -184,7 +190,7 @@ def execute_batch_query_with_retry(batch_projects, batch_num, total_batch):
                 full_name = item["full_name"]
                 if not single_repo:
                     print(
-                        f"⚠️ Batch {batch_num}/{total_batch} - Repository not found: {full_name}"
+                        f"Warning Batch {batch_num}/{total_batch} - Repository not found: {full_name}"
                     )
                     continue
 
@@ -260,20 +266,20 @@ def execute_batch_query_with_retry(batch_projects, batch_num, total_batch):
 
                 results.append(parsed)
                 print(
-                    f"✅ Batch {batch_num}/{total_batch} - Fetched: {full_name} | Stars: {parsed['stars']}"
+                    f"Success Batch {batch_num}/{total_batch} - Fetched: {full_name} | Stars: {parsed['stars']}"
                 )
             return results
 
         except requests.exceptions.RequestException as e:
             print(
-                f"❌ Batch {batch_num}/{total_batch} Attempt {retry+1} - Network error: {str(e)}"
+                f"Error Batch {batch_num}/{total_batch} Attempt {retry+1} - Network error: {str(e)}"
             )
             if retry == RETRY_TIMES - 1:
                 return []
             time.sleep(RETRY_DELAY)
         except Exception as e:
             print(
-                f"❌ Batch {batch_num}/{total_batch} Attempt {retry+1} - Parse error: {str(e)}"
+                f"Error Batch {batch_num}/{total_batch} Attempt {retry+1} - Parse error: {str(e)}"
             )
             if retry == RETRY_TIMES - 1:
                 return []
@@ -297,7 +303,7 @@ def load_json(file_path):
 def process_target_config(config_file_name):
     """Process single target repository config file"""
     if config_file_name not in TARGET_CONFIGS:
-        print(f"⚠️ Skip non-target config file: {config_file_name}")
+        print(f"Warning Skip non-target config file: {config_file_name}")
         return
 
     config_base_name = os.path.splitext(config_file_name)[0]
@@ -305,21 +311,21 @@ def process_target_config(config_file_name):
     output_file = os.path.join(STATUS_DIR, f"{config_base_name}_{TODAY}.json")
 
     print("=" * 80)
-    print(f"📂 Start processing config: {config_file_name}")
-    print(f"📤 Output file: {os.path.basename(output_file)}")
+    print(f"Start processing config: {config_file_name}")
+    print(f"Output file: {os.path.basename(output_file)}")
     print("=" * 80 + "\n")
 
     projects = load_json(config_file_path)
     if not projects:
-        print(f"❌ No valid repository list in {config_file_name}, skip\n")
+        print(f"Error No valid repository list in {config_file_name}, skip\n")
         return
 
     original_count = len(projects)
     unique_projects = list(set(projects))
     duplicate_count = original_count - len(unique_projects)
-    print(f"🚀 Raw repository count: {original_count}")
+    print(f"Raw repository count: {original_count}")
     if duplicate_count > 0:
-        print(f"🔍 Duplicate removed: {duplicate_count}")
+        print(f"Duplicate removed: {duplicate_count}")
 
     valid_projects = []
     for repo_full_name in unique_projects:
@@ -328,7 +334,7 @@ def process_target_config(config_file_name):
             or "/" not in repo_full_name
             or repo_full_name.strip() == ""
         ):
-            print(f"❌ Invalid format, skip: {repo_full_name}")
+            print(f"Error Invalid format, skip: {repo_full_name}")
             continue
         owner, name = repo_full_name.split("/", 1)
         valid_projects.append(
@@ -336,9 +342,9 @@ def process_target_config(config_file_name):
         )
 
     total_valid = len(valid_projects)
-    print(f"✅ Valid repository count: {total_valid} (batch size: {BATCH_SIZE})\n")
+    print(f"Valid repository count: {total_valid} (batch size: {BATCH_SIZE})\n")
     if total_valid == 0:
-        print(f"⚠️ No valid repositories to query, skip\n")
+        print(f"Warning No valid repositories to query, skip\n")
         return
 
     all_results = []
@@ -348,7 +354,7 @@ def process_target_config(config_file_name):
         end = start + BATCH_SIZE
         batch_projects = valid_projects[start:end]
         print(
-            f"\n📡 Execute batch {batch_num+1}/{total_batch} (repo count: {len(batch_projects)})"
+            f"\nExecute batch {batch_num+1}/{total_batch} (repo count: {len(batch_projects)})"
         )
         batch_results = execute_batch_query_with_retry(
             batch_projects, batch_num + 1, total_batch
@@ -356,16 +362,16 @@ def process_target_config(config_file_name):
         all_results.extend(batch_results)
 
     if not all_results:
-        print(f"\n⚠️ No valid data fetched, skip saving\n")
+        print(f"\nWarning No valid data fetched, skip saving\n")
         return
 
     all_results.sort(key=lambda x: x["stars"], reverse=True)
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(all_results, f, indent=2, ensure_ascii=False, default=str)
     print(
-        f"\n🎉 Saved result: {os.path.basename(output_file)} (repos fetched: {len(all_results)})"
+        f"\nSaved result: {os.path.basename(output_file)} (repos fetched: {len(all_results)})"
     )
-    print(f"✅ {config_file_name} processing finished!\n")
+    print(f"{config_file_name} processing finished!\n")
 
 
 # ===================== Main Entry =====================
@@ -373,7 +379,7 @@ if __name__ == "__main__":
     # Pre-check repos directory
     if not os.path.isdir(REPOS_DIR):
         print(
-            f"❌ Error: Directory '{REPOS_DIR}' not found. Create it and place {TARGET_CONFIGS} inside."
+            f"Error: Directory '{REPOS_DIR}' not found. Create it and place {TARGET_CONFIGS} inside."
         )
         exit(1)
 
@@ -383,17 +389,17 @@ if __name__ == "__main__":
 
     existing_configs = [f for f in os.listdir(REPOS_DIR) if f in TARGET_CONFIGS]
     if not existing_configs:
-        print(f"❌ Target files {TARGET_CONFIGS} not found under {REPOS_DIR}")
+        print(f"Error Target files {TARGET_CONFIGS} not found under {REPOS_DIR}")
         exit(0)
 
     print(
-        f"🚀 Start processing (target config count: {len(existing_configs)}) : {existing_configs}\n"
+        f"Start processing (target config count: {len(existing_configs)}) : {existing_configs}\n"
     )
     for file_name in existing_configs:
         process_target_config(file_name)
 
     print("=" * 80)
     print(
-        f"🎉 All target config files processed! Results stored in {STATUS_DIR}, retention: {MAX_KEEP_DAYS} days"
+        f"All target config files processed! Results stored in {STATUS_DIR}, retention: {MAX_KEEP_DAYS} days"
     )
     print("=" * 80)
