@@ -2,7 +2,7 @@ import glob
 import json
 import os
 import time
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import requests
@@ -43,20 +43,21 @@ BASIC_FIELDS = ["name", "url", "language", "language_color"]
 REPOS_DIR = "repos"
 STATUS_DIR = "status"
 os.makedirs(STATUS_DIR, exist_ok=True)
-# Date config for output filename
-TODAY = datetime.now().strftime("%Y%m%d")
+# Date config for output filename (UTC time)
+TODAY = datetime.now(UTC).strftime("%Y%m%d")
 MAX_KEEP_DAYS = 7  # Keep status files for latest N days
 
 
 # ===================== Utility Functions =====================
 def clean_old_files():
-    """Remove status json files older than MAX_KEEP_DAYS"""
+    """Remove status json files older than MAX_KEEP_DAYS (UTC based)"""
     print("[Cleaner] Start scanning expired status files...")
-    now = datetime.now()
-    cutoff = now - timedelta(days=MAX_KEEP_DAYS)
-    cutoff_date = cutoff.date()
+    now_utc = datetime.now(UTC)
+    cutoff_utc = now_utc - timedelta(days=MAX_KEEP_DAYS)
+    cutoff_date_utc = cutoff_utc.date()
+
     print(
-        f"[Cleaner] Current date: {now.strftime('%Y-%m-%d')}, cutoff date (delete if <= this day): {cutoff_date}"
+        f"[Cleaner] Now UTC date: {now_utc.date()}, cutoff UTC date (delete if <=): {cutoff_date_utc}"
     )
 
     status_path = Path(STATUS_DIR)
@@ -70,10 +71,11 @@ def clean_old_files():
             name_stem = file_path.stem
             date_str = name_stem.split("_")[-1]
             file_dt = datetime.strptime(date_str, "%Y%m%d")
-            file_dt_date = file_dt.date()
-            print(f"[Cleaner] Check file: {file_name}, extracted date: {file_dt_date}")
+            file_date = file_dt.date()
 
-            if file_dt_date <= cutoff_date:
+            print(f"[Cleaner] Check file: {file_name}, extracted date: {file_date}")
+
+            if file_date <= cutoff_date_utc:
                 try:
                     file_path.unlink()
                     print(f"Removed expired file: {file_name}")
