@@ -1,9 +1,10 @@
-import glob
 import json
 import os
+import signal
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 
@@ -12,12 +13,14 @@ TOKEN = os.getenv("PANTHEON_TOKEN")
 HEADERS = {"Authorization": f"Bearer {TOKEN}"}
 URL = "https://api.github.com/graphql"
 BATCH_SIZE = 5  # Request 5 repositories per batch
+BATCH_SLEEP_SEC = 1.5  # Add delay between batches to avoid rate limit
 RETRY_TIMES = 3  # Max retry attempts for failed request
 RETRY_DELAY = 3  # Seconds to wait between retries
 # Only process specified config files
 TARGET_CONFIGS = ["science.json", "general.json"]
 # Mapping config filename -> category name
 CONFIG_CATEGORY_MAP = {"science.json": "science", "general.json": "general"}
+
 # Numeric metrics fields (only for logical grouping, no filtering)
 NUMERIC_FIELDS = [
     "stars",
@@ -30,7 +33,6 @@ NUMERIC_FIELDS = [
     "contributors",
     "commits",
 ]
-# Timestamp fields
 TIME_FIELDS = [
     "createdAt",
     "last_commit",
@@ -41,15 +43,29 @@ TIME_FIELDS = [
     "last_fork",
 ]
 BASIC_FIELDS = ["name", "url", "language", "language_color"]
+
 # Directory settings
-REPOS_DIR = "repos"
-STATUS_DIR = "status"
-BIRTH_DIR = "birth"
-os.makedirs(STATUS_DIR, exist_ok=True)
-os.makedirs(BIRTH_DIR, exist_ok=True)
+REPOS_DIR = Path("repos")
+STATUS_DIR = Path("status")
+BIRTH_DIR = Path("birth")
+for folder in (REPOS_DIR, STATUS_DIR, BIRTH_DIR):
+    folder.mkdir(exist_ok=True)
+
 # Date config for output filename (local time)
 TODAY = datetime.now().strftime("%Y%m%d")
 MAX_KEEP_DAYS = 7  # Keep status files for latest N days
+
+# Graceful exit flag
+STOP_FLAG = False
+
+
+def handle_signal(signum, frame):
+    global STOP_FLAG
+    print("\n[Signal] Received stop signal, will exit after current batch...")
+    STOP_FLAG = True
+
+
+signal.signal(signal.SIGINT, handle_signal)
 
 
 # ===================== Utility Functions =====================
@@ -64,12 +80,7 @@ def clean_old_files():
         f"[Cleaner] Now local date: {now.date()}, cutoff date (delete if <=): {cutoff_date}"
     )
 
-    status_path = Path(STATUS_DIR)
-    if not status_path.exists():
-        print(f"[Cleaner] Directory {STATUS_DIR} does not exist, skip")
-        return
-
-    for file_path in status_path.glob("*.json"):
+    for file_path in STATUS_DIR.glob("*.json"):
         file_name = file_path.name
         try:
             name_stem = file_path.stem
@@ -94,7 +105,38 @@ def clean_old_files():
     print("[Cleaner] Expired file scan finished.\n")
 
 
-def generate_batch_query(batch_projects):
+def load_birth_cache(category: str) -> Dict[str, str]:
+    """一次性加载分类对应的birth缓存到内存字典（静态缓存）"""
+    birth_file = BIRTH_DIR / f"{category}_birth.json"
+    cache_map: Dict[str, str] = {}
+    if birth_file.exists():
+        raw = load_json(birth_file)
+        for entry in raw:
+            repo_name = entry.get("repo")
+            create_time = entry.get("created_at")
+            if repo_name and create_time:
+                cache_map[repo_name] = create_time
+    print(
+        f"[Birth Cache] Loaded {len(cache_map)} repo creation records for category [{category}]"
+    )
+    return cache_map
+
+
+def save_birth_cache(category: str, cache_map: Dict[str, str]):
+    """将内存birth缓存整体持久化写入文件（批量写入减少IO）"""
+    birth_file = BIRTH_DIR / f"{category}_birth.json"
+    export_list = [{"repo": k, "created_at": v} for k, v in cache_map.items()]
+    try:
+        with open(birth_file, "w", encoding="utf-8") as f:
+            json.dump(export_list, f, indent=2, ensure_ascii=False)
+        print(f"[Birth Cache] Persisted updated birth cache for [{category}]")
+    except Exception as err:
+        print(f"[Birth Cache] Write failed! file={birth_file.name}, err={str(err)}")
+
+
+def generate_batch_query(
+    batch_projects: List[Dict[str, str]],
+) -> Tuple[str, Dict[str, str]]:
     """Build GraphQL batch query string for repository statistics"""
     fragment = """
     fragment RepoStats on Repository {
@@ -127,8 +169,8 @@ def generate_batch_query(batch_projects):
             totalCount
             nodes { createdAt }
         }
-        # Mentionable contributors count
-        contributors: mentionableUsers(first: 100) { totalCount }
+        # Mentionable contributors count: first:0 reduce GraphQL cost
+        contributors: mentionableUsers(first: 0) { totalCount }
         # Default branch commit info
         defaultBranchRef {
             target {
@@ -165,7 +207,12 @@ def generate_batch_query(batch_projects):
     return full_query, query_variables
 
 
-def execute_batch_query_with_retry(batch_projects, batch_num, total_batch):
+def execute_batch_query_with_retry(
+    batch_projects: List[Dict[str, str]],
+    batch_num: int,
+    total_batch: int,
+    birth_cache: Dict[str, str],
+) -> List[Dict[str, Any]]:
     """Execute GraphQL query with automatic retry mechanism"""
     if not batch_projects:
         return []
@@ -183,9 +230,13 @@ def execute_batch_query_with_retry(batch_projects, batch_num, total_batch):
             data = response.json()
 
             if "errors" in data and data["errors"]:
+                err_msg = data["errors"][0]["message"]
                 print(
-                    f"Warning Batch {batch_num}/{total_batch} Attempt {retry+1} - GraphQL error: {data['errors'][0]['message']}"
+                    f"Warning Batch {batch_num}/{total_batch} Attempt {retry+1} - GraphQL error: {err_msg}"
                 )
+                if "rate limit exceeded" in err_msg.lower():
+                    print("[!] Hit GitHub API rate limit, sleep 60s ...")
+                    time.sleep(60)
                 if retry == RETRY_TIMES - 1:
                     return []
                 time.sleep(RETRY_DELAY)
@@ -203,12 +254,18 @@ def execute_batch_query_with_retry(batch_projects, batch_num, total_batch):
                     )
                     continue
 
+                # ========== 核心改动：优先读取birth缓存的created_at ==========
+                if full_name in birth_cache:
+                    created_at_val = birth_cache[full_name]
+                else:
+                    created_at_val = single_repo.get("createdAt", "N/A")
+
                 parsed = {
                     "name": single_repo["nameWithOwner"],
                     "url": single_repo["url"],
                     "language": "Unknown",
                     "language_color": "#ccc",
-                    "created_at": single_repo.get("createdAt", "N/A"),
+                    "created_at": created_at_val,
                     "stars": single_repo["stargazerCount"],
                     "forks": single_repo["forkCount"],
                     "watching": single_repo["watchers"]["totalCount"],
@@ -291,9 +348,9 @@ def execute_batch_query_with_retry(batch_projects, batch_num, total_batch):
     return []
 
 
-def load_json(file_path):
+def load_json(file_path: Path) -> List[Any]:
     """Load json file, return empty list if file missing / invalid"""
-    if not os.path.exists(file_path):
+    if not file_path.exists():
         return []
     try:
         with open(file_path, "r", encoding="utf-8") as f:
@@ -303,52 +360,25 @@ def load_json(file_path):
         return []
 
 
-def save_birth_data(category, repo_name, created_at):
-    """Persistent save repository create time to birth/{category}_birth.json, do NOT overwrite existing record"""
-    os.makedirs(BIRTH_DIR, exist_ok=True)
-    birth_file = os.path.abspath(os.path.join(BIRTH_DIR, f"{category}_birth.json"))
-    birth_map = {}
-    print(f"[Birth] Target birth file path: {birth_file}")
-
-    # Load existing birth data
-    if os.path.exists(birth_file):
-        raw = load_json(birth_file)
-        for item in raw:
-            birth_map[item["repo"]] = item["created_at"]
-
-    # Skip if already exists or empty date
-    if repo_name in birth_map:
-        print(f"[Birth] Skip, already exists: {repo_name}")
-        return
-    if not created_at or created_at == "N/A":
-        print(f"[Birth] Skip, invalid created_at for {repo_name}")
-        return
-
-    try:
-        birth_map[repo_name] = created_at
-        export_list = [{"repo": k, "created_at": v} for k, v in birth_map.items()]
-        with open(birth_file, "w", encoding="utf-8") as f:
-            json.dump(export_list, f, indent=2, ensure_ascii=False)
-        print(f"[Birth] Successfully saved new record: {repo_name}")
-    except Exception as err:
-        print(f"[Birth] ERROR writing birth file! repo={repo_name}, error={str(err)}")
-
-
 # ===================== Core Processing Logic =====================
-def process_target_config(config_file_name):
+def process_target_config(config_file_name: str):
     """Process single target repository config file"""
+    global STOP_FLAG
     if config_file_name not in TARGET_CONFIGS:
         print(f"Warning Skip non-target config file: {config_file_name}")
         return
     category = CONFIG_CATEGORY_MAP[config_file_name]
-    config_base_name = os.path.splitext(config_file_name)[0]
-    config_file_path = os.path.join(REPOS_DIR, config_file_name)
-    output_file = os.path.join(STATUS_DIR, f"{config_base_name}_{TODAY}.json")
+    config_base_name = Path(config_file_name).stem
+    config_file_path = REPOS_DIR / config_file_name
+    output_file = STATUS_DIR / f"{config_base_name}_{TODAY}.json"
 
     print("=" * 80)
     print(f"Start processing config: {config_file_name} [category: {category}]")
-    print(f"Output file: {os.path.basename(output_file)}")
+    print(f"Output file: {output_file.name}")
     print("=" * 80 + "\n")
+
+    # 加载该分类全局birth缓存（静态内存变量）
+    birth_cache = load_birth_cache(category)
 
     projects = load_json(config_file_path)
     if not projects:
@@ -385,6 +415,9 @@ def process_target_config(config_file_name):
     all_results = []
     total_batch = (total_valid + BATCH_SIZE - 1) // BATCH_SIZE
     for batch_num in range(total_batch):
+        if STOP_FLAG:
+            print("\n[Interrupt] Stop fetching batches due to SIGINT")
+            break
         start = batch_num * BATCH_SIZE
         end = start + BATCH_SIZE
         batch_projects = valid_projects[start:end]
@@ -392,12 +425,22 @@ def process_target_config(config_file_name):
             f"\nExecute batch {batch_num+1}/{total_batch} (repo count: {len(batch_projects)})"
         )
         batch_results = execute_batch_query_with_retry(
-            batch_projects, batch_num + 1, total_batch
+            batch_projects, batch_num + 1, total_batch, birth_cache
         )
         for item in batch_results:
+            repo_name = item["name"]
+            create_time = item["created_at"]
             all_results.append(item)
-            # Persist birth info
-            save_birth_data(category, item["name"], item["created_at"])
+            # 缓存不存在，则新增到内存缓存
+            if repo_name not in birth_cache and create_time != "N/A":
+                birth_cache[repo_name] = create_time
+                print(
+                    f"[Birth Cache] New repo discovered, cache {repo_name} -> {create_time}"
+                )
+        time.sleep(BATCH_SLEEP_SEC)
+
+    # 批次全部跑完后，一次性写入birth文件（减少频繁IO）
+    save_birth_cache(category, birth_cache)
 
     if not all_results:
         print(f"\nWarning No valid data fetched, skip saving\n")
@@ -406,18 +449,20 @@ def process_target_config(config_file_name):
     all_results.sort(key=lambda x: x["stars"], reverse=True)
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(all_results, f, indent=2, ensure_ascii=False, default=str)
-    print(
-        f"\nSaved result: {os.path.basename(output_file)} (repos fetched: {len(all_results)})"
-    )
+    print(f"\nSaved result: {output_file.name} (repos fetched: {len(all_results)})")
     print(f"{config_file_name} processing finished!\n")
 
 
 # ===================== Main Entry =====================
 if __name__ == "__main__":
-    if not os.path.isdir(REPOS_DIR):
+    if not REPOS_DIR.isdir():
         print(
             f"Error: Directory '{REPOS_DIR}' not found. Create it and place {TARGET_CONFIGS} inside."
         )
+        exit(1)
+
+    if not TOKEN:
+        print("ERROR: Environment variable PANTHEON_TOKEN is not set!")
         exit(1)
 
     clean_old_files()
@@ -433,6 +478,8 @@ if __name__ == "__main__":
     )
     for file_name in existing_configs:
         process_target_config(file_name)
+        if STOP_FLAG:
+            break
 
     print("=" * 80)
     print(

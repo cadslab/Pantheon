@@ -1,14 +1,15 @@
 import json
-import os
 import re
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 
 # ===================== Configuration =====================
-STATUS_DIR = "status"
-SCORES_DIR = "scores"
-REPOS_DIR = "repos"
-BIRTH_DIR = "birth"
+STATUS_DIR = Path("status")
+SCORES_DIR = Path("scores")
+REPOS_DIR = Path("repos")
+BIRTH_DIR = Path("birth")
+
 AGE_PENALTY_MIN = 0.3
 WEIGHT_1D = 0.4
 WEIGHT_3D = 0.3
@@ -18,7 +19,7 @@ MAX_SCORE = 100
 CONFIG_CATEGORY_MAP = {"science.json": "science", "general.json": "general"}
 # =========================================================
 
-os.makedirs(SCORES_DIR, exist_ok=True)
+SCORES_DIR.mkdir(exist_ok=True)
 
 
 def parse_iso_date(date_str):
@@ -52,7 +53,11 @@ def normalize_global(values):
 
 
 def project_age_penalty(created_at, now):
-    """Apply aging penalty for older repositories"""
+    """Apply aging penalty for older repositories
+    <=1 year: penalty=1.0
+    1~2 year: linear drop to AGE_PENALTY_MIN
+    >=2 year: fixed AGE_PENALTY_MIN
+    """
     if not created_at or not now:
         return AGE_PENALTY_MIN
     days_old = (now - created_at).days
@@ -96,9 +101,10 @@ def extract_date(filename):
 
 def get_file_type(filename):
     """Identify category: general / science"""
-    if filename.startswith("general_"):
+    fn = str(filename)
+    if fn.startswith("general_"):
         return "general"
-    elif filename.startswith("science_"):
+    elif fn.startswith("science_"):
         return "science"
     return None
 
@@ -112,8 +118,8 @@ def get_target_date(base_date_str, offset_days):
 
 def load_repo_list_from_config(config_name):
     """Load repo full_name list from repos config file"""
-    config_path = os.path.join(REPOS_DIR, config_name)
-    if not os.path.exists(config_path):
+    config_path = REPOS_DIR / config_name
+    if not config_path.exists():
         print(f"Warning: config file {config_path} not found")
         return []
     try:
@@ -131,16 +137,22 @@ def load_repo_list_from_config(config_name):
 
 def load_birth_map(category):
     """Load repo -> created_at permanent birth record"""
-    birth_file = os.path.join(BIRTH_DIR, f"{category}_birth.json")
+    birth_file = BIRTH_DIR / f"{category}_birth.json"
     birth_map = {}
-    if not os.path.exists(birth_file):
+    if not birth_file.exists():
         print(f"Warning birth file {birth_file} not found")
         return birth_map
     try:
         with open(birth_file, "r", encoding="utf-8") as f:
             data = json.load(f)
         for entry in data:
-            birth_map[entry["repo"]] = entry["created_at"]
+            repo = entry.get("repo")
+            ctime = entry.get("created_at")
+            if repo and ctime:
+                birth_map[repo] = ctime
+        print(
+            f"[Birth Cache] Loaded {len(birth_map)} records for category [{category}]"
+        )
     except Exception as e:
         print(f"Error loading birth file: {str(e)}")
     return birth_map
@@ -153,17 +165,18 @@ def main():
     snapshot_data = defaultdict(dict)  # snapshot_data[repo_fullname][date] = item
     all_dates = set()
 
-    for filename in os.listdir(STATUS_DIR):
-        file_type = get_file_type(filename)
-        if not file_type or not filename.endswith(".json"):
+    for filename in STATUS_DIR.iterdir():
+        if not filename.is_file():
             continue
-        date_str = extract_date(filename)
+        file_type = get_file_type(filename.name)
+        if not file_type or not filename.name.endswith(".json"):
+            continue
+        date_str = extract_date(filename.name)
         if not date_str:
             continue
         all_dates.add(date_str)
 
-        path = os.path.join(STATUS_DIR, filename)
-        with open(path, "r", encoding="utf-8") as f:
+        with open(filename, "r", encoding="utf-8") as f:
             items = json.load(f)
 
         for item in items:
@@ -189,7 +202,6 @@ def main():
         )
 
         repo_meta_list = []
-        calculation_history = []
 
         # First pass: collect raw metrics for repos in config
         for repo_fullname in repo_list:
@@ -199,12 +211,17 @@ def main():
                 print(f"Warning: No snapshot found for {repo_fullname}, skip")
                 continue
 
-            # Priority: permanent birth record > snapshot created_at
+            # ========= CORE LOGIC：优先永久birth记录 > 快照created_at =========
             birth_created_raw = birth_map.get(repo_fullname)
             if birth_created_raw:
                 repo_created_raw = birth_created_raw
+                src = "BIRTH_CACHE"
             else:
                 repo_created_raw = current.get("created_at", "")
+                src = "SNAPSHOT_FALLBACK"
+
+            # 调试打印，确认来源，正式运行可注释
+            # print(f"[{src}] {repo_fullname} -> {repo_created_raw}")
 
             # Time activity sub-scores
             time_sub_scores = [
@@ -241,16 +258,22 @@ def main():
             def get_increment(offset):
                 target_dt_str = get_target_date(base_date, offset)
                 old = snapshots.get(target_dt_str)
+                if not old:
+                    return {
+                        "stars": None,
+                        "forks": None,
+                        "commits": None,
+                        "closed_prs": None,
+                        "closed_issues": None,
+                    }
+                # 注意：下方 max(0, ...) 会把负增长清零
+                # 如果你想要允许负增量，删除 max(0, )，直接保留差值
                 inc = {
-                    "stars": max(0, stars - old["stars"]) if old else None,
-                    "forks": max(0, forks - old["forks"]) if old else None,
-                    "commits": max(0, commits - old["commits"]) if old else None,
-                    "closed_prs": (
-                        max(0, closed_prs - old["closed_prs"]) if old else None
-                    ),
-                    "closed_issues": (
-                        max(0, closed_issues - old["closed_issues"]) if old else None
-                    ),
+                    "stars": max(0, stars - old["stars"]),
+                    "forks": max(0, forks - old["forks"]),
+                    "commits": max(0, commits - old["commits"]),
+                    "closed_prs": max(0, closed_prs - old["closed_prs"]),
+                    "closed_issues": max(0, closed_issues - old["closed_issues"]),
                 }
                 return inc
 
@@ -305,6 +328,7 @@ def main():
         map_7d = build_norm_map(all_inc_7d, norm_7d_pool)
 
         results = []
+        calculation_history = []
         for meta in repo_meta_list:
             inc_1d = meta["inc_1d"]
             inc_3d = meta["inc_3d"]
@@ -340,7 +364,7 @@ def main():
             }
             results.append(summary_item)
 
-            # Full calculation history (all intermediate variables)
+            # Full calculation history
             history_item = {
                 "repo": meta["repo"],
                 "calculated_at": base_date,
@@ -377,16 +401,18 @@ def main():
         )
 
         # Output main heat summary
-        out_summary = os.path.join(SCORES_DIR, f"{category}_heat.json")
+        out_summary = SCORES_DIR / f"{category}_heat.json"
         with open(out_summary, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
         print(f"Saved summary heat: {out_summary}, calculated items: {len(results)}")
 
-        # Output full calculation history with all intermediate steps
-        out_history = os.path.join(SCORES_DIR, f"{category}_history.json")
+        # Output full calculation history
+        out_history = SCORES_DIR / f"{category}_history.json"
         with open(out_history, "w", encoding="utf-8") as f:
             json.dump(calculation_history, f, indent=2, ensure_ascii=False)
-        print(f"Saved full calculation history: {out_history}")
+        print(f"Saved full calculation history: {out_history}\n")
+
+    print("Score calculation complete!")
 
 
 if __name__ == "__main__":
