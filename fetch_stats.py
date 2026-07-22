@@ -1,9 +1,9 @@
 import glob
 import json
 import os
-import shutil
 import time
 from datetime import datetime, timedelta
+from pathlib import Path
 
 import requests
 
@@ -52,34 +52,38 @@ MAX_KEEP_DAYS = 7  # Keep status files for latest N days
 def clean_old_files():
     """Remove status json files older than MAX_KEEP_DAYS"""
     print("[Cleaner] Start scanning expired status files...")
-    cutoff = datetime.now() - timedelta(days=MAX_KEEP_DAYS)
+    now = datetime.now()
+    cutoff = now - timedelta(days=MAX_KEEP_DAYS)
     cutoff_date = cutoff.date()
-    file_pattern = os.path.join(STATUS_DIR, "*.json")
+    print(
+        f"[Cleaner] Current date: {now.strftime('%Y-%m-%d')}, cutoff date (delete if <= this day): {cutoff_date}"
+    )
 
-    for file_path in glob.glob(file_pattern):
+    status_path = Path(STATUS_DIR)
+    if not status_path.exists():
+        print(f"[Cleaner] Directory {STATUS_DIR} does not exist, skip")
+        return
+
+    for file_path in status_path.glob("*.json"):
+        file_name = file_path.name
         try:
-            file_name = os.path.basename(file_path)
-            # Extract date suffix from filename: prefix_YYYYMMDD.json
-            name_without_ext = file_name.replace(".json", "")
-            date_str = name_without_ext.split("_")[-1]
-            # Validate date format
-            file_date = datetime.strptime(date_str, "%Y%m%d")
-            file_date_only = file_date.date()
+            name_stem = file_path.stem
+            date_str = name_stem.split("_")[-1]
+            file_dt = datetime.strptime(date_str, "%Y%m%d")
+            file_dt_date = file_dt.date()
+            print(f"[Cleaner] Check file: {file_name}, extracted date: {file_dt_date}")
 
-            if file_date_only < cutoff_date:
-                # Add exception capture for remove operation to diagnose delete failure
+            if file_dt_date <= cutoff_date:
                 try:
-                    os.remove(file_path)
+                    file_path.unlink()
                     print(f"Removed expired file: {file_name}")
                 except Exception as del_err:
                     print(f"Failed to delete file {file_name}, error: {str(del_err)}")
             else:
                 print(f"Keep file (within retention period): {file_name}")
-        except (ValueError, OSError, IndexError):
-            # Skip files with unmatched name format or access error
-            print(
-                f"Skip invalid file (no valid date suffix): {os.path.basename(file_path)}"
-            )
+
+        except (ValueError, IndexError):
+            print(f"Skip invalid file (no valid date suffix): {file_name}")
             continue
     print("[Cleaner] Expired file scan finished.\n")
 
@@ -172,7 +176,6 @@ def execute_batch_query_with_retry(batch_projects, batch_num, total_batch):
             response.raise_for_status()
             data = response.json()
 
-            # Handle graphql logic errors
             if "errors" in data and data["errors"]:
                 print(
                     f"Warning Batch {batch_num}/{total_batch} Attempt {retry+1} - GraphQL error: {data['errors'][0]['message']}"
@@ -217,7 +220,6 @@ def execute_batch_query_with_retry(batch_projects, batch_num, total_batch):
                     "last_fork": "N/A",
                 }
 
-                # Parse primary language
                 if single_repo.get("primaryLanguage"):
                     parsed["language"] = single_repo["primaryLanguage"].get(
                         "name", "Unknown"
@@ -226,7 +228,6 @@ def execute_batch_query_with_retry(batch_projects, batch_num, total_batch):
                         "color", "#ccc"
                     )
 
-                # Parse commit info
                 if single_repo.get("defaultBranchRef") and single_repo[
                     "defaultBranchRef"
                 ].get("target"):
@@ -238,7 +239,6 @@ def execute_batch_query_with_retry(batch_projects, batch_num, total_batch):
                         else 0
                     )
 
-                # Issue timestamps
                 if single_repo["openIssues"]["nodes"]:
                     parsed["last_open_issue"] = single_repo["openIssues"]["nodes"][
                         0
@@ -248,7 +248,6 @@ def execute_batch_query_with_retry(batch_projects, batch_num, total_batch):
                         0
                     ].get("closedAt", "N/A")
 
-                # PR timestamps
                 if single_repo["openPRs"]["nodes"]:
                     parsed["last_open_pr"] = single_repo["openPRs"]["nodes"][0].get(
                         "updatedAt", "N/A"
@@ -258,7 +257,6 @@ def execute_batch_query_with_retry(batch_projects, batch_num, total_batch):
                         "closedAt", "N/A"
                     )
 
-                # Last fork time
                 if single_repo["forks"]["nodes"]:
                     parsed["last_fork"] = single_repo["forks"]["nodes"][0].get(
                         "createdAt", "N/A"
@@ -376,14 +374,12 @@ def process_target_config(config_file_name):
 
 # ===================== Main Entry =====================
 if __name__ == "__main__":
-    # Pre-check repos directory
     if not os.path.isdir(REPOS_DIR):
         print(
             f"Error: Directory '{REPOS_DIR}' not found. Create it and place {TARGET_CONFIGS} inside."
         )
         exit(1)
 
-    # Clean expired status files first
     clean_old_files()
     print("\n" + "-" * 60 + "\n")
 
