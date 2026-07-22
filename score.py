@@ -8,6 +8,7 @@ from datetime import datetime, timedelta, timezone
 STATUS_DIR = "status"
 SCORES_DIR = "scores"
 REPOS_DIR = "repos"
+BIRTH_DIR = "birth"
 AGE_PENALTY_MIN = 0.3
 WEIGHT_1D = 0.4
 WEIGHT_3D = 0.3
@@ -128,6 +129,23 @@ def load_repo_list_from_config(config_name):
         return []
 
 
+def load_birth_map(category):
+    """Load repo -> created_at permanent birth record"""
+    birth_file = os.path.join(BIRTH_DIR, f"{category}_birth.json")
+    birth_map = {}
+    if not os.path.exists(birth_file):
+        print(f"Warning birth file {birth_file} not found")
+        return birth_map
+    try:
+        with open(birth_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        for entry in data:
+            birth_map[entry["repo"]] = entry["created_at"]
+    except Exception as e:
+        print(f"Error loading birth file: {str(e)}")
+    return birth_map
+
+
 def main():
     now = datetime.now(timezone.utc)
 
@@ -162,6 +180,7 @@ def main():
     # Process each config file
     for config_filename, category in CONFIG_CATEGORY_MAP.items():
         repo_list = load_repo_list_from_config(config_filename)
+        birth_map = load_birth_map(category)
         if not repo_list:
             print(f"Skipping {config_filename}: empty repo list")
             continue
@@ -179,6 +198,13 @@ def main():
             if not current:
                 print(f"Warning: No snapshot found for {repo_fullname}, skip")
                 continue
+
+            # Priority: permanent birth record > snapshot created_at
+            birth_created_raw = birth_map.get(repo_fullname)
+            if birth_created_raw:
+                repo_created_raw = birth_created_raw
+            else:
+                repo_created_raw = current.get("created_at", "")
 
             # Time activity sub-scores
             time_sub_scores = [
@@ -208,9 +234,7 @@ def main():
             )
             raw_total = (time_score * 0.4) + (dev_score * 0.3) + (community_score * 0.3)
 
-            age_penalty = project_age_penalty(
-                parse_iso_date(current["created_at"]), now
-            )
+            age_penalty = project_age_penalty(parse_iso_date(repo_created_raw), now)
             base_total = raw_total * age_penalty
 
             # Get incremental metrics
@@ -237,7 +261,7 @@ def main():
             repo_meta_list.append(
                 {
                     "repo": repo_fullname,
-                    "created_at": current.get("created_at", ""),
+                    "created_at": repo_created_raw,
                     "base_total": base_total,
                     "age_penalty": age_penalty,
                     "time_sub_scores": time_sub_scores,

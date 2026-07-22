@@ -16,6 +16,8 @@ RETRY_TIMES = 3  # Max retry attempts for failed request
 RETRY_DELAY = 3  # Seconds to wait between retries
 # Only process specified config files
 TARGET_CONFIGS = ["science.json", "general.json"]
+# Mapping config filename -> category name
+CONFIG_CATEGORY_MAP = {"science.json": "science", "general.json": "general"}
 # Numeric metrics fields (only for logical grouping, no filtering)
 NUMERIC_FIELDS = [
     "stars",
@@ -42,7 +44,9 @@ BASIC_FIELDS = ["name", "url", "language", "language_color"]
 # Directory settings
 REPOS_DIR = "repos"
 STATUS_DIR = "status"
+BIRTH_DIR = "birth"
 os.makedirs(STATUS_DIR, exist_ok=True)
+os.makedirs(BIRTH_DIR, exist_ok=True)
 # Date config for output filename (local time)
 TODAY = datetime.now().strftime("%Y%m%d")
 MAX_KEEP_DAYS = 7  # Keep status files for latest N days
@@ -299,19 +303,37 @@ def load_json(file_path):
         return []
 
 
+def save_birth_data(category, repo_name, created_at):
+    """Persistent save repository create time to birth/{category}_birth.json, do NOT overwrite existing record"""
+    birth_file = os.path.join(BIRTH_DIR, f"{category}_birth.json")
+    birth_map = {}
+    # Load existing birth data
+    if os.path.exists(birth_file):
+        raw = load_json(birth_file)
+        for item in raw:
+            birth_map[item["repo"]] = item["created_at"]
+    # Only insert new repo, skip existing
+    if repo_name not in birth_map and created_at and created_at != "N/A":
+        birth_map[repo_name] = created_at
+        export_list = [{"repo": k, "created_at": v} for k, v in birth_map.items()]
+        with open(birth_file, "w", encoding="utf-8") as f:
+            json.dump(export_list, f, indent=2, ensure_ascii=False)
+        print(f"[Birth] Added new birth record: {repo_name}")
+
+
 # ===================== Core Processing Logic =====================
 def process_target_config(config_file_name):
     """Process single target repository config file"""
     if config_file_name not in TARGET_CONFIGS:
         print(f"Warning Skip non-target config file: {config_file_name}")
         return
-
+    category = CONFIG_CATEGORY_MAP[config_file_name]
     config_base_name = os.path.splitext(config_file_name)[0]
     config_file_path = os.path.join(REPOS_DIR, config_file_name)
     output_file = os.path.join(STATUS_DIR, f"{config_base_name}_{TODAY}.json")
 
     print("=" * 80)
-    print(f"Start processing config: {config_file_name}")
+    print(f"Start processing config: {config_file_name} [category: {category}]")
     print(f"Output file: {os.path.basename(output_file)}")
     print("=" * 80 + "\n")
 
@@ -359,7 +381,10 @@ def process_target_config(config_file_name):
         batch_results = execute_batch_query_with_retry(
             batch_projects, batch_num + 1, total_batch
         )
-        all_results.extend(batch_results)
+        for item in batch_results:
+            all_results.append(item)
+            # Persist birth info
+            save_birth_data(category, item["name"], item["created_at"])
 
     if not all_results:
         print(f"\nWarning No valid data fetched, skip saving\n")
