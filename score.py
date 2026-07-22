@@ -7,11 +7,14 @@ from datetime import datetime, timedelta, timezone
 # ===================== Configuration =====================
 STATUS_DIR = "status"
 SCORES_DIR = "scores"
+REPOS_DIR = "repos"
 AGE_PENALTY_MIN = 0.3
 WEIGHT_1D = 0.4
 WEIGHT_3D = 0.3
 WEIGHT_7D = 0.3
 MAX_SCORE = 100
+# Mapping: config filename -> category name
+CONFIG_CATEGORY_MAP = {"science.json": "science", "general.json": "general"}
 # =========================================================
 
 os.makedirs(SCORES_DIR, exist_ok=True)
@@ -106,13 +109,30 @@ def get_target_date(base_date_str, offset_days):
     return target_dt.strftime("%Y%m%d")
 
 
+def load_repo_list_from_config(config_name):
+    """Load repo full_name list from repos config file"""
+    config_path = os.path.join(REPOS_DIR, config_name)
+    if not os.path.exists(config_path):
+        print(f"Warning: config file {config_path} not found")
+        return []
+    try:
+        with open(config_path, "r", encoding="utf-8") as f:
+            raw_list = json.load(f)
+        valid = []
+        for item in raw_list:
+            if isinstance(item, str) and "/" in item and item.strip():
+                valid.append(item.strip())
+        return valid
+    except Exception as e:
+        print(f"Error load {config_name}: {str(e)}")
+        return []
+
+
 def main():
     now = datetime.now(timezone.utc)
 
-    data_by_type = {
-        "general": defaultdict(dict),
-        "science": defaultdict(dict),
-    }
+    # 1. Load all snapshot data from status folder
+    snapshot_data = defaultdict(dict)  # snapshot_data[repo_fullname][date] = item
     all_dates = set()
 
     for filename in os.listdir(STATUS_DIR):
@@ -128,30 +148,36 @@ def main():
         with open(path, "r", encoding="utf-8") as f:
             items = json.load(f)
 
-        target_dict = data_by_type[file_type]
         for item in items:
             repo_name = item["name"]
-            target_dict[repo_name][date_str] = item
+            snapshot_data[repo_name][date_str] = item
 
     if not all_dates:
-        print("No valid status data found")
+        print("No valid status snapshot data found")
         return
 
     base_date = sorted(all_dates)[-1]
     print(f"Base snapshot date: {base_date}")
 
-    for category, repo_snapshots in data_by_type.items():
-        if not repo_snapshots:
+    # 2. Iterate each config file in repos/ and compute by config list
+    for config_filename, category in CONFIG_CATEGORY_MAP.items():
+        repo_list = load_repo_list_from_config(config_filename)
+        if not repo_list:
+            print(f"Skipping {config_filename}: empty repo list")
             continue
+        print(
+            f"\nProcess category [{category}], total repos in config: {len(repo_list)}"
+        )
 
         repo_meta_list = []
-        # First pass: collect static data and raw increments
-        for repo, snapshots in repo_snapshots.items():
+        # First pass: collect data ONLY for repos present in repos config
+        for repo_fullname in repo_list:
+            snapshots = snapshot_data.get(repo_fullname, {})
             current = snapshots.get(base_date)
             if not current:
+                print(f"Warning: No snapshot found for {repo_fullname}, skip")
                 continue
 
-            # Basic activity score calculation
             time_scores = [
                 time_activity_score(parse_iso_date(current["last_commit"]), now),
                 time_activity_score(parse_iso_date(current["last_open_issue"]), now),
@@ -184,7 +210,7 @@ def main():
             )
             base_total = raw_total * age_penalty
 
-            # Fetch incremental changes for 1d / 3d /7d
+            # Get incremental metrics
             def get_increment(offset):
                 target_dt_str = get_target_date(base_date, offset)
                 old = snapshots.get(target_dt_str)
@@ -207,7 +233,7 @@ def main():
 
             repo_meta_list.append(
                 {
-                    "repo": repo,
+                    "repo": repo_fullname,
                     "created_at": current.get("created_at", ""),
                     "base_total": base_total,
                     "age_penalty": age_penalty,
@@ -217,9 +243,11 @@ def main():
                 }
             )
 
-        # --------------------------
-        # Global normalization for increments across ALL repos in category
-        # --------------------------
+        if not repo_meta_list:
+            print(f"No valid snapshot data for category {category}, skip output")
+            continue
+
+        # Global normalization within current category (only config repos)
         def extract_all_inc(meta_list, inc_key):
             vals = []
             for m in meta_list:
@@ -237,7 +265,6 @@ def main():
         norm_3d_pool = normalize_global(all_inc_3d) if all_inc_3d else []
         norm_7d_pool = normalize_global(all_inc_7d) if all_inc_7d else []
 
-        # Build mapping for normalized value lookup
         def build_norm_map(raw_list, norm_list):
             return {raw: norm for raw, norm in zip(raw_list, norm_list)}
 
@@ -247,32 +274,30 @@ def main():
 
         results = []
         for meta in repo_meta_list:
-            repo = meta["repo"]
             inc_1d = meta["inc_1d"]
             inc_3d = meta["inc_3d"]
             inc_7d = meta["inc_7d"]
+            fallback_val = meta["base_total"] * 0.5
 
-            def calc_heat(inc_dict, norm_map, fallback):
+            def calc_heat(inc_dict, norm_map):
                 norm_vals = []
-                for k, raw_val in inc_dict.items():
+                for raw_val in inc_dict.values():
                     if raw_val is None:
-                        norm_vals.append(fallback)
+                        norm_vals.append(fallback_val)
                     else:
-                        norm_vals.append(norm_map.get(raw_val, fallback))
+                        norm_vals.append(norm_map.get(raw_val, fallback_val))
                 return sum(norm_vals) / len(norm_vals)
 
-            # Fallback: if history snapshot missing, use half base score
-            fallback_val = meta["base_total"] * 0.5
-            heat_1d = calc_heat(inc_1d, map_1d, fallback_val)
-            heat_3d = calc_heat(inc_3d, map_3d, fallback_val)
-            heat_7d = calc_heat(inc_7d, map_7d, fallback_val)
+            heat_1d = calc_heat(inc_1d, map_1d)
+            heat_3d = calc_heat(inc_3d, map_3d)
+            heat_7d = calc_heat(inc_7d, map_7d)
 
             total_heat = heat_1d * WEIGHT_1D + heat_3d * WEIGHT_3D + heat_7d * WEIGHT_7D
             total_heat = round(min(MAX_SCORE, total_heat), 2)
 
             results.append(
                 {
-                    "repo": repo,
+                    "repo": meta["repo"],
                     "created_at": meta["created_at"],
                     "heat_1d": round(heat_1d, 2),
                     "heat_3d": round(heat_3d, 2),
@@ -283,13 +308,13 @@ def main():
                 }
             )
 
-        # Sort output by total heat descending
+        # Sort by total heat descending
         results.sort(key=lambda x: x["total_heat"], reverse=True)
 
         out_file = os.path.join(SCORES_DIR, f"{category}_heat.json")
         with open(out_file, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
-        print(f"Saved heat result: {out_file}")
+        print(f"Saved heat result: {out_file}, calculated items: {len(results)}")
 
 
 if __name__ == "__main__":
