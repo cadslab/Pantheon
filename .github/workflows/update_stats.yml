@@ -55,7 +55,6 @@ jobs:
             echo "No changes detected, skip commit"
           fi
 
-      # ========== 新增：删除超过7天的 workflow runs ==========
       - name: Delete workflow runs older than 7 days
         env:
           GH_TOKEN: ${{ secrets.PANTHEON_TOKEN }}
@@ -63,12 +62,13 @@ jobs:
         run: |
           python << 'EOF'
           import requests
-          from datetime import datetime, timedelta
+          from datetime import datetime, timedelta, timezone
           import os
 
           token = os.environ["GH_TOKEN"]
           repo = os.environ["GH_REPO"]
-          cutoff = datetime.utcnow() - timedelta(days=7)
+          # 使用带UTC时区的当前时间
+          cutoff = datetime.now(timezone.utc) - timedelta(days=7)
           headers = {"Authorization": f"token {token}", "Accept": "application/vnd.github.v3+json"}
 
           page = 1
