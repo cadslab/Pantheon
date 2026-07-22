@@ -10,47 +10,29 @@ jobs:
     permissions:
       contents: write
     steps:
-      # Configure global git credentials
+      # 先配置全局凭证
       - name: Configure Git Global Credential
         run: |
           git config --global credential.helper store
           echo "https://${{ secrets.PANTHEON_TOKEN }}@github.com" >> ~/.git-credentials
           chmod 600 ~/.git-credentials
 
-      # Checkout full repository code history
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Pull latest remote main branch changes
       - name: Pull latest changes
         run: git pull origin main
 
-      # Initialize Python 3.9 environment
       - name: Set up Python 3.9
         uses: actions/setup-python@v5
         with:
           python-version: "3.9"
 
-      # Install required python dependency packages
       - name: Install Python Dependencies
         run: pip install requests tenacity python-dateutil
 
-      # Clean up expired old json files in status directory (added missing cleanup logic)
-      - name: Clean up expired old stats files
-        run: |
-          if [ -d "status" ]; then
-            echo "Start cleaning expired old JSON files under status folder..."
-            # Modify file deletion rules according to your actual expiration logic
-            # Example: delete all json files modified more than 30 days ago
-            find status -maxdepth 1 -name "*.json" -type f -mtime +30 -delete
-            echo "Expired file cleanup completed"
-          else
-            echo "status directory does not exist, skip cleanup"
-          fi
-
-      # Execute data fetching and scoring scripts
       - name: Run stats scripts
         env:
           PANTHEON_TOKEN: ${{ secrets.PANTHEON_TOKEN }}
@@ -58,12 +40,10 @@ jobs:
           python fetch_stats.py
           python score.py
 
-      # Commit and push newly updated statistics data to remote repo
       - name: Commit & Push updated stats data
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git branch --set-upstream-to=origin/main main
 
           if [ -d "status" ]; then
             changed_files=$(git status --porcelain status/*.json 2>/dev/null | wc -l)
@@ -71,10 +51,7 @@ jobs:
               git add status/*.json 2>/dev/null
               git commit -m "chore: auto update pantheon stats data [ci skip]" --no-verify
               git push origin main
-              echo "Data changes detected, committed and pushed successfully"
             else
-              echo "No stats file changes detected, skip commit & push"
+              echo "No changes"
             fi
-          else
-            echo "status folder missing, skip commit process"
           fi
