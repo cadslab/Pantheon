@@ -45,6 +45,7 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
           git add --update status/ scores/ birth/
+          git add status/ scores/ birth/
           git status
 
           if [[ -n $(git status --porcelain status/ scores/ birth/) ]]; then
@@ -53,3 +54,45 @@ jobs:
           else
             echo "No changes detected, skip commit"
           fi
+
+      # ========== 新增：删除超过7天的 workflow runs ==========
+      - name: Delete workflow runs older than 7 days
+        env:
+          GH_TOKEN: ${{ secrets.PANTHEON_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          python << 'EOF'
+          import requests
+          from datetime import datetime, timedelta
+          import os
+
+          token = os.environ["GH_TOKEN"]
+          repo = os.environ["GH_REPO"]
+          cutoff = datetime.utcnow() - timedelta(days=7)
+          headers = {"Authorization": f"token {token}", "Accept": "application/vnd.github.v3+json"}
+
+          page = 1
+          deleted = 0
+          while True:
+              url = f"https://api.github.com/repos/{repo}/actions/runs?per_page=100&page={page}"
+              resp = requests.get(url, headers=headers)
+              resp.raise_for_status()
+              runs = resp.json()["workflow_runs"]
+              if not runs:
+                  break
+
+              for run in runs:
+                  created_str = run["created_at"]
+                  created_dt = datetime.fromisoformat(created_str.replace("Z", "+00:00"))
+                  if created_dt < cutoff:
+                      run_id = run["id"]
+                      del_url = f"https://api.github.com/repos/{repo}/actions/runs/{run_id}"
+                      del_resp = requests.delete(del_url, headers=headers)
+                      if del_resp.status_code == 204:
+                          deleted += 1
+                          print(f"Deleted run {run_id} created at {created_str}")
+                      else:
+                          print(f"Failed delete {run_id}, status: {del_resp.status_code}")
+              page += 1
+          print(f"Total deleted runs: {deleted}")
+          EOF
