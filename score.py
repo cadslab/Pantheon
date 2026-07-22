@@ -13,7 +13,7 @@ WEIGHT_1D = 0.4
 WEIGHT_3D = 0.3
 WEIGHT_7D = 0.3
 MAX_SCORE = 100
-# Mapping: config filename -> category name
+# Mapping: repos config filename -> output category
 CONFIG_CATEGORY_MAP = {"science.json": "science", "general.json": "general"}
 # =========================================================
 
@@ -131,7 +131,7 @@ def load_repo_list_from_config(config_name):
 def main():
     now = datetime.now(timezone.utc)
 
-    # 1. Load all snapshot data from status folder
+    # Load all snapshot data from status folder
     snapshot_data = defaultdict(dict)  # snapshot_data[repo_fullname][date] = item
     all_dates = set()
 
@@ -159,7 +159,7 @@ def main():
     base_date = sorted(all_dates)[-1]
     print(f"Base snapshot date: {base_date}")
 
-    # 2. Iterate each config file in repos/ and compute by config list
+    # Process each config file
     for config_filename, category in CONFIG_CATEGORY_MAP.items():
         repo_list = load_repo_list_from_config(config_filename)
         if not repo_list:
@@ -170,7 +170,9 @@ def main():
         )
 
         repo_meta_list = []
-        # First pass: collect data ONLY for repos present in repos config
+        calculation_history = []
+
+        # First pass: collect raw metrics for repos in config
         for repo_fullname in repo_list:
             snapshots = snapshot_data.get(repo_fullname, {})
             current = snapshots.get(base_date)
@@ -178,7 +180,8 @@ def main():
                 print(f"Warning: No snapshot found for {repo_fullname}, skip")
                 continue
 
-            time_scores = [
+            # Time activity sub-scores
+            time_sub_scores = [
                 time_activity_score(parse_iso_date(current["last_commit"]), now),
                 time_activity_score(parse_iso_date(current["last_open_issue"]), now),
                 time_activity_score(parse_iso_date(current["last_closed_issue"]), now),
@@ -186,7 +189,7 @@ def main():
                 time_activity_score(parse_iso_date(current["last_closed_pr"]), now),
                 time_activity_score(parse_iso_date(current["last_fork"]), now),
             ]
-            time_score = sum(time_scores) / len(time_scores)
+            time_score = sum(time_sub_scores) / len(time_sub_scores)
 
             stars = current["stars"]
             forks = current["forks"]
@@ -237,6 +240,11 @@ def main():
                     "created_at": current.get("created_at", ""),
                     "base_total": base_total,
                     "age_penalty": age_penalty,
+                    "time_sub_scores": time_sub_scores,
+                    "time_score": time_score,
+                    "dev_score": dev_score,
+                    "community_score": community_score,
+                    "raw_total": raw_total,
                     "inc_1d": inc_1d,
                     "inc_3d": inc_3d,
                     "inc_7d": inc_7d,
@@ -247,7 +255,7 @@ def main():
             print(f"No valid snapshot data for category {category}, skip output")
             continue
 
-        # Global normalization within current category (only config repos)
+        # Global normalization within current category
         def extract_all_inc(meta_list, inc_key):
             vals = []
             for m in meta_list:
@@ -295,26 +303,66 @@ def main():
             total_heat = heat_1d * WEIGHT_1D + heat_3d * WEIGHT_3D + heat_7d * WEIGHT_7D
             total_heat = round(min(MAX_SCORE, total_heat), 2)
 
-            results.append(
-                {
-                    "repo": meta["repo"],
-                    "created_at": meta["created_at"],
+            # Main summary result
+            summary_item = {
+                "repo": meta["repo"],
+                "created_at": meta["created_at"],
+                "heat_1d": round(heat_1d, 2),
+                "heat_3d": round(heat_3d, 2),
+                "heat_7d": round(heat_7d, 2),
+                "total_heat": total_heat,
+                "age_penalty": round(meta["age_penalty"], 2),
+                "calculated_at": base_date,
+            }
+            results.append(summary_item)
+
+            # Full calculation history (all intermediate variables)
+            history_item = {
+                "repo": meta["repo"],
+                "calculated_at": base_date,
+                "created_at": meta["created_at"],
+                "age_penalty": meta["age_penalty"],
+                "score_components": {
+                    "time_activity": {
+                        "sub_scores": [round(x, 2) for x in meta["time_sub_scores"]],
+                        "average_score": round(meta["time_score"], 2),
+                    },
+                    "developer_activity_score": round(meta["dev_score"], 2),
+                    "community_activity_score": round(meta["community_score"], 2),
+                    "raw_weighted_total": round(meta["raw_total"], 2),
+                    "base_total_after_age_penalty": round(meta["base_total"], 2),
+                },
+                "increment_data": {
+                    "inc_1d": inc_1d,
+                    "inc_3d": inc_3d,
+                    "inc_7d": inc_7d,
+                },
+                "heat_result": {
                     "heat_1d": round(heat_1d, 2),
                     "heat_3d": round(heat_3d, 2),
                     "heat_7d": round(heat_7d, 2),
                     "total_heat": total_heat,
-                    "age_penalty": round(meta["age_penalty"], 2),
-                    "calculated_at": base_date,
-                }
-            )
+                },
+            }
+            calculation_history.append(history_item)
 
-        # Sort by total heat descending
+        # Sort summary by total heat descending
         results.sort(key=lambda x: x["total_heat"], reverse=True)
+        calculation_history.sort(
+            key=lambda x: x["heat_result"]["total_heat"], reverse=True
+        )
 
-        out_file = os.path.join(SCORES_DIR, f"{category}_heat.json")
-        with open(out_file, "w", encoding="utf-8") as f:
+        # Output main heat summary
+        out_summary = os.path.join(SCORES_DIR, f"{category}_heat.json")
+        with open(out_summary, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
-        print(f"Saved heat result: {out_file}, calculated items: {len(results)}")
+        print(f"Saved summary heat: {out_summary}, calculated items: {len(results)}")
+
+        # Output full calculation history with all intermediate steps
+        out_history = os.path.join(SCORES_DIR, f"{category}_history.json")
+        with open(out_history, "w", encoding="utf-8") as f:
+            json.dump(calculation_history, f, indent=2, ensure_ascii=False)
+        print(f"Saved full calculation history: {out_history}")
 
 
 if __name__ == "__main__":
