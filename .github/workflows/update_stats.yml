@@ -10,7 +10,6 @@ jobs:
     permissions:
       contents: write
     steps:
-      # 先配置全局凭证
       - name: Configure Git Global Credential
         run: |
           git config --global credential.helper store
@@ -46,12 +45,15 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
           if [ -d "status" ]; then
-            changed_files=$(git status --porcelain status/*.json 2>/dev/null | wc -l)
-            if [ "$changed_files" -gt 0 ]; then
-              git add status/*.json 2>/dev/null
+            # 重点修改：追踪status目录全部变更（包含删除的文件）
+            git add --update status/
+            # 查看所有变更
+            git status
+            # 判断是否存在变更
+            if [[ -n $(git status --porcelain status/) ]]; then
               git commit -m "chore: auto update pantheon stats data [ci skip]" --no-verify
               git push origin main
             else
-              echo "No changes"
+              echo "No changes detected, skip commit"
             fi
           fi
