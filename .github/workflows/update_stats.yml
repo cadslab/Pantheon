@@ -44,16 +44,14 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-          if [ -d "status" ]; then
-            # 重点修改：追踪status目录全部变更（包含删除的文件）
-            git add --update status/
-            # 查看所有变更
-            git status
-            # 判断是否存在变更
-            if [[ -n $(git status --porcelain status/) ]]; then
-              git commit -m "chore: auto update pantheon stats data [ci skip]" --no-verify
-              git push origin main
-            else
-              echo "No changes detected, skip commit"
-            fi
+          # 同时追踪 status scores birth 目录内修改、删除的文件
+          git add --update status/ scores/ birth/
+          git status
+
+          # 检测三个目录下任意变更
+          if [[ -n $(git status --porcelain status/ scores/ birth/) ]]; then
+            git commit -m "chore: auto update pantheon stats data [ci skip]" --no-verify
+            git push origin main
+          else
+            echo "No changes detected, skip commit"
           fi

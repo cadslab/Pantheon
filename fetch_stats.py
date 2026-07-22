@@ -305,20 +305,33 @@ def load_json(file_path):
 
 def save_birth_data(category, repo_name, created_at):
     """Persistent save repository create time to birth/{category}_birth.json, do NOT overwrite existing record"""
-    birth_file = os.path.join(BIRTH_DIR, f"{category}_birth.json")
+    os.makedirs(BIRTH_DIR, exist_ok=True)
+    birth_file = os.path.abspath(os.path.join(BIRTH_DIR, f"{category}_birth.json"))
     birth_map = {}
+    print(f"[Birth] Target birth file path: {birth_file}")
+
     # Load existing birth data
     if os.path.exists(birth_file):
         raw = load_json(birth_file)
         for item in raw:
             birth_map[item["repo"]] = item["created_at"]
-    # Only insert new repo, skip existing
-    if repo_name not in birth_map and created_at and created_at != "N/A":
+
+    # Skip if already exists or empty date
+    if repo_name in birth_map:
+        print(f"[Birth] Skip, already exists: {repo_name}")
+        return
+    if not created_at or created_at == "N/A":
+        print(f"[Birth] Skip, invalid created_at for {repo_name}")
+        return
+
+    try:
         birth_map[repo_name] = created_at
         export_list = [{"repo": k, "created_at": v} for k, v in birth_map.items()]
         with open(birth_file, "w", encoding="utf-8") as f:
             json.dump(export_list, f, indent=2, ensure_ascii=False)
-        print(f"[Birth] Added new birth record: {repo_name}")
+        print(f"[Birth] Successfully saved new record: {repo_name}")
+    except Exception as err:
+        print(f"[Birth] ERROR writing birth file! repo={repo_name}, error={str(err)}")
 
 
 # ===================== Core Processing Logic =====================
