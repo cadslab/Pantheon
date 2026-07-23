@@ -1,5 +1,57 @@
 [
   {
+    "repo": "mvanhorn/last30days-skill",
+    "calculated_at": "20260723",
+    "created_at": "2026-01-23T20:37:37Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          96.67,
+          100.0,
+          76.67,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "average_score": 95.56
+      },
+      "developer_activity_score": 81.76,
+      "community_activity_score": 100,
+      "raw_weighted_total": 92.75,
+      "base_total_after_age_penalty": 92.75
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      },
+      "inc_3d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 46.38,
+      "heat_3d": 46.38,
+      "heat_7d": 46.38,
+      "total_heat": 46.38
+    }
+  },
+  {
     "repo": "aipoch/open-science",
     "calculated_at": "20260723",
     "created_at": "2026-07-03T02:50:10Z",
@@ -16,10 +68,10 @@
         ],
         "average_score": 100.0
       },
-      "developer_activity_score": 70.87,
+      "developer_activity_score": 71.45,
       "community_activity_score": 100,
-      "raw_weighted_total": 91.26,
-      "base_total_after_age_penalty": 91.26
+      "raw_weighted_total": 91.44,
+      "base_total_after_age_penalty": 91.44
     },
     "increment_data": {
       "inc_1d": {
@@ -45,62 +97,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 45.63,
-      "heat_3d": 45.63,
-      "heat_7d": 45.63,
-      "total_heat": 45.63
-    }
-  },
-  {
-    "repo": "mvanhorn/last30days-skill",
-    "calculated_at": "20260723",
-    "created_at": "2026-01-23T20:37:37Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          96.67,
-          93.33,
-          76.67,
-          100.0,
-          83.33,
-          100.0
-        ],
-        "average_score": 91.67
-      },
-      "developer_activity_score": 81.68,
-      "community_activity_score": 100,
-      "raw_weighted_total": 91.17,
-      "base_total_after_age_penalty": 91.17
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      },
-      "inc_3d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 45.58,
-      "heat_3d": 45.58,
-      "heat_7d": 45.58,
-      "total_heat": 45.58
+      "heat_1d": 45.72,
+      "heat_3d": 45.72,
+      "heat_7d": 45.72,
+      "total_heat": 45.72
     }
   },
   {
@@ -111,19 +111,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          83.33,
+          80.0,
           66.67,
           36.67,
-          93.33,
+          90.0,
           36.67,
-          93.33
+          90.0
         ],
-        "average_score": 68.33
+        "average_score": 66.67
       },
       "developer_activity_score": 51.3,
       "community_activity_score": 100,
-      "raw_weighted_total": 72.72,
-      "base_total_after_age_penalty": 72.72
+      "raw_weighted_total": 72.06,
+      "base_total_after_age_penalty": 72.06
     },
     "increment_data": {
       "inc_1d": {
@@ -149,10 +149,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 36.36,
-      "heat_3d": 36.36,
-      "heat_7d": 36.36,
-      "total_heat": 36.36
+      "heat_1d": 36.03,
+      "heat_3d": 36.03,
+      "heat_7d": 36.03,
+      "total_heat": 36.03
     }
   },
   {
@@ -163,34 +163,34 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          90.0,
-          100.0,
-          90.0,
           100.0,
           100.0,
+          100.0,
+          100.0,
+          96.67,
           100.0
         ],
-        "average_score": 96.67
+        "average_score": 99.44
       },
-      "developer_activity_score": 85.68,
+      "developer_activity_score": 89.09,
       "community_activity_score": 100,
-      "raw_weighted_total": 94.37,
-      "base_total_after_age_penalty": 94.37
+      "raw_weighted_total": 96.5,
+      "base_total_after_age_penalty": 96.5
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 75,
-        "forks": 5,
-        "commits": 0,
+        "stars": 257,
+        "forks": 30,
+        "commits": 44,
         "closed_prs": 0,
-        "closed_issues": 0
+        "closed_issues": 10
       },
       "inc_3d": {
-        "stars": 820,
-        "forks": 92,
-        "commits": 0,
+        "stars": 1002,
+        "forks": 117,
+        "commits": 44,
         "closed_prs": 1,
-        "closed_issues": 0
+        "closed_issues": 10
       },
       "inc_7d": {
         "stars": null,
@@ -201,10 +201,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 21.33,
-      "heat_3d": 22.27,
-      "heat_7d": 47.19,
-      "total_heat": 29.37
+      "heat_1d": 26.54,
+      "heat_3d": 23.43,
+      "heat_7d": 48.25,
+      "total_heat": 32.12
     }
   },
   {
@@ -220,14 +220,14 @@
           0.0,
           0.0,
           0.0,
-          30.0
+          26.67
         ],
-        "average_score": 5.0
+        "average_score": 4.44
       },
       "developer_activity_score": 60.0,
       "community_activity_score": 100,
-      "raw_weighted_total": 50.0,
-      "base_total_after_age_penalty": 50.0
+      "raw_weighted_total": 49.78,
+      "base_total_after_age_penalty": 49.78
     },
     "increment_data": {
       "inc_1d": {
@@ -253,10 +253,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 25.0,
-      "heat_3d": 25.0,
-      "heat_7d": 25.0,
-      "total_heat": 25.0
+      "heat_1d": 24.89,
+      "heat_3d": 24.89,
+      "heat_7d": 24.89,
+      "total_heat": 24.89
     }
   },
   {
@@ -267,19 +267,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          96.67,
-          70.0,
+          93.33,
+          66.67,
           0.0,
-          70.0,
+          66.67,
           0.0,
-          90.0
+          86.67
         ],
-        "average_score": 54.44
+        "average_score": 52.22
       },
       "developer_activity_score": 30.0,
       "community_activity_score": 48.15,
-      "raw_weighted_total": 45.22,
-      "base_total_after_age_penalty": 45.22
+      "raw_weighted_total": 44.33,
+      "base_total_after_age_penalty": 44.33
     },
     "increment_data": {
       "inc_1d": {
@@ -305,10 +305,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 22.61,
-      "heat_3d": 22.61,
-      "heat_7d": 22.61,
-      "total_heat": 22.61
+      "heat_1d": 22.17,
+      "heat_3d": 22.17,
+      "heat_7d": 22.17,
+      "total_heat": 22.17
     }
   },
   {
@@ -322,31 +322,31 @@
           100.0,
           100.0,
           100.0,
-          0.0,
+          100.0,
           90.0,
           100.0
         ],
-        "average_score": 81.67
+        "average_score": 98.33
       },
-      "developer_activity_score": 98.1,
+      "developer_activity_score": 88.9,
       "community_activity_score": 100,
-      "raw_weighted_total": 92.1,
-      "base_total_after_age_penalty": 92.1
+      "raw_weighted_total": 96.0,
+      "base_total_after_age_penalty": 96.0
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 13,
-        "forks": 2,
-        "commits": 19,
+        "stars": 37,
+        "forks": 6,
+        "commits": 42,
         "closed_prs": 0,
-        "closed_issues": 3
+        "closed_issues": 11
       },
       "inc_3d": {
-        "stars": 100,
-        "forks": 15,
-        "commits": 100,
+        "stars": 124,
+        "forks": 19,
+        "commits": 123,
         "closed_prs": 0,
-        "closed_issues": 12
+        "closed_issues": 20
       },
       "inc_7d": {
         "stars": null,
@@ -357,10 +357,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 9.87,
-      "heat_3d": 5.54,
-      "heat_7d": 46.05,
-      "total_heat": 19.42
+      "heat_1d": 7.47,
+      "heat_3d": 5.71,
+      "heat_7d": 48.0,
+      "total_heat": 19.1
     }
   },
   {
@@ -371,19 +371,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          43.33,
+          40.0,
           0.0,
           0.0,
           0.0,
-          43.33,
-          66.67
+          40.0,
+          63.33
         ],
-        "average_score": 25.56
+        "average_score": 23.89
       },
       "developer_activity_score": 60.0,
-      "community_activity_score": 31.9,
-      "raw_weighted_total": 37.79,
-      "base_total_after_age_penalty": 37.79
+      "community_activity_score": 32.6,
+      "raw_weighted_total": 37.34,
+      "base_total_after_age_penalty": 37.34
     },
     "increment_data": {
       "inc_1d": {
@@ -409,10 +409,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 18.9,
-      "heat_3d": 18.9,
-      "heat_7d": 18.9,
-      "total_heat": 18.9
+      "heat_1d": 18.67,
+      "heat_3d": 18.67,
+      "heat_7d": 18.67,
+      "total_heat": 18.67
     }
   },
   {
@@ -423,31 +423,31 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          100.0,
-          100.0,
-          100.0,
+          96.67,
+          96.67,
+          96.67,
           100.0,
           96.67,
           100.0
         ],
-        "average_score": 99.44
+        "average_score": 97.78
       },
-      "developer_activity_score": 69.41,
+      "developer_activity_score": 68.43,
       "community_activity_score": 100,
-      "raw_weighted_total": 90.6,
-      "base_total_after_age_penalty": 90.6
+      "raw_weighted_total": 89.64,
+      "base_total_after_age_penalty": 89.64
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 15,
-        "forks": 2,
+        "stars": 60,
+        "forks": 8,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 104,
-        "forks": 4,
+        "stars": 149,
+        "forks": 10,
         "commits": 8,
         "closed_prs": 1,
         "closed_issues": 1
@@ -461,166 +461,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 4.53,
-      "heat_3d": 2.88,
-      "heat_7d": 45.3,
-      "total_heat": 16.27
-    }
-  },
-  {
-    "repo": "EvoScientist/EvoScientist",
-    "calculated_at": "20260723",
-    "created_at": "2026-01-26T11:19:26Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          100.0,
-          100.0,
-          100.0,
-          100.0,
-          96.67,
-          90.0
-        ],
-        "average_score": 97.78
-      },
-      "developer_activity_score": 82.24,
-      "community_activity_score": 100,
-      "raw_weighted_total": 93.78,
-      "base_total_after_age_penalty": 93.78
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 7,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 37,
-        "forks": 0,
-        "commits": 2,
-        "closed_prs": 1,
-        "closed_issues": 3
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 1.87,
-      "heat_3d": 1.05,
-      "heat_7d": 46.89,
-      "total_heat": 15.13
-    }
-  },
-  {
-    "repo": "synthetic-sciences/openscience",
-    "calculated_at": "20260723",
-    "created_at": "2026-07-03T15:06:45Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          100.0,
-          100.0,
-          100.0,
-          100.0,
-          100.0,
-          96.67
-        ],
-        "average_score": 99.44
-      },
-      "developer_activity_score": 74.43,
-      "community_activity_score": 100,
-      "raw_weighted_total": 92.11,
-      "base_total_after_age_penalty": 92.11
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 7,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 61,
-        "forks": 7,
-        "commits": 1,
-        "closed_prs": 1,
-        "closed_issues": 3
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 1.87,
-      "heat_3d": 1.78,
-      "heat_7d": 46.05,
-      "total_heat": 15.1
-    }
-  },
-  {
-    "repo": "aiming-lab/AutoResearchClaw",
-    "calculated_at": "20260723",
-    "created_at": "2026-03-15T03:38:49Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          70.0,
-          100.0,
-          70.0,
-          83.33,
-          70.0,
-          100.0
-        ],
-        "average_score": 82.22
-      },
-      "developer_activity_score": 94.61,
-      "community_activity_score": 100,
-      "raw_weighted_total": 91.27,
-      "base_total_after_age_penalty": 91.27
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 4,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 7,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 1.07,
-      "heat_3d": 0.17,
-      "heat_7d": 45.64,
-      "total_heat": 14.17
+      "heat_1d": 5.29,
+      "heat_3d": 3.37,
+      "heat_7d": 44.82,
+      "total_heat": 16.57
     }
   },
   {
@@ -632,33 +476,33 @@
       "time_activity": {
         "sub_scores": [
           0.0,
-          3.33,
-          83.33,
+          0.0,
+          100.0,
           50.0,
-          93.33,
+          90.0,
           100.0
         ],
-        "average_score": 55.0
+        "average_score": 56.67
       },
-      "developer_activity_score": 58.95,
+      "developer_activity_score": 59.12,
       "community_activity_score": 100,
-      "raw_weighted_total": 69.68,
-      "base_total_after_age_penalty": 69.68
+      "raw_weighted_total": 70.4,
+      "base_total_after_age_penalty": 70.4
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 19,
-        "forks": 1,
+        "stars": 90,
+        "forks": 5,
         "commits": 0,
         "closed_prs": 0,
-        "closed_issues": 0
+        "closed_issues": 1
       },
       "inc_3d": {
-        "stars": 192,
-        "forks": 20,
+        "stars": 263,
+        "forks": 24,
         "commits": 0,
         "closed_prs": 0,
-        "closed_issues": 0
+        "closed_issues": 1
       },
       "inc_7d": {
         "stars": null,
@@ -669,10 +513,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 5.33,
-      "heat_3d": 5.17,
-      "heat_7d": 34.84,
-      "total_heat": 14.14
+      "heat_1d": 7.47,
+      "heat_3d": 5.75,
+      "heat_7d": 35.2,
+      "total_heat": 15.27
     }
   },
   {
@@ -686,31 +530,31 @@
           100.0,
           100.0,
           100.0,
-          100.0,
-          93.33,
+          96.67,
+          90.0,
           100.0
         ],
-        "average_score": 98.89
+        "average_score": 97.78
       },
-      "developer_activity_score": 49.09,
+      "developer_activity_score": 50.3,
       "community_activity_score": 100,
-      "raw_weighted_total": 84.28,
-      "base_total_after_age_penalty": 84.28
+      "raw_weighted_total": 84.2,
+      "base_total_after_age_penalty": 84.2
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 3,
-        "forks": 1,
-        "commits": 1,
+        "stars": 41,
+        "forks": 3,
+        "commits": 12,
         "closed_prs": 0,
-        "closed_issues": 2
+        "closed_issues": 3
       },
       "inc_3d": {
-        "stars": 32,
-        "forks": 5,
-        "commits": 29,
+        "stars": 70,
+        "forks": 7,
+        "commits": 40,
         "closed_prs": 0,
-        "closed_issues": 5
+        "closed_issues": 6
       },
       "inc_7d": {
         "stars": null,
@@ -721,10 +565,166 @@
       }
     },
     "heat_result": {
-      "heat_1d": 1.87,
-      "heat_3d": 1.73,
-      "heat_7d": 42.14,
-      "total_heat": 13.91
+      "heat_1d": 4.59,
+      "heat_3d": 2.46,
+      "heat_7d": 42.1,
+      "total_heat": 15.2
+    }
+  },
+  {
+    "repo": "EvoScientist/EvoScientist",
+    "calculated_at": "20260723",
+    "created_at": "2026-01-26T11:19:26Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          96.67,
+          100.0,
+          96.67,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "average_score": 98.89
+      },
+      "developer_activity_score": 80.22,
+      "community_activity_score": 100,
+      "raw_weighted_total": 93.62,
+      "base_total_after_age_penalty": 93.62
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 16,
+        "forks": 1,
+        "commits": 0,
+        "closed_prs": 1,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 46,
+        "forks": 0,
+        "commits": 2,
+        "closed_prs": 2,
+        "closed_issues": 3
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 1.4,
+      "heat_3d": 1.06,
+      "heat_7d": 46.81,
+      "total_heat": 14.92
+    }
+  },
+  {
+    "repo": "synthetic-sciences/openscience",
+    "calculated_at": "20260723",
+    "created_at": "2026-07-03T15:06:45Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          96.67,
+          96.67,
+          96.67,
+          96.67,
+          96.67,
+          100.0
+        ],
+        "average_score": 97.22
+      },
+      "developer_activity_score": 74.43,
+      "community_activity_score": 100,
+      "raw_weighted_total": 91.22,
+      "base_total_after_age_penalty": 91.22
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 21,
+        "forks": 1,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 75,
+        "forks": 8,
+        "commits": 1,
+        "closed_prs": 1,
+        "closed_issues": 3
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 1.71,
+      "heat_3d": 1.76,
+      "heat_7d": 45.61,
+      "total_heat": 14.89
+    }
+  },
+  {
+    "repo": "aiming-lab/AutoResearchClaw",
+    "calculated_at": "20260723",
+    "created_at": "2026-03-15T03:38:49Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          66.67,
+          96.67,
+          66.67,
+          100.0,
+          66.67,
+          100.0
+        ],
+        "average_score": 82.78
+      },
+      "developer_activity_score": 93.84,
+      "community_activity_score": 100,
+      "raw_weighted_total": 91.26,
+      "base_total_after_age_penalty": 91.26
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 18,
+        "forks": 1,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 21,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 1.48,
+      "heat_3d": 0.42,
+      "heat_7d": 45.63,
+      "total_heat": 14.41
     }
   },
   {
@@ -735,19 +735,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          53.33,
+          50.0,
           0.0,
           0.0,
           0.0,
           0.0,
-          60.0
+          56.67
         ],
-        "average_score": 18.89
+        "average_score": 17.78
       },
       "developer_activity_score": 0.0,
-      "community_activity_score": 64.8,
-      "raw_weighted_total": 27.0,
-      "base_total_after_age_penalty": 27.0
+      "community_activity_score": 65.5,
+      "raw_weighted_total": 26.76,
+      "base_total_after_age_penalty": 26.76
     },
     "increment_data": {
       "inc_1d": {
@@ -773,10 +773,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 13.5,
-      "heat_3d": 13.5,
-      "heat_7d": 13.5,
-      "total_heat": 13.5
+      "heat_1d": 13.38,
+      "heat_3d": 13.38,
+      "heat_7d": 13.38,
+      "total_heat": 13.38
     }
   },
   {
@@ -790,29 +790,29 @@
           100.0,
           40.0,
           0.0,
-          100.0,
+          96.67,
           93.33,
           100.0
         ],
-        "average_score": 72.22
+        "average_score": 71.67
       },
       "developer_activity_score": 90.32,
       "community_activity_score": 100,
-      "raw_weighted_total": 85.98,
-      "base_total_after_age_penalty": 85.98
+      "raw_weighted_total": 85.76,
+      "base_total_after_age_penalty": 85.76
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 2,
-        "forks": 1,
-        "commits": 0,
+        "stars": 3,
+        "forks": 3,
+        "commits": 1,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 5,
-        "forks": 2,
-        "commits": 9,
+        "stars": 6,
+        "forks": 4,
+        "commits": 10,
         "closed_prs": 0,
         "closed_issues": 0
       },
@@ -825,10 +825,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.8,
-      "heat_3d": 0.39,
-      "heat_7d": 42.99,
-      "total_heat": 13.33
+      "heat_1d": 0.54,
+      "heat_3d": 0.4,
+      "heat_7d": 42.88,
+      "total_heat": 13.2
     }
   },
   {
@@ -839,12 +839,12 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          90.0,
-          73.33,
+          100.0,
+          70.0,
           93.33,
           73.33,
-          83.33,
-          100.0
+          80.0,
+          96.67
         ],
         "average_score": 85.56
       },
@@ -855,16 +855,16 @@
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 1,
+        "stars": 3,
         "forks": 0,
-        "commits": 0,
+        "commits": 2,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 4,
+        "stars": 6,
         "forks": 1,
-        "commits": 0,
+        "commits": 2,
         "closed_prs": 0,
         "closed_issues": 1
       },
@@ -877,10 +877,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.27,
-      "heat_3d": 0.15,
+      "heat_1d": 0.39,
+      "heat_3d": 0.2,
       "heat_7d": 42.94,
-      "total_heat": 13.03
+      "total_heat": 13.1
     }
   },
   {
@@ -892,30 +892,30 @@
       "time_activity": {
         "sub_scores": [
           93.33,
-          96.67,
+          93.33,
           80.0,
-          80.0,
+          100.0,
           13.33,
           100.0
         ],
-        "average_score": 77.22
+        "average_score": 80.0
       },
-      "developer_activity_score": 82.73,
+      "developer_activity_score": 78.88,
       "community_activity_score": 100,
-      "raw_weighted_total": 85.71,
-      "base_total_after_age_penalty": 85.71
+      "raw_weighted_total": 85.66,
+      "base_total_after_age_penalty": 85.66
     },
     "increment_data": {
       "inc_1d": {
         "stars": 0,
-        "forks": 0,
+        "forks": 1,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
         "stars": 6,
-        "forks": 1,
+        "forks": 2,
         "commits": 8,
         "closed_prs": 0,
         "closed_issues": 0
@@ -929,114 +929,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.0,
-      "heat_3d": 0.37,
-      "heat_7d": 42.85,
-      "total_heat": 12.97
-    }
-  },
-  {
-    "repo": "Orchestra-Research/AI-Research-SKILLs",
-    "calculated_at": "20260723",
-    "created_at": "2025-11-03T06:13:06Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          0.0,
-          76.67,
-          0.0,
-          76.67,
-          0.0,
-          100.0
-        ],
-        "average_score": 42.22
-      },
-      "developer_activity_score": 60.75,
-      "community_activity_score": 100,
-      "raw_weighted_total": 65.11,
-      "base_total_after_age_penalty": 65.11
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 16,
-        "forks": 3,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 99,
-        "forks": 7,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 5.07,
-      "heat_3d": 2.59,
-      "heat_7d": 32.56,
-      "total_heat": 12.57
-    }
-  },
-  {
-    "repo": "Orchestra-Research/AI-Research-SKILLs",
-    "calculated_at": "20260723",
-    "created_at": "2025-11-03T06:13:06Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          0.0,
-          76.67,
-          0.0,
-          76.67,
-          0.0,
-          100.0
-        ],
-        "average_score": 42.22
-      },
-      "developer_activity_score": 60.75,
-      "community_activity_score": 100,
-      "raw_weighted_total": 65.11,
-      "base_total_after_age_penalty": 65.11
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 16,
-        "forks": 3,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 99,
-        "forks": 7,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 5.07,
-      "heat_3d": 2.59,
-      "heat_7d": 32.56,
-      "total_heat": 12.57
+      "heat_1d": 0.08,
+      "heat_3d": 0.32,
+      "heat_7d": 42.83,
+      "total_heat": 12.98
     }
   },
   {
@@ -1047,12 +943,12 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          30.0,
+          26.67,
           0.0,
-          50.0,
+          46.67,
           0.0,
-          30.0,
-          90.0
+          26.67,
+          100.0
         ],
         "average_score": 33.33
       },
@@ -1063,15 +959,15 @@
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 7,
-        "forks": 0,
+        "stars": 31,
+        "forks": 1,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 67,
-        "forks": 1,
+        "stars": 91,
+        "forks": 2,
         "commits": 0,
         "closed_prs": 1,
         "closed_issues": 1
@@ -1085,10 +981,166 @@
       }
     },
     "heat_result": {
-      "heat_1d": 1.87,
-      "heat_3d": 1.71,
+      "heat_1d": 2.49,
+      "heat_3d": 1.9,
       "heat_7d": 36.67,
-      "total_heat": 12.26
+      "total_heat": 12.56
+    }
+  },
+  {
+    "repo": "Orchestra-Research/AI-Research-SKILLs",
+    "calculated_at": "20260723",
+    "created_at": "2025-11-03T06:13:06Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          0.0,
+          73.33,
+          0.0,
+          73.33,
+          0.0,
+          100.0
+        ],
+        "average_score": 41.11
+      },
+      "developer_activity_score": 60.75,
+      "community_activity_score": 100,
+      "raw_weighted_total": 64.67,
+      "base_total_after_age_penalty": 64.67
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 46,
+        "forks": 4,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 129,
+        "forks": 8,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 3.89,
+      "heat_3d": 2.73,
+      "heat_7d": 32.33,
+      "total_heat": 12.08
+    }
+  },
+  {
+    "repo": "Orchestra-Research/AI-Research-SKILLs",
+    "calculated_at": "20260723",
+    "created_at": "2025-11-03T06:13:06Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          0.0,
+          73.33,
+          0.0,
+          73.33,
+          0.0,
+          100.0
+        ],
+        "average_score": 41.11
+      },
+      "developer_activity_score": 60.75,
+      "community_activity_score": 100,
+      "raw_weighted_total": 64.67,
+      "base_total_after_age_penalty": 64.67
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 46,
+        "forks": 4,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 129,
+        "forks": 8,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 3.89,
+      "heat_3d": 2.73,
+      "heat_7d": 32.33,
+      "total_heat": 12.08
+    }
+  },
+  {
+    "repo": "Leey21/awesome-ai-research-writing",
+    "calculated_at": "20260723",
+    "created_at": "2026-01-30T07:59:30Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          0.0,
+          0.0,
+          0.0,
+          80.0,
+          96.67,
+          100.0
+        ],
+        "average_score": 46.11
+      },
+      "developer_activity_score": 38.6,
+      "community_activity_score": 100,
+      "raw_weighted_total": 60.02,
+      "base_total_after_age_penalty": 60.02
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 40,
+        "forks": 3,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 185,
+        "forks": 17,
+        "commits": 0,
+        "closed_prs": 1,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 3.35,
+      "heat_3d": 4.05,
+      "heat_7d": 30.01,
+      "total_heat": 11.56
     }
   },
   {
@@ -1099,30 +1151,30 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          83.33,
-          96.67,
+          80.0,
+          93.33,
           0.0,
           0.0,
           0.0,
           93.33
         ],
-        "average_score": 45.56
+        "average_score": 44.44
       },
       "developer_activity_score": 88.12,
       "community_activity_score": 100,
-      "raw_weighted_total": 74.66,
-      "base_total_after_age_penalty": 74.66
+      "raw_weighted_total": 74.21,
+      "base_total_after_age_penalty": 74.21
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 3,
+        "stars": 6,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 11,
+        "stars": 14,
         "forks": 1,
         "commits": 0,
         "closed_prs": 0,
@@ -1137,10 +1189,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.8,
-      "heat_3d": 0.29,
-      "heat_7d": 37.33,
-      "total_heat": 11.61
+      "heat_1d": 0.47,
+      "heat_3d": 0.3,
+      "heat_7d": 37.11,
+      "total_heat": 11.41
     }
   },
   {
@@ -1156,25 +1208,25 @@
           60.0,
           0.0,
           0.0,
-          73.33
+          70.0
         ],
-        "average_score": 32.22
+        "average_score": 31.67
       },
       "developer_activity_score": 100,
       "community_activity_score": 100,
-      "raw_weighted_total": 72.89,
-      "base_total_after_age_penalty": 72.89
+      "raw_weighted_total": 72.67,
+      "base_total_after_age_penalty": 72.67
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 1,
+        "stars": 3,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 12,
+        "stars": 14,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
@@ -1189,100 +1241,48 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.27,
-      "heat_3d": 0.29,
-      "heat_7d": 36.44,
-      "total_heat": 11.13
+      "heat_1d": 0.23,
+      "heat_3d": 0.28,
+      "heat_7d": 36.33,
+      "total_heat": 11.08
     }
   },
   {
-    "repo": "Leey21/awesome-ai-research-writing",
+    "repo": "mims-harvard/ToolUniverse",
     "calculated_at": "20260723",
-    "created_at": "2026-01-30T07:59:30Z",
-    "age_penalty": 1.0,
+    "created_at": "2025-03-03T21:09:47Z",
+    "age_penalty": 0.73,
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          0.0,
-          0.0,
-          0.0,
-          83.33,
+          96.67,
           100.0,
+          93.33,
+          100.0,
+          96.67,
           100.0
         ],
-        "average_score": 47.22
+        "average_score": 97.78
       },
-      "developer_activity_score": 38.6,
+      "developer_activity_score": 86.85,
       "community_activity_score": 100,
-      "raw_weighted_total": 60.47,
-      "base_total_after_age_penalty": 60.47
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 7,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 152,
-        "forks": 13,
-        "commits": 0,
-        "closed_prs": 1,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 1.87,
-      "heat_3d": 4.05,
-      "heat_7d": 30.23,
-      "total_heat": 11.03
-    }
-  },
-  {
-    "repo": "K-Dense-AI/claude-scientific-writer",
-    "calculated_at": "20260723",
-    "created_at": "2025-10-27T06:52:45Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          100.0,
-          0.0,
-          0.0,
-          30.0,
-          0.0,
-          96.67
-        ],
-        "average_score": 37.78
-      },
-      "developer_activity_score": 70.45,
-      "community_activity_score": 100,
-      "raw_weighted_total": 66.25,
-      "base_total_after_age_penalty": 66.25
+      "raw_weighted_total": 95.16,
+      "base_total_after_age_penalty": 69.47
     },
     "increment_data": {
       "inc_1d": {
         "stars": 1,
-        "forks": 0,
-        "commits": 6,
+        "forks": 1,
+        "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 12,
-        "forks": 0,
-        "commits": 7,
-        "closed_prs": 0,
-        "closed_issues": 0
+        "stars": 7,
+        "forks": 3,
+        "commits": 28,
+        "closed_prs": 14,
+        "closed_issues": 1
       },
       "inc_7d": {
         "stars": null,
@@ -1293,10 +1293,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 1.87,
-      "heat_3d": 0.46,
-      "heat_7d": 33.12,
-      "total_heat": 10.82
+      "heat_1d": 0.16,
+      "heat_3d": 1.06,
+      "heat_7d": 34.74,
+      "total_heat": 10.8
     }
   },
   {
@@ -1310,16 +1310,16 @@
           56.67,
           0.0,
           0.0,
-          70.0,
+          66.67,
           0.0,
-          96.67
+          93.33
         ],
-        "average_score": 37.22
+        "average_score": 36.11
       },
       "developer_activity_score": 85.0,
       "community_activity_score": 100,
-      "raw_weighted_total": 70.39,
-      "base_total_after_age_penalty": 70.39
+      "raw_weighted_total": 69.94,
+      "base_total_after_age_penalty": 69.94
     },
     "increment_data": {
       "inc_1d": {
@@ -1347,46 +1347,46 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.02,
-      "heat_7d": 35.19,
-      "total_heat": 10.57
+      "heat_7d": 34.97,
+      "total_heat": 10.5
     }
   },
   {
-    "repo": "mims-harvard/ToolUniverse",
+    "repo": "K-Dense-AI/claude-scientific-writer",
     "calculated_at": "20260723",
-    "created_at": "2025-03-03T21:09:47Z",
-    "age_penalty": 0.73,
+    "created_at": "2025-10-27T06:52:45Z",
+    "age_penalty": 1.0,
     "score_components": {
       "time_activity": {
         "sub_scores": [
           100.0,
-          43.33,
-          93.33,
-          100.0,
-          96.67,
-          96.67
+          0.0,
+          0.0,
+          26.67,
+          0.0,
+          93.33
         ],
-        "average_score": 88.33
+        "average_score": 36.67
       },
-      "developer_activity_score": 87.8,
+      "developer_activity_score": 70.45,
       "community_activity_score": 100,
-      "raw_weighted_total": 91.67,
-      "base_total_after_age_penalty": 66.92
+      "raw_weighted_total": 65.8,
+      "base_total_after_age_penalty": 65.8
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 0,
+        "stars": 6,
         "forks": 0,
-        "commits": 0,
+        "commits": 6,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 6,
-        "forks": 2,
-        "commits": 28,
-        "closed_prs": 14,
-        "closed_issues": 1
+        "stars": 17,
+        "forks": 0,
+        "commits": 7,
+        "closed_prs": 0,
+        "closed_issues": 0
       },
       "inc_7d": {
         "stars": null,
@@ -1397,10 +1397,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.0,
-      "heat_3d": 1.24,
-      "heat_7d": 33.46,
-      "total_heat": 10.41
+      "heat_1d": 0.93,
+      "heat_3d": 0.48,
+      "heat_7d": 32.9,
+      "total_heat": 10.39
     }
   },
   {
@@ -1416,25 +1416,25 @@
           0.0,
           0.0,
           0.0,
-          96.67
+          93.33
         ],
-        "average_score": 25.0
+        "average_score": 24.44
       },
       "developer_activity_score": 88.57,
       "community_activity_score": 100,
-      "raw_weighted_total": 66.57,
-      "base_total_after_age_penalty": 66.57
+      "raw_weighted_total": 66.35,
+      "base_total_after_age_penalty": 66.35
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 2,
+        "stars": 4,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 4,
+        "stars": 6,
         "forks": 1,
         "commits": 0,
         "closed_prs": 0,
@@ -1449,10 +1449,62 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.53,
-      "heat_3d": 0.12,
-      "heat_7d": 33.29,
-      "total_heat": 10.24
+      "heat_1d": 0.31,
+      "heat_3d": 0.14,
+      "heat_7d": 33.17,
+      "total_heat": 10.12
+    }
+  },
+  {
+    "repo": "aristoteleo/PantheonOS",
+    "calculated_at": "20260723",
+    "created_at": "2025-07-30T19:54:44Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          86.67,
+          30.0,
+          86.67,
+          3.33,
+          0.0,
+          30.0
+        ],
+        "average_score": 39.44
+      },
+      "developer_activity_score": 70.2,
+      "community_activity_score": 100,
+      "raw_weighted_total": 66.84,
+      "base_total_after_age_penalty": 66.84
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 2,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 2,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 0.16,
+      "heat_3d": 0.04,
+      "heat_7d": 33.42,
+      "total_heat": 10.1
     }
   },
   {
@@ -1468,14 +1520,14 @@
           0.0,
           0.0,
           0.0,
-          96.67
+          93.33
         ],
-        "average_score": 16.11
+        "average_score": 15.56
       },
       "developer_activity_score": 100,
       "community_activity_score": 100,
-      "raw_weighted_total": 66.44,
-      "base_total_after_age_penalty": 66.44
+      "raw_weighted_total": 66.22,
+      "base_total_after_age_penalty": 66.22
     },
     "increment_data": {
       "inc_1d": {
@@ -1501,44 +1553,44 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.27,
-      "heat_3d": 0.12,
-      "heat_7d": 33.22,
-      "total_heat": 10.11
+      "heat_1d": 0.08,
+      "heat_3d": 0.1,
+      "heat_7d": 33.11,
+      "total_heat": 9.99
     }
   },
   {
-    "repo": "aristoteleo/PantheonOS",
+    "repo": "ResearAI/DeepScientist",
     "calculated_at": "20260723",
-    "created_at": "2025-07-30T19:54:44Z",
+    "created_at": "2025-09-26T05:32:16Z",
     "age_penalty": 1.0,
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          90.0,
-          30.0,
-          90.0,
-          3.33,
+          16.67,
+          93.33,
           0.0,
-          30.0
+          0.0,
+          0.0,
+          60.0
         ],
-        "average_score": 40.56
+        "average_score": 28.33
       },
-      "developer_activity_score": 70.2,
+      "developer_activity_score": 79.09,
       "community_activity_score": 100,
-      "raw_weighted_total": 67.28,
-      "base_total_after_age_penalty": 67.28
+      "raw_weighted_total": 65.06,
+      "base_total_after_age_penalty": 65.06
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 0,
+        "stars": 4,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 0,
+        "stars": 10,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
@@ -1553,10 +1605,62 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.0,
-      "heat_3d": 0.0,
-      "heat_7d": 33.64,
-      "total_heat": 10.09
+      "heat_1d": 0.31,
+      "heat_3d": 0.2,
+      "heat_7d": 32.53,
+      "total_heat": 9.94
+    }
+  },
+  {
+    "repo": "ResearAI/DeepScientist",
+    "calculated_at": "20260723",
+    "created_at": "2025-09-26T05:32:16Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          16.67,
+          93.33,
+          0.0,
+          0.0,
+          0.0,
+          60.0
+        ],
+        "average_score": 28.33
+      },
+      "developer_activity_score": 79.09,
+      "community_activity_score": 100,
+      "raw_weighted_total": 65.06,
+      "base_total_after_age_penalty": 65.06
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 4,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 10,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 0.31,
+      "heat_3d": 0.2,
+      "heat_7d": 32.53,
+      "total_heat": 9.94
     }
   },
   {
@@ -1572,14 +1676,14 @@
           0.0,
           0.0,
           0.0,
-          96.67
+          93.33
         ],
-        "average_score": 16.11
+        "average_score": 15.56
       },
       "developer_activity_score": 99.17,
       "community_activity_score": 100,
-      "raw_weighted_total": 66.19,
-      "base_total_after_age_penalty": 66.19
+      "raw_weighted_total": 65.97,
+      "base_total_after_age_penalty": 65.97
     },
     "increment_data": {
       "inc_1d": {
@@ -1607,112 +1711,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.02,
-      "heat_7d": 33.1,
-      "total_heat": 9.94
-    }
-  },
-  {
-    "repo": "ResearAI/DeepScientist",
-    "calculated_at": "20260723",
-    "created_at": "2025-09-26T05:32:16Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          20.0,
-          93.33,
-          0.0,
-          0.0,
-          0.0,
-          63.33
-        ],
-        "average_score": 29.44
-      },
-      "developer_activity_score": 79.09,
-      "community_activity_score": 100,
-      "raw_weighted_total": 65.51,
-      "base_total_after_age_penalty": 65.51
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 0,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 6,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 0.0,
-      "heat_3d": 0.15,
-      "heat_7d": 32.75,
-      "total_heat": 9.87
-    }
-  },
-  {
-    "repo": "ResearAI/DeepScientist",
-    "calculated_at": "20260723",
-    "created_at": "2025-09-26T05:32:16Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          20.0,
-          93.33,
-          0.0,
-          0.0,
-          0.0,
-          63.33
-        ],
-        "average_score": 29.44
-      },
-      "developer_activity_score": 79.09,
-      "community_activity_score": 100,
-      "raw_weighted_total": 65.51,
-      "base_total_after_age_penalty": 65.51
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 0,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 6,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 0.0,
-      "heat_3d": 0.15,
-      "heat_7d": 32.75,
-      "total_heat": 9.87
+      "heat_7d": 32.99,
+      "total_heat": 9.9
     }
   },
   {
@@ -1728,14 +1728,14 @@
           80.0,
           0.0,
           0.0,
-          70.0
+          66.67
         ],
-        "average_score": 38.33
+        "average_score": 37.78
       },
       "developer_activity_score": 67.3,
       "community_activity_score": 100,
-      "raw_weighted_total": 65.52,
-      "base_total_after_age_penalty": 65.52
+      "raw_weighted_total": 65.3,
+      "base_total_after_age_penalty": 65.3
     },
     "increment_data": {
       "inc_1d": {
@@ -1763,60 +1763,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.02,
-      "heat_7d": 32.76,
-      "total_heat": 9.84
-    }
-  },
-  {
-    "repo": "Galaxy-Dawn/claude-scholar",
-    "calculated_at": "20260723",
-    "created_at": "2026-01-27T10:32:17Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          33.33,
-          0.0,
-          0.0,
-          33.33,
-          0.0,
-          100.0
-        ],
-        "average_score": 27.78
-      },
-      "developer_activity_score": 51.36,
-      "community_activity_score": 100,
-      "raw_weighted_total": 56.52,
-      "base_total_after_age_penalty": 56.52
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 6,
-        "forks": 2,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 60,
-        "forks": 2,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 2.13,
-      "heat_3d": 1.51,
-      "heat_7d": 28.26,
-      "total_heat": 9.79
+      "heat_7d": 32.65,
+      "total_heat": 9.8
     }
   },
   {
@@ -1828,29 +1776,29 @@
       "time_activity": {
         "sub_scores": [
           0.0,
-          93.33,
+          90.0,
           0.0,
-          56.67,
-          10.0,
-          80.0
+          53.33,
+          6.67,
+          76.67
         ],
-        "average_score": 40.0
+        "average_score": 37.78
       },
       "developer_activity_score": 62.59,
       "community_activity_score": 100,
-      "raw_weighted_total": 64.78,
-      "base_total_after_age_penalty": 64.78
+      "raw_weighted_total": 63.89,
+      "base_total_after_age_penalty": 63.89
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 0,
+        "stars": 2,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 1,
+        "stars": 3,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
@@ -1865,10 +1813,62 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.0,
-      "heat_3d": 0.02,
-      "heat_7d": 32.39,
-      "total_heat": 9.72
+      "heat_1d": 0.16,
+      "heat_3d": 0.06,
+      "heat_7d": 31.94,
+      "total_heat": 9.66
+    }
+  },
+  {
+    "repo": "Galaxy-Dawn/claude-scholar",
+    "calculated_at": "20260723",
+    "created_at": "2026-01-27T10:32:17Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          30.0,
+          0.0,
+          0.0,
+          30.0,
+          0.0,
+          100.0
+        ],
+        "average_score": 26.67
+      },
+      "developer_activity_score": 51.36,
+      "community_activity_score": 100,
+      "raw_weighted_total": 56.08,
+      "base_total_after_age_penalty": 56.08
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 22,
+        "forks": 2,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 76,
+        "forks": 2,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 1.87,
+      "heat_3d": 1.56,
+      "heat_7d": 28.04,
+      "total_heat": 9.63
     }
   },
   {
@@ -1879,19 +1879,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          40.0,
-          33.33,
+          36.67,
+          30.0,
           0.0,
-          40.0,
+          36.67,
           0.0,
           76.67
         ],
-        "average_score": 31.67
+        "average_score": 30.0
       },
       "developer_activity_score": 62.25,
       "community_activity_score": 100,
-      "raw_weighted_total": 61.34,
-      "base_total_after_age_penalty": 61.34
+      "raw_weighted_total": 60.68,
+      "base_total_after_age_penalty": 60.68
     },
     "increment_data": {
       "inc_1d": {
@@ -1917,10 +1917,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.53,
-      "heat_3d": 0.12,
-      "heat_7d": 30.67,
-      "total_heat": 9.45
+      "heat_1d": 0.16,
+      "heat_3d": 0.1,
+      "heat_7d": 30.34,
+      "total_heat": 9.19
     }
   },
   {
@@ -1931,31 +1931,31 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          26.67,
+          23.33,
           0.0,
-          26.67,
-          50.0,
+          23.33,
+          46.67,
           0.0,
           100.0
         ],
-        "average_score": 33.89
+        "average_score": 32.22
       },
       "developer_activity_score": 47.5,
       "community_activity_score": 100,
-      "raw_weighted_total": 57.81,
-      "base_total_after_age_penalty": 57.81
+      "raw_weighted_total": 57.14,
+      "base_total_after_age_penalty": 57.14
     },
     "increment_data": {
       "inc_1d": {
         "stars": 0,
-        "forks": 1,
+        "forks": 2,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
         "stars": 1,
-        "forks": 1,
+        "forks": 2,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
@@ -1969,10 +1969,62 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.27,
-      "heat_3d": 0.05,
-      "heat_7d": 28.9,
-      "total_heat": 8.79
+      "heat_1d": 0.16,
+      "heat_3d": 0.06,
+      "heat_7d": 28.57,
+      "total_heat": 8.65
+    }
+  },
+  {
+    "repo": "wentorai/Research-Claw",
+    "calculated_at": "20260723",
+    "created_at": "2026-03-09T07:54:53Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          76.67,
+          0.0,
+          23.33,
+          0.0,
+          0.0,
+          66.67
+        ],
+        "average_score": 27.78
+      },
+      "developer_activity_score": 53.33,
+      "community_activity_score": 100,
+      "raw_weighted_total": 57.11,
+      "base_total_after_age_penalty": 57.11
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 1,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 0,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 0.08,
+      "heat_3d": 0.0,
+      "heat_7d": 28.56,
+      "total_heat": 8.6
     }
   },
   {
@@ -1987,8 +2039,8 @@
           93.33,
           0.0,
           93.33,
-          80.0,
-          96.67
+          76.67,
+          100.0
         ],
         "average_score": 60.56
       },
@@ -1999,15 +2051,15 @@
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 4,
-        "forks": 0,
+        "stars": 7,
+        "forks": 1,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 18,
-        "forks": 3,
+        "stars": 21,
+        "forks": 4,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
@@ -2021,33 +2073,33 @@
       }
     },
     "heat_result": {
-      "heat_1d": 1.07,
-      "heat_3d": 0.51,
+      "heat_1d": 0.62,
+      "heat_3d": 0.5,
       "heat_7d": 27.34,
-      "total_heat": 8.78
+      "total_heat": 8.6
     }
   },
   {
-    "repo": "wentorai/Research-Claw",
+    "repo": "NomaDamas/AutoRAG-Research",
     "calculated_at": "20260723",
-    "created_at": "2026-03-09T07:54:53Z",
+    "created_at": "2025-11-14T08:09:33Z",
     "age_penalty": 1.0,
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          80.0,
+          66.67,
+          16.67,
+          66.67,
           0.0,
-          26.67,
           0.0,
-          0.0,
-          70.0
+          0.0
         ],
-        "average_score": 29.44
+        "average_score": 25.0
       },
-      "developer_activity_score": 53.33,
-      "community_activity_score": 100,
-      "raw_weighted_total": 57.78,
-      "base_total_after_age_penalty": 57.78
+      "developer_activity_score": 94.53,
+      "community_activity_score": 59.15,
+      "raw_weighted_total": 56.1,
+      "base_total_after_age_penalty": 56.1
     },
     "increment_data": {
       "inc_1d": {
@@ -2075,8 +2127,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.0,
-      "heat_7d": 28.89,
-      "total_heat": 8.67
+      "heat_7d": 28.05,
+      "total_heat": 8.42
     }
   },
   {
@@ -2087,19 +2139,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          33.33,
-          33.33,
-          33.33,
-          33.33,
+          30.0,
+          30.0,
+          30.0,
+          30.0,
           0.0,
-          96.67
+          93.33
         ],
-        "average_score": 38.33
+        "average_score": 35.56
       },
       "developer_activity_score": 38.7,
       "community_activity_score": 100,
-      "raw_weighted_total": 56.94,
-      "base_total_after_age_penalty": 56.94
+      "raw_weighted_total": 55.83,
+      "base_total_after_age_penalty": 55.83
     },
     "increment_data": {
       "inc_1d": {
@@ -2126,32 +2178,32 @@
     },
     "heat_result": {
       "heat_1d": 0.0,
-      "heat_3d": 0.05,
-      "heat_7d": 28.47,
-      "total_heat": 8.56
+      "heat_3d": 0.04,
+      "heat_7d": 27.92,
+      "total_heat": 8.39
     }
   },
   {
-    "repo": "NomaDamas/AutoRAG-Research",
+    "repo": "Prismer-AI/Prismer",
     "calculated_at": "20260723",
-    "created_at": "2025-11-14T08:09:33Z",
+    "created_at": "2026-01-28T09:17:24Z",
     "age_penalty": 1.0,
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          70.0,
-          20.0,
-          70.0,
           0.0,
           0.0,
-          0.0
+          0.0,
+          3.33,
+          3.33,
+          6.67
         ],
-        "average_score": 26.67
+        "average_score": 2.22
       },
-      "developer_activity_score": 94.53,
-      "community_activity_score": 59.15,
-      "raw_weighted_total": 56.77,
-      "base_total_after_age_penalty": 56.77
+      "developer_activity_score": 76.78,
+      "community_activity_score": 100,
+      "raw_weighted_total": 53.92,
+      "base_total_after_age_penalty": 53.92
     },
     "increment_data": {
       "inc_1d": {
@@ -2179,8 +2231,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.0,
-      "heat_7d": 28.39,
-      "total_heat": 8.52
+      "heat_7d": 26.96,
+      "total_heat": 8.09
     }
   },
   {
@@ -2207,14 +2259,14 @@
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 2,
+        "stars": 3,
         "forks": 1,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 5,
+        "stars": 6,
         "forks": 1,
         "commits": 0,
         "closed_prs": 0,
@@ -2229,10 +2281,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.8,
-      "heat_3d": 0.15,
+      "heat_1d": 0.31,
+      "heat_3d": 0.14,
       "heat_7d": 26.39,
-      "total_heat": 8.28
+      "total_heat": 8.08
     }
   },
   {
@@ -2243,19 +2295,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          20.0,
-          56.67,
+          16.67,
+          53.33,
           0.0,
           0.0,
           0.0,
           80.0
         ],
-        "average_score": 26.11
+        "average_score": 25.0
       },
       "developer_activity_score": 0.0,
       "community_activity_score": 20.35,
-      "raw_weighted_total": 16.55,
-      "base_total_after_age_penalty": 16.55
+      "raw_weighted_total": 16.11,
+      "base_total_after_age_penalty": 16.11
     },
     "increment_data": {
       "inc_1d": {
@@ -2281,10 +2333,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 8.27,
-      "heat_3d": 8.27,
-      "heat_7d": 8.27,
-      "total_heat": 8.27
+      "heat_1d": 8.05,
+      "heat_3d": 8.05,
+      "heat_7d": 8.05,
+      "total_heat": 8.05
     }
   },
   {
@@ -2295,19 +2347,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          100.0,
+          96.67,
           0.0,
           0.0,
           0.0,
-          100.0,
-          86.67
+          96.67,
+          83.33
         ],
-        "average_score": 47.78
+        "average_score": 46.11
       },
       "developer_activity_score": 60.0,
       "community_activity_score": 48.25,
-      "raw_weighted_total": 51.59,
-      "base_total_after_age_penalty": 51.59
+      "raw_weighted_total": 50.92,
+      "base_total_after_age_penalty": 50.92
     },
     "increment_data": {
       "inc_1d": {
@@ -2334,61 +2386,9 @@
     },
     "heat_result": {
       "heat_1d": 0.0,
-      "heat_3d": 1.56,
-      "heat_7d": 25.79,
-      "total_heat": 8.21
-    }
-  },
-  {
-    "repo": "Prismer-AI/Prismer",
-    "calculated_at": "20260723",
-    "created_at": "2026-01-28T09:17:24Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          0.0,
-          0.0,
-          0.0,
-          6.67,
-          6.67,
-          10.0
-        ],
-        "average_score": 3.89
-      },
-      "developer_activity_score": 76.78,
-      "community_activity_score": 100,
-      "raw_weighted_total": 54.59,
-      "base_total_after_age_penalty": 54.59
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 0,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 0,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 0.0,
-      "heat_3d": 0.0,
-      "heat_7d": 27.3,
-      "total_heat": 8.19
+      "heat_3d": 1.28,
+      "heat_7d": 25.46,
+      "total_heat": 8.02
     }
   },
   {
@@ -2437,10 +2437,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.27,
-      "heat_3d": 0.05,
+      "heat_1d": 0.08,
+      "heat_3d": 0.04,
       "heat_7d": 25.64,
-      "total_heat": 7.81
+      "total_heat": 7.74
     }
   },
   {
@@ -2452,30 +2452,30 @@
       "time_activity": {
         "sub_scores": [
           0.0,
-          50.0,
+          46.67,
           0.0,
-          73.33,
-          86.67,
+          100.0,
+          83.33,
           100.0
         ],
-        "average_score": 51.67
+        "average_score": 55.0
       },
-      "developer_activity_score": 33.64,
+      "developer_activity_score": 33.2,
       "community_activity_score": 100,
-      "raw_weighted_total": 60.76,
-      "base_total_after_age_penalty": 48.61
+      "raw_weighted_total": 61.96,
+      "base_total_after_age_penalty": 49.57
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 1,
+        "stars": 4,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 22,
-        "forks": 2,
+        "stars": 25,
+        "forks": 3,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
@@ -2489,10 +2489,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.27,
-      "heat_3d": 0.59,
-      "heat_7d": 24.3,
-      "total_heat": 7.57
+      "heat_1d": 0.31,
+      "heat_3d": 0.56,
+      "heat_7d": 24.78,
+      "total_heat": 7.73
     }
   },
   {
@@ -2571,15 +2571,15 @@
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 5,
-        "forks": 2,
+        "stars": 19,
+        "forks": 3,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 45,
-        "forks": 4,
+        "stars": 59,
+        "forks": 5,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
@@ -2593,10 +2593,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 1.87,
-      "heat_3d": 1.2,
+      "heat_1d": 1.71,
+      "heat_3d": 1.28,
       "heat_7d": 21.33,
-      "total_heat": 7.51
+      "total_heat": 7.47
     }
   },
   {
@@ -2612,25 +2612,25 @@
           0.0,
           0.0,
           0.0,
-          70.0
+          66.67
         ],
-        "average_score": 11.67
+        "average_score": 11.11
       },
       "developer_activity_score": 44.0,
       "community_activity_score": 100,
-      "raw_weighted_total": 47.87,
-      "base_total_after_age_penalty": 47.87
+      "raw_weighted_total": 47.64,
+      "base_total_after_age_penalty": 47.64
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 0,
+        "stars": 1,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 0,
+        "stars": 1,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
@@ -2645,9 +2645,9 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.0,
-      "heat_3d": 0.0,
-      "heat_7d": 23.93,
+      "heat_1d": 0.08,
+      "heat_3d": 0.02,
+      "heat_7d": 23.82,
       "total_heat": 7.18
     }
   },
@@ -2714,16 +2714,16 @@
           0.0,
           0.0,
           0.0,
-          53.33,
+          50.0,
           0.0,
-          53.33
+          50.0
         ],
-        "average_score": 17.78
+        "average_score": 16.67
       },
       "developer_activity_score": 70.97,
       "community_activity_score": 61.05,
-      "raw_weighted_total": 46.72,
-      "base_total_after_age_penalty": 46.72
+      "raw_weighted_total": 46.27,
+      "base_total_after_age_penalty": 46.27
     },
     "increment_data": {
       "inc_1d": {
@@ -2751,60 +2751,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.0,
-      "heat_7d": 23.36,
-      "total_heat": 7.01
-    }
-  },
-  {
-    "repo": "mims-harvard/AutoScientists",
-    "calculated_at": "20260723",
-    "created_at": "2026-05-21T13:58:17Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          0.0,
-          0.0,
-          0.0,
-          43.33,
-          43.33,
-          90.0
-        ],
-        "average_score": 29.44
-      },
-      "developer_activity_score": 12.0,
-      "community_activity_score": 100,
-      "raw_weighted_total": 45.38,
-      "base_total_after_age_penalty": 45.38
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 1,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 1,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 0.27,
-      "heat_3d": 0.02,
-      "heat_7d": 22.69,
-      "total_heat": 6.92
+      "heat_7d": 23.14,
+      "total_heat": 6.94
     }
   },
   {
@@ -2906,9 +2854,61 @@
     },
     "heat_result": {
       "heat_1d": 0.0,
-      "heat_3d": 0.05,
+      "heat_3d": 0.04,
       "heat_7d": 22.61,
       "total_heat": 6.8
+    }
+  },
+  {
+    "repo": "mims-harvard/AutoScientists",
+    "calculated_at": "20260723",
+    "created_at": "2026-05-21T13:58:17Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          0.0,
+          0.0,
+          0.0,
+          43.33,
+          40.0,
+          86.67
+        ],
+        "average_score": 28.33
+      },
+      "developer_activity_score": 12.0,
+      "community_activity_score": 100,
+      "raw_weighted_total": 44.93,
+      "base_total_after_age_penalty": 44.93
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 1,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 1,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 0.08,
+      "heat_3d": 0.02,
+      "heat_7d": 22.47,
+      "total_heat": 6.78
     }
   },
   {
@@ -2919,19 +2919,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          86.67,
+          83.33,
           0.0,
           0.0,
-          63.33,
+          60.0,
           0.0,
-          60.0
+          56.67
         ],
-        "average_score": 35.0
+        "average_score": 33.33
       },
       "developer_activity_score": 61.2,
       "community_activity_score": 36.35,
-      "raw_weighted_total": 43.27,
-      "base_total_after_age_penalty": 43.27
+      "raw_weighted_total": 42.6,
+      "base_total_after_age_penalty": 42.6
     },
     "increment_data": {
       "inc_1d": {
@@ -2959,8 +2959,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.0,
-      "heat_7d": 21.63,
-      "total_heat": 6.49
+      "heat_7d": 21.3,
+      "total_heat": 6.39
     }
   },
   {
@@ -2974,16 +2974,16 @@
           0.0,
           0.0,
           0.0,
-          80.0,
+          76.67,
           0.0,
-          80.0
+          76.67
         ],
-        "average_score": 26.67
+        "average_score": 25.56
       },
       "developer_activity_score": 0.0,
       "community_activity_score": 100,
-      "raw_weighted_total": 40.67,
-      "base_total_after_age_penalty": 40.67
+      "raw_weighted_total": 40.22,
+      "base_total_after_age_penalty": 40.22
     },
     "increment_data": {
       "inc_1d": {
@@ -3011,8 +3011,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.0,
-      "heat_7d": 20.33,
-      "total_heat": 6.1
+      "heat_7d": 20.11,
+      "total_heat": 6.03
     }
   },
   {
@@ -3024,29 +3024,29 @@
       "time_activity": {
         "sub_scores": [
           0.0,
-          13.33,
+          10.0,
           0.0,
           63.33,
           0.0,
-          96.67
+          93.33
         ],
-        "average_score": 28.89
+        "average_score": 27.78
       },
       "developer_activity_score": 64.08,
       "community_activity_score": 100,
-      "raw_weighted_total": 60.78,
-      "base_total_after_age_penalty": 38.29
+      "raw_weighted_total": 60.33,
+      "base_total_after_age_penalty": 38.01
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 2,
+        "stars": 5,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 16,
+        "stars": 19,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
@@ -3061,10 +3061,62 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.53,
-      "heat_3d": 0.39,
-      "heat_7d": 19.15,
-      "total_heat": 6.07
+      "heat_1d": 0.39,
+      "heat_3d": 0.38,
+      "heat_7d": 19.01,
+      "total_heat": 5.97
+    }
+  },
+  {
+    "repo": "xjtulyc/MedgeClaw",
+    "calculated_at": "20260723",
+    "created_at": "2026-02-24T16:45:00Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          100.0
+        ],
+        "average_score": 16.67
+      },
+      "developer_activity_score": 8.0,
+      "community_activity_score": 100,
+      "raw_weighted_total": 39.07,
+      "base_total_after_age_penalty": 39.07
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 0,
+        "forks": 1,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 2,
+        "forks": 1,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 0.08,
+      "heat_3d": 0.06,
+      "heat_7d": 19.53,
+      "total_heat": 5.91
     }
   },
   {
@@ -3075,19 +3127,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          53.33,
+          50.0,
           0.0,
           0.0,
           0.0,
           0.0,
-          36.67
+          33.33
         ],
-        "average_score": 15.0
+        "average_score": 13.89
       },
       "developer_activity_score": 10.0,
       "community_activity_score": 100,
-      "raw_weighted_total": 39.0,
-      "base_total_after_age_penalty": 39.0
+      "raw_weighted_total": 38.56,
+      "base_total_after_age_penalty": 38.56
     },
     "increment_data": {
       "inc_1d": {
@@ -3115,8 +3167,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.02,
-      "heat_7d": 19.5,
-      "total_heat": 5.86
+      "heat_7d": 19.28,
+      "total_heat": 5.79
     }
   },
   {
@@ -3166,61 +3218,9 @@
     },
     "heat_result": {
       "heat_1d": 0.0,
-      "heat_3d": 0.05,
+      "heat_3d": 0.04,
       "heat_7d": 19.22,
       "total_heat": 5.78
-    }
-  },
-  {
-    "repo": "xjtulyc/MedgeClaw",
-    "calculated_at": "20260723",
-    "created_at": "2026-02-24T16:45:00Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          90.0
-        ],
-        "average_score": 15.0
-      },
-      "developer_activity_score": 8.0,
-      "community_activity_score": 100,
-      "raw_weighted_total": 38.4,
-      "base_total_after_age_penalty": 38.4
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 0,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 2,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 0.0,
-      "heat_3d": 0.05,
-      "heat_7d": 19.2,
-      "total_heat": 5.77
     }
   },
   {
@@ -3270,7 +3270,7 @@
     },
     "heat_result": {
       "heat_1d": 0.0,
-      "heat_3d": 0.07,
+      "heat_3d": 0.06,
       "heat_7d": 18.77,
       "total_heat": 5.65
     }
@@ -3288,14 +3288,14 @@
           0.0,
           0.0,
           0.0,
-          70.0
+          66.67
         ],
-        "average_score": 11.67
+        "average_score": 11.11
       },
       "developer_activity_score": 5.71,
       "community_activity_score": 100,
-      "raw_weighted_total": 36.38,
-      "base_total_after_age_penalty": 36.38
+      "raw_weighted_total": 36.16,
+      "base_total_after_age_penalty": 36.16
     },
     "increment_data": {
       "inc_1d": {
@@ -3323,60 +3323,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.0,
-      "heat_7d": 18.19,
-      "total_heat": 5.46
-    }
-  },
-  {
-    "repo": "langchain-ai/local-deep-researcher",
-    "calculated_at": "20260723",
-    "created_at": "2024-12-04T23:57:20Z",
-    "age_penalty": 0.56,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          73.33,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          100.0
-        ],
-        "average_score": 28.89
-      },
-      "developer_activity_score": 61.85,
-      "community_activity_score": 100,
-      "raw_weighted_total": 60.11,
-      "base_total_after_age_penalty": 33.66
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 1,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 16,
-        "forks": 1,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 0.27,
-      "heat_3d": 0.41,
-      "heat_7d": 16.83,
-      "total_heat": 5.28
+      "heat_7d": 18.08,
+      "total_heat": 5.42
     }
   },
   {
@@ -3432,10 +3380,62 @@
     }
   },
   {
+    "repo": "langchain-ai/local-deep-researcher",
+    "calculated_at": "20260723",
+    "created_at": "2024-12-04T23:57:20Z",
+    "age_penalty": 0.56,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          70.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          96.67
+        ],
+        "average_score": 27.78
+      },
+      "developer_activity_score": 61.85,
+      "community_activity_score": 100,
+      "raw_weighted_total": 59.67,
+      "base_total_after_age_penalty": 33.41
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 1,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 16,
+        "forks": 1,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 0.08,
+      "heat_3d": 0.34,
+      "heat_7d": 16.71,
+      "total_heat": 5.14
+    }
+  },
+  {
     "repo": "zaixizhang/STELLA",
     "calculated_at": "20260723",
     "created_at": "2025-07-04T13:20:14Z",
-    "age_penalty": 0.97,
+    "age_penalty": 0.96,
     "score_components": {
       "time_activity": {
         "sub_scores": [
@@ -3451,7 +3451,7 @@
       "developer_activity_score": 40.0,
       "community_activity_score": 56.5,
       "raw_weighted_total": 35.39,
-      "base_total_after_age_penalty": 34.33
+      "base_total_after_age_penalty": 33.98
     },
     "increment_data": {
       "inc_1d": {
@@ -3479,8 +3479,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.02,
-      "heat_7d": 17.17,
-      "total_heat": 5.16
+      "heat_7d": 16.99,
+      "total_heat": 5.1
     }
   },
   {
@@ -3536,58 +3536,6 @@
     }
   },
   {
-    "repo": "SamuelSchmidgall/AgentLaboratory",
-    "calculated_at": "20260723",
-    "created_at": "2025-01-08T02:00:51Z",
-    "age_penalty": 0.62,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          0.0,
-          0.0,
-          0.0,
-          63.33,
-          0.0,
-          100.0
-        ],
-        "average_score": 27.22
-      },
-      "developer_activity_score": 40.36,
-      "community_activity_score": 100,
-      "raw_weighted_total": 53.0,
-      "base_total_after_age_penalty": 32.86
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 1,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 2,
-        "forks": 2,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 0.27,
-      "heat_3d": 0.1,
-      "heat_7d": 16.43,
-      "total_heat": 5.06
-    }
-  },
-  {
     "repo": "TheBlewish/Automated-AI-Web-Researcher-Ollama",
     "calculated_at": "20260723",
     "created_at": "2024-11-20T07:50:38Z",
@@ -3634,44 +3582,44 @@
     },
     "heat_result": {
       "heat_1d": 0.0,
-      "heat_3d": 0.1,
+      "heat_3d": 0.08,
       "heat_7d": 16.68,
       "total_heat": 5.03
     }
   },
   {
-    "repo": "stanford-oval/storm",
+    "repo": "SamuelSchmidgall/AgentLaboratory",
     "calculated_at": "20260723",
-    "created_at": "2024-03-24T16:23:39Z",
-    "age_penalty": 0.3,
+    "created_at": "2025-01-08T02:00:51Z",
+    "age_penalty": 0.62,
     "score_components": {
       "time_activity": {
         "sub_scores": [
           0.0,
-          93.33,
           0.0,
-          93.33,
-          90.0,
-          100.0
+          0.0,
+          60.0,
+          0.0,
+          96.67
         ],
-        "average_score": 62.78
+        "average_score": 26.11
       },
-      "developer_activity_score": 76.57,
+      "developer_activity_score": 40.36,
       "community_activity_score": 100,
-      "raw_weighted_total": 78.08,
-      "base_total_after_age_penalty": 23.42
+      "raw_weighted_total": 52.55,
+      "base_total_after_age_penalty": 32.58
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 5,
+        "stars": 1,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 101,
-        "forks": 5,
+        "stars": 2,
+        "forks": 2,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
@@ -3685,10 +3633,62 @@
       }
     },
     "heat_result": {
-      "heat_1d": 1.33,
-      "heat_3d": 2.59,
-      "heat_7d": 11.71,
-      "total_heat": 4.82
+      "heat_1d": 0.08,
+      "heat_3d": 0.08,
+      "heat_7d": 16.29,
+      "total_heat": 4.94
+    }
+  },
+  {
+    "repo": "stanford-oval/storm",
+    "calculated_at": "20260723",
+    "created_at": "2024-03-24T16:23:39Z",
+    "age_penalty": 0.3,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          0.0,
+          100.0,
+          0.0,
+          93.33,
+          86.67,
+          100.0
+        ],
+        "average_score": 63.33
+      },
+      "developer_activity_score": 76.57,
+      "community_activity_score": 100,
+      "raw_weighted_total": 78.3,
+      "base_total_after_age_penalty": 23.49
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 19,
+        "forks": 1,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 115,
+        "forks": 6,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 1.56,
+      "heat_3d": 2.42,
+      "heat_7d": 11.75,
+      "total_heat": 4.87
     }
   },
   {
@@ -3737,10 +3737,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.27,
-      "heat_3d": 0.07,
+      "heat_1d": 0.08,
+      "heat_3d": 0.06,
       "heat_7d": 15.0,
-      "total_heat": 4.63
+      "total_heat": 4.55
     }
   },
   {
@@ -3860,14 +3860,14 @@
           0.0,
           0.0,
           0.0,
-          100.0
+          96.67
         ],
-        "average_score": 16.67
+        "average_score": 16.11
       },
       "developer_activity_score": 2.35,
       "community_activity_score": 100,
-      "raw_weighted_total": 37.37,
-      "base_total_after_age_penalty": 26.16
+      "raw_weighted_total": 37.15,
+      "base_total_after_age_penalty": 26.01
     },
     "increment_data": {
       "inc_1d": {
@@ -3894,9 +3894,9 @@
     },
     "heat_result": {
       "heat_1d": 0.0,
-      "heat_3d": 0.1,
-      "heat_7d": 13.08,
-      "total_heat": 3.95
+      "heat_3d": 0.08,
+      "heat_7d": 13.0,
+      "total_heat": 3.92
     }
   },
   {
@@ -4004,6 +4004,110 @@
     }
   },
   {
+    "repo": "ZhihaoAIRobotic/ClawPhD",
+    "calculated_at": "20260723",
+    "created_at": "2026-02-10T06:05:04Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          66.67
+        ],
+        "average_score": 11.11
+      },
+      "developer_activity_score": 0.0,
+      "community_activity_score": 58.1,
+      "raw_weighted_total": 21.87,
+      "base_total_after_age_penalty": 21.87
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 1,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 1,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 0.08,
+      "heat_3d": 0.02,
+      "heat_7d": 10.94,
+      "total_heat": 3.32
+    }
+  },
+  {
+    "repo": "ur-whitelab/chemcrow-public",
+    "calculated_at": "20260723",
+    "created_at": "2023-06-04T15:59:05Z",
+    "age_penalty": 0.3,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          0.0,
+          40.0,
+          0.0,
+          100.0,
+          100.0,
+          76.67
+        ],
+        "average_score": 52.78
+      },
+      "developer_activity_score": 65.93,
+      "community_activity_score": 100,
+      "raw_weighted_total": 70.89,
+      "base_total_after_age_penalty": 21.27
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 2,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 1,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 2,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 1,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 0.23,
+      "heat_3d": 0.06,
+      "heat_7d": 10.63,
+      "total_heat": 3.3
+    }
+  },
+  {
     "repo": "SakanaAI/AI-Scientist",
     "calculated_at": "20260723",
     "created_at": "2024-08-12T09:32:55Z",
@@ -4027,14 +4131,14 @@
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 4,
+        "stars": 9,
         "forks": 1,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 22,
+        "stars": 27,
         "forks": 5,
         "commits": 0,
         "closed_prs": 0,
@@ -4049,62 +4153,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 1.33,
-      "heat_3d": 0.66,
+      "heat_1d": 0.78,
+      "heat_3d": 0.64,
       "heat_7d": 8.59,
-      "total_heat": 3.31
-    }
-  },
-  {
-    "repo": "ZhihaoAIRobotic/ClawPhD",
-    "calculated_at": "20260723",
-    "created_at": "2026-02-10T06:05:04Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          70.0
-        ],
-        "average_score": 11.67
-      },
-      "developer_activity_score": 0.0,
-      "community_activity_score": 57.75,
-      "raw_weighted_total": 21.99,
-      "base_total_after_age_penalty": 21.99
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 0,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 0,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 0.0,
-      "heat_3d": 0.0,
-      "heat_7d": 11.0,
-      "total_heat": 3.3
+      "total_heat": 3.08
     }
   },
   {
@@ -4120,14 +4172,14 @@
           0.0,
           0.0,
           0.0,
-          53.33
+          50.0
         ],
-        "average_score": 8.89
+        "average_score": 8.33
       },
       "developer_activity_score": 0.0,
       "community_activity_score": 56.85,
-      "raw_weighted_total": 20.61,
-      "base_total_after_age_penalty": 20.61
+      "raw_weighted_total": 20.39,
+      "base_total_after_age_penalty": 20.39
     },
     "increment_data": {
       "inc_1d": {
@@ -4155,8 +4207,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.02,
-      "heat_7d": 10.31,
-      "total_heat": 3.1
+      "heat_7d": 10.19,
+      "total_heat": 3.06
     }
   },
   {
@@ -4172,14 +4224,14 @@
           0.0,
           0.0,
           0.0,
-          63.33
+          60.0
         ],
-        "average_score": 10.56
+        "average_score": 10.0
       },
       "developer_activity_score": 0.0,
       "community_activity_score": 48.1,
-      "raw_weighted_total": 18.65,
-      "base_total_after_age_penalty": 18.65
+      "raw_weighted_total": 18.43,
+      "base_total_after_age_penalty": 18.43
     },
     "increment_data": {
       "inc_1d": {
@@ -4207,8 +4259,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.0,
-      "heat_7d": 9.33,
-      "total_heat": 2.8
+      "heat_7d": 9.21,
+      "total_heat": 2.76
     }
   },
   {
@@ -4264,58 +4316,6 @@
     }
   },
   {
-    "repo": "ur-whitelab/chemcrow-public",
-    "calculated_at": "20260723",
-    "created_at": "2023-06-04T15:59:05Z",
-    "age_penalty": 0.3,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          0.0,
-          43.33,
-          0.0,
-          0.0,
-          0.0,
-          76.67
-        ],
-        "average_score": 20.0
-      },
-      "developer_activity_score": 64.62,
-      "community_activity_score": 100,
-      "raw_weighted_total": 57.38,
-      "base_total_after_age_penalty": 17.22
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 1,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 1,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 0.27,
-      "heat_3d": 0.02,
-      "heat_7d": 8.61,
-      "total_heat": 2.7
-    }
-  },
-  {
     "repo": "qzzqzzb/OpenClaudeScience",
     "calculated_at": "20260723",
     "created_at": "2026-07-01T06:38:07Z",
@@ -4323,19 +4323,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          46.67,
+          43.33,
           0.0,
           0.0,
           0.0,
           0.0,
-          70.0
+          66.67
         ],
-        "average_score": 19.44
+        "average_score": 18.33
       },
       "developer_activity_score": 0.0,
       "community_activity_score": 31.2,
-      "raw_weighted_total": 17.14,
-      "base_total_after_age_penalty": 17.14
+      "raw_weighted_total": 16.69,
+      "base_total_after_age_penalty": 16.69
     },
     "increment_data": {
       "inc_1d": {
@@ -4362,9 +4362,9 @@
     },
     "heat_result": {
       "heat_1d": 0.0,
-      "heat_3d": 0.05,
-      "heat_7d": 8.57,
-      "total_heat": 2.59
+      "heat_3d": 0.04,
+      "heat_7d": 8.35,
+      "total_heat": 2.52
     }
   },
   {
@@ -4375,30 +4375,30 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          50.0,
-          93.33,
+          46.67,
+          90.0,
           0.0,
           0.0,
           0.0,
           50.0
         ],
-        "average_score": 32.22
+        "average_score": 31.11
       },
       "developer_activity_score": 0.0,
-      "community_activity_score": 13.2,
-      "raw_weighted_total": 16.85,
-      "base_total_after_age_penalty": 16.85
+      "community_activity_score": 13.55,
+      "raw_weighted_total": 16.51,
+      "base_total_after_age_penalty": 16.51
     },
     "increment_data": {
       "inc_1d": {
-        "stars": 0,
+        "stars": 1,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
         "closed_issues": 0
       },
       "inc_3d": {
-        "stars": 0,
+        "stars": 1,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
@@ -4413,10 +4413,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.0,
-      "heat_3d": 0.0,
-      "heat_7d": 8.42,
-      "total_heat": 2.53
+      "heat_1d": 0.08,
+      "heat_3d": 0.02,
+      "heat_7d": 8.25,
+      "total_heat": 2.51
     }
   },
   {
@@ -4593,13 +4593,117 @@
         "average_score": 0.0
       },
       "developer_activity_score": 0.0,
-      "community_activity_score": 41.3,
-      "raw_weighted_total": 12.39,
-      "base_total_after_age_penalty": 12.39
+      "community_activity_score": 41.65,
+      "raw_weighted_total": 12.49,
+      "base_total_after_age_penalty": 12.49
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 1,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 2,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 0.08,
+      "heat_3d": 0.04,
+      "heat_7d": 6.25,
+      "total_heat": 1.92
+    }
+  },
+  {
+    "repo": "AutoResearch/autora",
+    "calculated_at": "20260723",
+    "created_at": "2020-05-06T19:00:20Z",
+    "age_penalty": 0.3,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "average_score": 0.0
+      },
+      "developer_activity_score": 91.44,
+      "community_activity_score": 42.3,
+      "raw_weighted_total": 40.12,
+      "base_total_after_age_penalty": 12.04
     },
     "increment_data": {
       "inc_1d": {
         "stars": 0,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 0,
+        "forks": 0,
+        "commits": 0,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 0.0,
+      "heat_3d": 0.0,
+      "heat_7d": 6.02,
+      "total_heat": 1.81
+    }
+  },
+  {
+    "repo": "JWM0203/Claude-Science-for-win",
+    "calculated_at": "20260723",
+    "created_at": "2026-07-01T09:10:26Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          56.67,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          33.33
+        ],
+        "average_score": 15.0
+      },
+      "developer_activity_score": 0.0,
+      "community_activity_score": 13.0,
+      "raw_weighted_total": 9.9,
+      "base_total_after_age_penalty": 9.9
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 1,
         "forks": 0,
         "commits": 0,
         "closed_prs": 0,
@@ -4621,114 +4725,10 @@
       }
     },
     "heat_result": {
-      "heat_1d": 0.0,
+      "heat_1d": 0.08,
       "heat_3d": 0.02,
-      "heat_7d": 6.19,
-      "total_heat": 1.87
-    }
-  },
-  {
-    "repo": "AutoResearch/autora",
-    "calculated_at": "20260723",
-    "created_at": "2020-05-06T19:00:20Z",
-    "age_penalty": 0.3,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "average_score": 0.0
-      },
-      "developer_activity_score": 91.44,
-      "community_activity_score": 42.55,
-      "raw_weighted_total": 40.2,
-      "base_total_after_age_penalty": 12.06
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 0,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 0,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 0.0,
-      "heat_3d": 0.0,
-      "heat_7d": 6.03,
-      "total_heat": 1.81
-    }
-  },
-  {
-    "repo": "JWM0203/Claude-Science-for-win",
-    "calculated_at": "20260723",
-    "created_at": "2026-07-01T09:10:26Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          60.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          36.67
-        ],
-        "average_score": 16.11
-      },
-      "developer_activity_score": 0.0,
-      "community_activity_score": 12.65,
-      "raw_weighted_total": 10.24,
-      "base_total_after_age_penalty": 10.24
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 0,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 0,
-        "forks": 0,
-        "commits": 0,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 0.0,
-      "heat_3d": 0.0,
-      "heat_7d": 5.12,
-      "total_heat": 1.54
+      "heat_7d": 4.95,
+      "total_heat": 1.52
     }
   },
   {
@@ -4784,58 +4784,6 @@
     }
   },
   {
-    "repo": "knowjoby/autonomous-research-lab",
-    "calculated_at": "20260723",
-    "created_at": "2026-03-04T11:29:03Z",
-    "age_penalty": 1.0,
-    "score_components": {
-      "time_activity": {
-        "sub_scores": [
-          100.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "average_score": 16.67
-      },
-      "developer_activity_score": 0.0,
-      "community_activity_score": 0.0,
-      "raw_weighted_total": 6.67,
-      "base_total_after_age_penalty": 6.67
-    },
-    "increment_data": {
-      "inc_1d": {
-        "stars": 0,
-        "forks": 0,
-        "commits": 2,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_3d": {
-        "stars": 0,
-        "forks": 0,
-        "commits": 10,
-        "closed_prs": 0,
-        "closed_issues": 0
-      },
-      "inc_7d": {
-        "stars": null,
-        "forks": null,
-        "commits": null,
-        "closed_prs": null,
-        "closed_issues": null
-      }
-    },
-    "heat_result": {
-      "heat_1d": 0.53,
-      "heat_3d": 0.24,
-      "heat_7d": 3.33,
-      "total_heat": 1.29
-    }
-  },
-  {
     "repo": "MIRACLE-cowf/Powerful-Auto-Researcher",
     "calculated_at": "20260723",
     "created_at": "2024-04-02T06:31:56Z",
@@ -4885,6 +4833,58 @@
       "heat_3d": 0.0,
       "heat_7d": 4.12,
       "total_heat": 1.24
+    }
+  },
+  {
+    "repo": "knowjoby/autonomous-research-lab",
+    "calculated_at": "20260723",
+    "created_at": "2026-03-04T11:29:03Z",
+    "age_penalty": 1.0,
+    "score_components": {
+      "time_activity": {
+        "sub_scores": [
+          100.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "average_score": 16.67
+      },
+      "developer_activity_score": 0.0,
+      "community_activity_score": 0.0,
+      "raw_weighted_total": 6.67,
+      "base_total_after_age_penalty": 6.67
+    },
+    "increment_data": {
+      "inc_1d": {
+        "stars": 0,
+        "forks": 0,
+        "commits": 4,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_3d": {
+        "stars": 0,
+        "forks": 0,
+        "commits": 12,
+        "closed_prs": 0,
+        "closed_issues": 0
+      },
+      "inc_7d": {
+        "stars": null,
+        "forks": null,
+        "commits": null,
+        "closed_prs": null,
+        "closed_issues": null
+      }
+    },
+    "heat_result": {
+      "heat_1d": 0.31,
+      "heat_3d": 0.24,
+      "heat_7d": 3.33,
+      "total_heat": 1.2
     }
   },
   {
@@ -4952,14 +4952,14 @@
           0.0,
           0.0,
           0.0,
-          40.0
+          36.67
         ],
-        "average_score": 6.67
+        "average_score": 6.11
       },
       "developer_activity_score": 0.0,
       "community_activity_score": 14.45,
-      "raw_weighted_total": 7.0,
-      "base_total_after_age_penalty": 7.0
+      "raw_weighted_total": 6.78,
+      "base_total_after_age_penalty": 6.78
     },
     "increment_data": {
       "inc_1d": {
@@ -4987,8 +4987,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.0,
-      "heat_7d": 3.5,
-      "total_heat": 1.05
+      "heat_7d": 3.39,
+      "total_heat": 1.02
     }
   },
   {
@@ -4999,19 +4999,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          90.0,
+          86.67,
           0.0,
           0.0,
           0.0,
           0.0,
           0.0
         ],
-        "average_score": 15.0
+        "average_score": 14.44
       },
       "developer_activity_score": 0.0,
       "community_activity_score": 0.6,
-      "raw_weighted_total": 6.18,
-      "base_total_after_age_penalty": 6.18
+      "raw_weighted_total": 5.96,
+      "base_total_after_age_penalty": 5.96
     },
     "increment_data": {
       "inc_1d": {
@@ -5039,8 +5039,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.0,
-      "heat_7d": 3.09,
-      "total_heat": 0.93
+      "heat_7d": 2.98,
+      "total_heat": 0.89
     }
   },
   {
@@ -5051,19 +5051,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          90.0,
+          86.67,
           0.0,
           0.0,
           0.0,
           0.0,
           0.0
         ],
-        "average_score": 15.0
+        "average_score": 14.44
       },
       "developer_activity_score": 0.0,
       "community_activity_score": 0.0,
-      "raw_weighted_total": 6.0,
-      "base_total_after_age_penalty": 6.0
+      "raw_weighted_total": 5.78,
+      "base_total_after_age_penalty": 5.78
     },
     "increment_data": {
       "inc_1d": {
@@ -5091,8 +5091,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.0,
-      "heat_7d": 3.0,
-      "total_heat": 0.9
+      "heat_7d": 2.89,
+      "total_heat": 0.87
     }
   },
   {
@@ -5103,19 +5103,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          63.33,
+          60.0,
           0.0,
           0.0,
           0.0,
           0.0,
           0.0
         ],
-        "average_score": 10.56
+        "average_score": 10.0
       },
       "developer_activity_score": 0.0,
       "community_activity_score": 4.0,
-      "raw_weighted_total": 5.42,
-      "base_total_after_age_penalty": 5.42
+      "raw_weighted_total": 5.2,
+      "base_total_after_age_penalty": 5.2
     },
     "increment_data": {
       "inc_1d": {
@@ -5143,8 +5143,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.0,
-      "heat_7d": 2.71,
-      "total_heat": 0.81
+      "heat_7d": 2.6,
+      "total_heat": 0.78
     }
   },
   {
@@ -5155,19 +5155,19 @@
     "score_components": {
       "time_activity": {
         "sub_scores": [
-          73.33,
+          70.0,
           0.0,
           0.0,
           0.0,
           0.0,
           0.0
         ],
-        "average_score": 12.22
+        "average_score": 11.67
       },
       "developer_activity_score": 0.0,
       "community_activity_score": 1.4,
-      "raw_weighted_total": 5.31,
-      "base_total_after_age_penalty": 5.31
+      "raw_weighted_total": 5.09,
+      "base_total_after_age_penalty": 5.09
     },
     "increment_data": {
       "inc_1d": {
@@ -5195,8 +5195,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.0,
-      "heat_7d": 2.65,
-      "total_heat": 0.8
+      "heat_7d": 2.54,
+      "total_heat": 0.76
     }
   },
   {
@@ -5411,7 +5411,7 @@
     "repo": "InternScience/Dolphin",
     "calculated_at": "20260723",
     "created_at": "2024-12-08T07:18:55Z",
-    "age_penalty": 0.57,
+    "age_penalty": 0.56,
     "score_components": {
       "time_activity": {
         "sub_scores": [
@@ -5427,7 +5427,7 @@
       "developer_activity_score": 0.0,
       "community_activity_score": 16.0,
       "raw_weighted_total": 4.8,
-      "base_total_after_age_penalty": 2.74
+      "base_total_after_age_penalty": 2.69
     },
     "increment_data": {
       "inc_1d": {
@@ -5455,8 +5455,8 @@
     "heat_result": {
       "heat_1d": 0.0,
       "heat_3d": 0.0,
-      "heat_7d": 1.37,
-      "total_heat": 0.41
+      "heat_7d": 1.34,
+      "total_heat": 0.4
     }
   },
   {
