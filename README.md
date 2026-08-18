@@ -59,23 +59,14 @@ Pantheon/
 │   └── images/           # Image resources for the project
 └── docs/                 # Extended documentation (usage examples, API docs, etc.)
 ```
+## 🔥 Citation
 
-## Roadmap
+If you use Pantheon in your research, please cite our paper:
 
-- **Phase 0**: Project Initialization - 2026.03.18
-  - [x] Project Overview
-  - [x] Quick Start Guide
-  - [x] Page online
-  - [x] Project Ranking by Daily Change
-  - [x] Fit Phone Screen
-- **Phase 1**: Project Experience - 2026.03.22
-  - [x] Research-Claw by wentorai
-  - [x] dr-Claw by OpenLAIR
-  - [x] DrClaw by InternScience
-  - [x] EvoScientist by EvoScientist, also used ResearAI/DeepScientist
-  - So far, ai4s-research/open-science is pretty good.
-- **Phase 2**: Pantheon Score - 2026.07.21
-  - [x] Evaluate project performance with community heat score.
+```bibtex
+@article{Yu_Li_2026,title={Evaluating Automatic Research Platforms via Open-Source Community Popularity Metrics: An Ecological Assessment Framework},
+volume={3},url={https://ojs.apspublisher.com/index.php/jaet/article/view/1559}, DOI={10.62177/jaet.v3i3.1559}, abstractNote={&amp;lt;p&amp;gt;Automatic research platforms that leverage large language models (LLMs) and multi-agent frameworks to autonomously conduct scientific discovery have proliferated rapidly in open-source communities. Evaluating these platforms remains a challenge: traditional methods assess output quality with accuracy, logic, and completeness, yet these dimensions are subjective, difficult to standardize across heterogeneous platforms, and blind to long-term ecological vitality. This thesis proposes an ecological evaluation framework that relies exclusively on open-source community popularity metrics as the sole basis for platform assessment. We construct a multi-dimensional indicator system encompassing four dimensions of platform popularity, community activity, maintenance sustainability, and ecological expansion, and develop a unified quantitative scoring model grounded in GitHub metrics with stars, forks, issues, pull requests, contributors, and commit frequency and time-decayed heat scores. Empirical analysis covers 54 general-purpose and 112 science-oriented automatic research platforms, yielding comprehensive community-level rankings. Our results demonstrate that community popularity metrics effectively differentiate platforms by sustained engagement and long-term development potential, revealing an evaluation perspective that complements and, in some respects, surpasses traditional quality-centric assessments. The proposed framework provides actionable insights for platform selection by users, operational optimization by developers, and ecosystem analysis for researchers.&amp;lt;/p&amp;gt;}, number={3}, journal={Journal of Advances in Engineering and Technology}, author={Yu, Chenfeng and Li, Jingming}, year={2026}, month={Aug.} }
+```
 
 ## License
 
