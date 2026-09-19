@@ -2,342 +2,332 @@
   {
     "repo": "NousResearch/hermes-agent",
     "created_at": "2025-07-22T22:22:28Z",
-    "heat_1d": 31.6,
-    "heat_3d": 29.06,
-    "heat_7d": 38.57,
-    "total_heat": 32.93,
+    "heat_1d": 43.69,
+    "heat_3d": 36.48,
+    "heat_7d": 38.64,
+    "total_heat": 40.01,
     "age_penalty": 0.89,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "NousResearch/hermes-agent",
     "created_at": "2025-07-22T22:22:28Z",
-    "heat_1d": 31.6,
-    "heat_3d": 29.06,
-    "heat_7d": 38.57,
-    "total_heat": 32.93,
+    "heat_1d": 43.69,
+    "heat_3d": 36.48,
+    "heat_7d": 38.64,
+    "total_heat": 40.01,
     "age_penalty": 0.89,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "openclaw/openclaw",
     "created_at": "2025-11-24T10:16:47Z",
-    "heat_1d": 13.72,
-    "heat_3d": 13.56,
-    "heat_7d": 48.96,
-    "total_heat": 24.24,
+    "heat_1d": 16.98,
+    "heat_3d": 14.79,
+    "heat_7d": 48.94,
+    "total_heat": 25.91,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "deepseek-ai/deepseek-harness",
     "created_at": "2026-08-13T11:56:32Z",
-    "heat_1d": 23.47,
-    "heat_3d": 27.79,
-    "heat_7d": 21.56,
-    "total_heat": 24.19,
+    "heat_1d": 20.32,
+    "heat_3d": 28.28,
+    "heat_7d": 21.44,
+    "total_heat": 23.04,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "earendil-works/pi",
     "created_at": "2025-08-09T14:03:50Z",
-    "heat_1d": 9.23,
-    "heat_3d": 9.59,
-    "heat_7d": 45.61,
-    "total_heat": 20.25,
+    "heat_1d": 7.37,
+    "heat_3d": 8.14,
+    "heat_7d": 45.6,
+    "total_heat": 19.07,
     "age_penalty": 0.92,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "obra/superpowers",
     "created_at": "2025-10-09T19:45:18Z",
-    "heat_1d": 7.63,
-    "heat_3d": 8.06,
-    "heat_7d": 43.28,
-    "total_heat": 18.46,
+    "heat_1d": 6.45,
+    "heat_3d": 7.79,
+    "heat_7d": 47.11,
+    "total_heat": 19.05,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
-  },
-  {
-    "repo": "huangruiteng/loopx",
-    "created_at": "2026-05-31T14:58:56Z",
-    "heat_1d": 3.82,
-    "heat_3d": 3.16,
-    "heat_7d": 47.29,
-    "total_heat": 16.66,
-    "age_penalty": 1.0,
-    "calculated_at": "20260918"
-  },
-  {
-    "repo": "volcengine/OpenViking",
-    "created_at": "2026-01-05T07:11:17Z",
-    "heat_1d": 3.24,
-    "heat_3d": 3.66,
-    "heat_7d": 45.71,
-    "total_heat": 16.11,
-    "age_penalty": 1.0,
-    "calculated_at": "20260918"
-  },
-  {
-    "repo": "code-yeongyu/oh-my-openagent",
-    "created_at": "2025-12-03T01:40:05Z",
-    "heat_1d": 2.37,
-    "heat_3d": 2.48,
-    "heat_7d": 46.83,
-    "total_heat": 15.74,
-    "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "anomalyco/opencode",
     "created_at": "2025-04-30T20:08:00Z",
-    "heat_1d": 7.48,
-    "heat_3d": 6.98,
-    "heat_7d": 32.58,
-    "total_heat": 14.86,
+    "heat_1d": 7.37,
+    "heat_3d": 7.46,
+    "heat_7d": 34.86,
+    "total_heat": 15.64,
     "age_penalty": 0.73,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
+  },
+  {
+    "repo": "volcengine/OpenViking",
+    "created_at": "2026-01-05T07:11:17Z",
+    "heat_1d": 2.14,
+    "heat_3d": 2.96,
+    "heat_7d": 45.55,
+    "total_heat": 15.41,
+    "age_penalty": 1.0,
+    "calculated_at": "20260919"
+  },
+  {
+    "repo": "code-yeongyu/oh-my-openagent",
+    "created_at": "2025-12-03T01:40:05Z",
+    "heat_1d": 1.67,
+    "heat_3d": 1.92,
+    "heat_7d": 46.82,
+    "total_heat": 15.29,
+    "age_penalty": 1.0,
+    "calculated_at": "20260919"
   },
   {
     "repo": "zeroclaw-labs/zeroclaw",
     "created_at": "2026-02-13T08:56:04Z",
-    "heat_1d": 0.74,
-    "heat_3d": 0.39,
-    "heat_7d": 48.06,
-    "total_heat": 14.83,
+    "heat_1d": 0.91,
+    "heat_3d": 0.59,
+    "heat_7d": 48.12,
+    "total_heat": 14.98,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "HKUDS/nanobot",
     "created_at": "2026-02-01T07:16:15Z",
-    "heat_1d": 1.09,
-    "heat_3d": 1.0,
-    "heat_7d": 46.85,
-    "total_heat": 14.79,
+    "heat_1d": 1.21,
+    "heat_3d": 1.2,
+    "heat_7d": 46.76,
+    "total_heat": 14.87,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "Yeachan-Heo/oh-my-claudecode",
     "created_at": "2026-01-09T03:36:29Z",
-    "heat_1d": 0.51,
+    "heat_1d": 0.2,
     "heat_3d": 0.38,
-    "heat_7d": 47.08,
-    "total_heat": 14.44,
+    "heat_7d": 46.41,
+    "total_heat": 14.12,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "qhkm/zeptoclaw",
     "created_at": "2026-02-12T10:11:01Z",
-    "heat_1d": 0.03,
+    "heat_1d": 0.0,
     "heat_3d": 0.06,
-    "heat_7d": 46.87,
-    "total_heat": 14.09,
+    "heat_7d": 46.21,
+    "total_heat": 13.88,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
-  },
-  {
-    "repo": "sipeed/picoclaw",
-    "created_at": "2026-02-04T12:32:35Z",
-    "heat_1d": 0.16,
-    "heat_3d": 0.14,
-    "heat_7d": 46.17,
-    "total_heat": 13.96,
-    "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "netease-youdao/LobsterAI",
     "created_at": "2026-02-12T09:56:20Z",
-    "heat_1d": 0.35,
-    "heat_3d": 0.49,
-    "heat_7d": 44.1,
-    "total_heat": 13.52,
+    "heat_1d": 0.14,
+    "heat_3d": 0.41,
+    "heat_7d": 43.96,
+    "total_heat": 13.37,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "moltis-org/moltis",
     "created_at": "2026-01-29T19:36:31Z",
-    "heat_1d": 0.0,
+    "heat_1d": 0.04,
     "heat_3d": 0.02,
-    "heat_7d": 44.05,
-    "total_heat": 13.22,
+    "heat_7d": 43.67,
+    "total_heat": 13.12,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "openai/codex",
     "created_at": "2025-04-13T05:37:54Z",
-    "heat_1d": 5.66,
-    "heat_3d": 5.99,
-    "heat_7d": 29.9,
-    "total_heat": 13.03,
+    "heat_1d": 6.02,
+    "heat_3d": 5.69,
+    "heat_7d": 29.51,
+    "total_heat": 12.97,
     "age_penalty": 0.7,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
+  },
+  {
+    "repo": "sipeed/picoclaw",
+    "created_at": "2026-02-04T12:32:35Z",
+    "heat_1d": 0.08,
+    "heat_3d": 0.12,
+    "heat_7d": 42.84,
+    "total_heat": 12.92,
+    "age_penalty": 1.0,
+    "calculated_at": "20260919"
   },
   {
     "repo": "nearai/ironclaw",
     "created_at": "2026-02-03T06:57:10Z",
-    "heat_1d": 0.0,
-    "heat_3d": 0.01,
-    "heat_7d": 43.27,
-    "total_heat": 12.98,
+    "heat_1d": 0.02,
+    "heat_3d": 0.0,
+    "heat_7d": 43.05,
+    "total_heat": 12.92,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "ultraworkers/claw-code",
     "created_at": "2026-03-31T08:58:08Z",
-    "heat_1d": 0.0,
-    "heat_3d": 0.06,
-    "heat_7d": 40.61,
-    "total_heat": 12.2,
+    "heat_1d": 0.14,
+    "heat_3d": 0.04,
+    "heat_7d": 40.39,
+    "total_heat": 12.18,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "nullclaw/nullclaw",
     "created_at": "2026-02-16T21:17:27Z",
-    "heat_1d": 0.08,
-    "heat_3d": 0.08,
-    "heat_7d": 40.09,
-    "total_heat": 12.08,
+    "heat_1d": 0.02,
+    "heat_3d": 0.05,
+    "heat_7d": 39.53,
+    "total_heat": 11.88,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "prompt-security/clawsec",
     "created_at": "2026-02-05T19:59:46Z",
-    "heat_1d": 0.03,
-    "heat_3d": 0.05,
-    "heat_7d": 39.12,
-    "total_heat": 11.76,
+    "heat_1d": 0.02,
+    "heat_3d": 0.07,
+    "heat_7d": 38.67,
+    "total_heat": 11.63,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "RightNow-AI/openfang",
     "created_at": "2026-02-24T23:12:38Z",
-    "heat_1d": 0.02,
-    "heat_3d": 0.05,
-    "heat_7d": 38.46,
-    "total_heat": 11.56,
-    "age_penalty": 1.0,
-    "calculated_at": "20260918"
-  },
-  {
-    "repo": "microclaw/microclaw",
-    "created_at": "2026-02-07T08:28:51Z",
-    "heat_1d": 0.02,
+    "heat_1d": 0.14,
     "heat_3d": 0.01,
-    "heat_7d": 37.56,
-    "total_heat": 11.28,
+    "heat_7d": 38.01,
+    "total_heat": 11.46,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
-  },
-  {
-    "repo": "OpenBMB/PilotDeck",
-    "created_at": "2026-05-22T06:50:28Z",
-    "heat_1d": 0.08,
-    "heat_3d": 0.09,
-    "heat_7d": 37.28,
-    "total_heat": 11.24,
-    "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "iOfficeAI/AionUi",
     "created_at": "2025-08-07T10:29:51Z",
-    "heat_1d": 0.54,
-    "heat_3d": 0.46,
-    "heat_7d": 36.27,
-    "total_heat": 11.24,
+    "heat_1d": 0.32,
+    "heat_3d": 0.45,
+    "heat_7d": 36.49,
+    "total_heat": 11.21,
     "age_penalty": 0.92,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
+  },
+  {
+    "repo": "microclaw/microclaw",
+    "created_at": "2026-02-07T08:28:51Z",
+    "heat_1d": 0.0,
+    "heat_3d": 0.01,
+    "heat_7d": 37.12,
+    "total_heat": 11.14,
+    "age_penalty": 1.0,
+    "calculated_at": "20260919"
+  },
+  {
+    "repo": "OpenBMB/PilotDeck",
+    "created_at": "2026-05-22T06:50:28Z",
+    "heat_1d": 0.02,
+    "heat_3d": 0.04,
+    "heat_7d": 36.73,
+    "total_heat": 11.04,
+    "age_penalty": 1.0,
+    "calculated_at": "20260919"
   },
   {
     "repo": "bytedance/deer-flow",
     "created_at": "2025-05-07T02:50:19Z",
-    "heat_1d": 1.94,
-    "heat_3d": 1.59,
-    "heat_7d": 32.28,
-    "total_heat": 10.94,
+    "heat_1d": 1.47,
+    "heat_3d": 1.65,
+    "heat_7d": 32.17,
+    "total_heat": 10.73,
     "age_penalty": 0.74,
-    "calculated_at": "20260918"
-  },
-  {
-    "repo": "Maximilien-ai/clawmax",
-    "created_at": "2026-03-09T22:43:21Z",
-    "heat_1d": 0.84,
-    "heat_3d": 0.46,
-    "heat_7d": 30.98,
-    "total_heat": 9.77,
-    "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "HKUDS/OpenHarness",
     "created_at": "2026-04-01T15:37:13Z",
-    "heat_1d": 0.35,
+    "heat_1d": 0.18,
     "heat_3d": 0.28,
-    "heat_7d": 30.58,
-    "total_heat": 9.4,
+    "heat_7d": 31.44,
+    "total_heat": 9.59,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
+  },
+  {
+    "repo": "Maximilien-ai/clawmax",
+    "created_at": "2026-03-09T22:43:21Z",
+    "heat_1d": 0.14,
+    "heat_3d": 0.53,
+    "heat_7d": 30.53,
+    "total_heat": 9.38,
+    "age_penalty": 1.0,
+    "calculated_at": "20260919"
   },
   {
     "repo": "clawwork-ai/ClawWork",
     "created_at": "2026-03-12T06:11:44Z",
     "heat_1d": 0.0,
     "heat_3d": 0.0,
-    "heat_7d": 30.39,
-    "total_heat": 9.12,
+    "heat_7d": 30.06,
+    "total_heat": 9.02,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "memovai/mimiclaw",
     "created_at": "2026-02-04T04:25:33Z",
-    "heat_1d": 0.05,
-    "heat_3d": 0.03,
-    "heat_7d": 27.15,
-    "total_heat": 8.17,
+    "heat_1d": 0.02,
+    "heat_3d": 0.04,
+    "heat_7d": 26.7,
+    "total_heat": 8.03,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
+  },
+  {
+    "repo": "moxxy-ai/moxxy",
+    "created_at": "2026-05-12T20:58:21Z",
+    "heat_1d": 2.52,
+    "heat_3d": 0.75,
+    "heat_7d": 21.81,
+    "total_heat": 7.78,
+    "age_penalty": 1.0,
+    "calculated_at": "20260919"
   },
   {
     "repo": "openlegion-ai/openlegion",
     "created_at": "2026-02-19T16:35:14Z",
     "heat_1d": 0.0,
     "heat_3d": 0.01,
-    "heat_7d": 22.04,
-    "total_heat": 6.62,
+    "heat_7d": 21.93,
+    "total_heat": 6.58,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
-  },
-  {
-    "repo": "moxxy-ai/moxxy",
-    "created_at": "2026-05-12T20:58:21Z",
-    "heat_1d": 0.0,
-    "heat_3d": 0.0,
-    "heat_7d": 20.49,
-    "total_heat": 6.15,
-    "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "Negai-ai/AgentClaw",
     "created_at": "2026-05-06T12:28:41Z",
     "heat_1d": 0.0,
     "heat_3d": 0.0,
-    "heat_7d": 19.67,
-    "total_heat": 5.9,
+    "heat_7d": 19.56,
+    "total_heat": 5.87,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "Lichas/maxclaw",
@@ -347,27 +337,27 @@
     "heat_7d": 19.55,
     "total_heat": 5.87,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "hivementality-ai/hivemind",
     "created_at": "2026-02-14T14:31:56Z",
     "heat_1d": 0.0,
-    "heat_3d": 0.01,
-    "heat_7d": 18.91,
-    "total_heat": 5.67,
+    "heat_3d": 0.0,
+    "heat_7d": 18.58,
+    "total_heat": 5.57,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "Seeed-Solution/MeshClaw",
     "created_at": "2026-02-26T06:38:52Z",
     "heat_1d": 0.02,
     "heat_3d": 0.01,
-    "heat_7d": 18.09,
-    "total_heat": 5.44,
+    "heat_7d": 18.03,
+    "total_heat": 5.42,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "GENWAY-AI/clawatch",
@@ -377,7 +367,7 @@
     "heat_7d": 12.59,
     "total_heat": 3.78,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "AgenticHighway/kelvinclaw",
@@ -387,7 +377,7 @@
     "heat_7d": 11.86,
     "total_heat": 3.56,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "wanikua/byebyeclaw",
@@ -397,7 +387,7 @@
     "heat_7d": 8.18,
     "total_heat": 2.46,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "longzhi/clawhive",
@@ -407,7 +397,7 @@
     "heat_7d": 6.89,
     "total_heat": 2.07,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "agoodway/goodwizard",
@@ -417,7 +407,7 @@
     "heat_7d": 6.82,
     "total_heat": 2.05,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "t4tarzan/seaclaw",
@@ -427,7 +417,7 @@
     "heat_7d": 6.31,
     "total_heat": 1.89,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "parikhakshat/autoharness",
@@ -437,7 +427,7 @@
     "heat_7d": 5.4,
     "total_heat": 1.62,
     "age_penalty": 0.3,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "itc-ou-shigou/winclaw",
@@ -447,7 +437,7 @@
     "heat_7d": 1.57,
     "total_heat": 0.47,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "yogesharc/babyclaw",
@@ -457,7 +447,7 @@
     "heat_7d": 0.77,
     "total_heat": 0.23,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "femtoclaw/femtoclaw",
@@ -467,7 +457,7 @@
     "heat_7d": 0.16,
     "total_heat": 0.05,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   },
   {
     "repo": "lucianfialho/hooklaw",
@@ -477,6 +467,6 @@
     "heat_7d": 0.16,
     "total_heat": 0.05,
     "age_penalty": 1.0,
-    "calculated_at": "20260918"
+    "calculated_at": "20260919"
   }
 ]
